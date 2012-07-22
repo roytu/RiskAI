@@ -13,7 +13,10 @@ public class GameData {
 	}
 	private void giveReinforcements(int player)
 	{
-		
+		//TODO: Give players number of units at beginning of turn
+		//TODO: Player attacks
+		//TODO: Player fortifies
+		//TODO: Player gets cards
 	}
 	
 }
