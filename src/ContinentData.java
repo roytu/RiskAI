@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.BadStringOperationException;
+
 
 public class ContinentData {
 	public List<Continent> continentList = new ArrayList<Continent>();
@@ -14,13 +16,13 @@ public class ContinentData {
 		continentList.add(new Continent("Australia", 2));
 		
 	}
-	public Continent findContinentByName(String continentName)
+	public Continent findContinentByName(String continentName) throws BadStringOperationException
 	{
 		for (Continent i:continentList)
 		{
 			if(i.name==continentName) return i;
 		}
-		return new Continent();
+		throw new BadStringOperationException(continentName);
 	}
 	static public Continent findContinentByName(String continentName, List<Continent> continentList)
 	{

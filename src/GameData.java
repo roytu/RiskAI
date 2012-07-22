@@ -17,12 +17,13 @@ public class GameData {
 	public void movePlayer(int player)
 	{
 		giveReinforcements(player);
+		//TODO: Player attacks
+		//TODO: Player fortifies
+		//TODO: Player gets cards
 	}
 	private void giveReinforcements(int player)
 	{
 		//TODO: Give players number of units at beginning of turn
-		//TODO: Player attacks
-		//TODO: Player fortifies
-		//TODO: Player gets cards
+		
 	}
 }
