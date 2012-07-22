@@ -24,20 +24,19 @@ public class TerritoryData {
 			while((line= reader.readLine())!= null)
 			{
 				//DO FILE STUFF HERE
-				System.out.println(line);
+				initTerritory(line);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public void initTerritory(String territoryData)
+	private Territory initTerritory(String territoryData)
 	{
 		char currentChar;
 		int currentDataIndex=0;
-		
 		String name="";
-		int continent=0;
+		String continent="";
 		int numberOfAjacentTerritories=0;
 		List<String> ajacentTerritoryNames = new ArrayList<String>();
 		String tempAjacentName="";
@@ -47,7 +46,7 @@ public class TerritoryData {
 			{
 				if(currentDataIndex==0)name+=currentChar;
 				if(currentDataIndex==1)continent+=currentChar;
-				if(currentDataIndex==2)numberOfAjacentTerritories+=currentChar;
+				if(currentDataIndex==2)numberOfAjacentTerritories+=(int)currentChar;
 				if(currentDataIndex==3)
 				{
 					if(currentChar!=',')
@@ -67,6 +66,7 @@ public class TerritoryData {
 			}
 			
 		}
+		return new Territory(name, continent, ajacentTerritoryNames);
 	}
 	
 
