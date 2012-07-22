@@ -8,8 +8,10 @@ import java.util.List;
 
 
 public class TerritoryData {
-	public void initTerritoryData()
+	public static List<Territory> initTerritoryData()
 	{
+		List<Territory> territoryList = new ArrayList<Territory>();
+		
 		BufferedReader reader;
 		try
 		{
@@ -24,22 +26,25 @@ public class TerritoryData {
 			while((line= reader.readLine())!= null)
 			{
 				//DO FILE STUFF HERE
-				initTerritory(line);
+				territoryList.add(initTerritory(line));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return territoryList;
 	}
-	private Territory initTerritory(String territoryData)
+	private static Territory initTerritory(String territoryData, List<Continent> continentList)
 	{
 		char currentChar;
 		int currentDataIndex=0;
 		String name="";
 		String continent="";
 		int numberOfAjacentTerritories=0;
-		List<String> ajacentTerritoryNames = new ArrayList<String>();
 		String tempAjacentName="";
+		List<String> ajacentTerritoryNames = new ArrayList<String>();
+		
+		
 		for(int i=0;i<territoryData.length();i++)
 		{
 			if((currentChar=territoryData.charAt(i))!=';')
@@ -66,7 +71,27 @@ public class TerritoryData {
 			}
 			
 		}
-		return new Territory(name, continent, ajacentTerritoryNames);
+		return new Territory(name, ContinentData.findContinentByName(continent,continentList), ajacentTerritoryNames);
+	}
+	public static Territory findTerritoryByName(String territoryName, List<Territory> territoryList)
+	{
+		for (Territory i : territoryList)
+		{
+			if(i.name==territoryName) return i;
+		}
+		return new Territory();
+		}
+	}
+	
+	public void linkTerritories(List<Territory> territoryList)
+	{
+		for (Territory territory : territoryList)
+		{
+			for (String name : territory.getAjacentTerritoryNameList())
+			{
+				territory.link(TerritoryData.findTerritoryByName(name,territoryList));
+			}			
+		}
 	}
 	
 

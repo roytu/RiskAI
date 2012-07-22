@@ -22,5 +22,13 @@ public class ContinentData {
 		}
 		return new Continent();
 	}
+	static public Continent findContinentByName(String continentName, List<Continent> continentList)
+	{
+		for (Continent i:continentList)
+		{
+			if(i.name==continentName) return i;
+		}
+		return new Continent();
+	}
 
 }
