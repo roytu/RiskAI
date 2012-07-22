@@ -9,6 +9,6 @@ public class Territory {
 	}
 	public static void initializeTerritories()
 	{
-		new Territory();
+		
 	}
 }

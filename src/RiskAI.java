@@ -7,6 +7,6 @@ public class RiskAI {
 	}
 	public RiskAI()
 	{
-		currentGame = new GameData();
+		currentGame = new GameData(4); //4 player game
 	}
 }
