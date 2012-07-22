@@ -1,6 +1,7 @@
 public class RiskAI {
 	static RiskAI riskAI;
 	GameData currentGame;
+	static TerritoryData aaa= new TerritoryData();
 	public static void main(String args[])
 	{
 		riskAI = new RiskAI();

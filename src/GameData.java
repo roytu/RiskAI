@@ -2,6 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameData {
+	public void initTerritories()
+	{
+		/*readfile of territory- name:continent:ajacentTerritories
+		
+		
+		Middle East:5:6:Ukraine,Afghanistan,India,East Africa,Egypt,Southern Europe*/
+	}
 	private List<Player> playerList;
 	public GameData(int playerCount)
 	{
@@ -19,5 +26,4 @@ public class GameData {
 		//TODO: Give players number of units at beginning of turn
 		
 	}
-	
 }
