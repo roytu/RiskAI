@@ -5,9 +5,9 @@ public class Continent {
 	String name;
 	List<Territory> territories;
 	int bonus;
-	Continent()
+	Continent(String name)
 	{
-		this.name="INVALID CONTINENT";
+		this.name=name;
 	}
 	Continent(String name, int bonus)
 	{
