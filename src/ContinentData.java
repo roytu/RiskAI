@@ -5,9 +5,9 @@ import javax.management.BadStringOperationException;
 
 
 public class ContinentData {
-	public List<Continent> continentList = new ArrayList<Continent>();
-	public void init()
+	public static void init()
 	{
+		List<Continent> continentList = new ArrayList<Continent>();
 		continentList.add(new Continent("North America", 5));
 		continentList.add(new Continent("South America", 2));
 		continentList.add(new Continent("Europe", 5));
@@ -16,7 +16,7 @@ public class ContinentData {
 		continentList.add(new Continent("Australia", 2));
 		
 	}
-	public Continent findContinentByName(String continentName) throws BadStringOperationException
+	static public Continent findContinentByName(String continentName, List<Continent> continentList) throws BadStringOperatingException
 	{
 		for (Continent i:continentList)
 		{
