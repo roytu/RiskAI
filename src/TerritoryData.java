@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,7 +31,7 @@ public class TerritoryData {
 			e.printStackTrace();
 		}
 	}
-	private void initTerritory(String territoryData)
+	public void initTerritory(String territoryData)
 	{
 		char currentChar;
 		int currentDataIndex=0;
@@ -38,7 +39,8 @@ public class TerritoryData {
 		String name="";
 		int continent=0;
 		int numberOfAjacentTerritories=0;
-		List<String> ajacentTerritoryNames;
+		List<String> ajacentTerritoryNames = new ArrayList<String>();
+		String tempAjacentName="";
 		for(int i=0;i<territoryData.length();i++)
 		{
 			if((currentChar=territoryData.charAt(i))!=';')
@@ -46,8 +48,18 @@ public class TerritoryData {
 				if(currentDataIndex==0)name+=currentChar;
 				if(currentDataIndex==1)continent+=currentChar;
 				if(currentDataIndex==2)numberOfAjacentTerritories+=currentChar;
-				//if(currentDataIndex==3);//arrrgh;
-				
+				if(currentDataIndex==3)
+				{
+					if(currentChar!=',')
+					{
+						tempAjacentName+=currentChar;
+					}
+					else
+					{
+						ajacentTerritoryNames.add(tempAjacentName);
+						tempAjacentName=new String("");
+					}
+				}				
 			}
 			else
 			{
