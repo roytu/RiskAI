@@ -32,13 +32,36 @@ Iceland;Europe;3;Greenland,Great Britain,Scandinavia,;
 Scandinavia;Europe;4;Iceland,Great Britain,Northern Europe,Ukraine,;
 Great Britain;Europe;4;Iceland,Scandinavia,Northern Europe,Western Europe,;
 Northern Europe;Europe;5;Great Britain,Scandinavia,Ukraine,Western Europe,Southern Europe,;
-Ukraine;Europe;6;Scandinavia,Northern Europe,Southern Europe,;
-###ukraine has many other countries as well- addd later.###
+Ukraine;Europe;6;Scandinavia,Northern Europe,Southern Europe,Ural,Afghanistan,Middle East,;
 Western Europe;Europe;4;Great Britain,Northern Europe,Southern Europe,North Africa,;
-Southern Europe;Europe;6;Western Europe,Northern Europe,Ukraine,North Africa,Egypt,;
-##S.E. also has mid-east
+Southern Europe;Europe;6;Western Europe,Northern Europe,Ukraine,North Africa,Egypt,Middle East,;
 #
 ##AFRICA##
 #
-North Africa;Africa;6;Western Europe,Southern Europe,Brazil,;
-
+North Africa;Africa;6;Western Europe,Southern Europe,Brazil,Egypt,East Africa,Congo,;
+Egypt;Africa;4;North Africa,Southern Europe,Middle East,East Africa,;
+East Africa;Africa;6;North Africa,Egypt,Middle East,Congo,South Africa,Madagascar,;
+Congo;Africa;3;North Africa,East Africa,South Africa,;
+South Africa;Africa;3;Congo,East Africa,Madagascar,;
+Madagascar;Africa;2;South Africa,East Africa,;
+#
+##ASIA##
+#
+Ural;Asia;4;Ukraine,Siberia,Afghanistan,China,;
+Siberia;Asia;5;Ural,Yakutsk,Irkutsk,Mongolia,China,;
+Yakutsk;Asia;3;Siberia,Kamchatka,Irkutsk,;
+Kamchatka;Asia;5;Yakutsk,Irkutsk,Mongolia,Japan,Alaska,;
+Afghanistan;Asia;5;Ukraine,Ural,Middle East,India,China,;
+China;Asia;6;Ural,Siberia,Mongolia,Afghanistan,India,Siam,;
+Mongolia;Asia;5;Siberia,Irkutsk,Kamchatka,Japan,China,;
+Japan;Asia;2;Kamchatka,Mongolia,;
+Middle East;Asia;6;Southern Europe,Ukraine,Afghanistan,Egypt,East Africa,India,;
+India;Asia;4;Afghanistan,China,Middle East,Siam,;
+Siam;Asia;3;India,China,Indonesia,;
+#
+##AUSTRALIA##
+#
+Indonesia;Australia;3;Siam,New Guinea,Western Australia,;
+New Guinea;Australia;3;Indonesia,Western Australia,Eastern Australia,;
+Western Australia;Australia;3;Indonesia,New Guinea,Eastern Australia,;
+Eastern Australia;Australia;2;New Guinea,Western Australia,;
