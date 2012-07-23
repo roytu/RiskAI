@@ -1,4 +1,8 @@
 bin
 README.md
 .classpath
+<<<<<<< HEAD
 .project
+=======
+.project
+>>>>>>> eb216dd784c3de9c54e1af83685f2e41e70fefe2
