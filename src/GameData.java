@@ -16,18 +16,23 @@ public class GameData {
 	{
 		playerList = new ArrayList<Player>(playerCount);
 	}
-	public void movePlayer(int player)
+	public void movePlayer(int playerID)
 	{
+		Player player = getPlayer(playerID);
 		giveReinforcements(player);
 		
 		//TODO: Player attacks
 		//TODO: Player fortifies
 		//TODO: Player gets cards
 	}
-	private void giveReinforcements(int player)
+	private void giveReinforcements(Player player)
 	{
 		//TODO: Give players number of units at beginning of turn
 		//Give 3 for now
 		player.placeReinforcements(3);
+	}
+	private Player getPlayer(int playerID)
+	{
+		return playerList.get(playerID);
 	}
 }

@@ -31,4 +31,9 @@ public class Territory {
 	{
 		return linkedTerritories.size();
 	}
+	public Territory getRandomLinkedTerritory()
+	{
+		Random random = new Random();
+		return linkedTerritories.get(random.nextInt(linkedTerritories.size()));
+	}	
 }

@@ -21,6 +21,11 @@ public class Player {
 		Territory territory = getRandomControlledTerritory();
 		unitMap.put(territory, unitMap.get(territory)+3);
 	}
+	public void attack()
+	{
+		Territory terrFrom = getRandomControlledTerritory();
+		
+	}
 	private Territory getRandomControlledTerritory()
 	{
 		Set<Territory> territories = unitMap.keySet();
