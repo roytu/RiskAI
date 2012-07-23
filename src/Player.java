@@ -8,7 +8,7 @@ import java.util.Set;
 
 
 public class Player {
-	List<Card> cardList;
+	private List<Card> cardList;
 	private Map<Territory, Integer> unitMap;
 	public Player()
 	{
@@ -48,6 +48,10 @@ public class Player {
 	public boolean isOwnerOf(Territory territory)
 	{
 		return unitMap.containsKey(territory);
+	}
+	public int getUnitsInTerritory(Territory territory)
+	{
+		return unitMap.get(territory);
 	}
 
 }

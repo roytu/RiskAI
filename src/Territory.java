@@ -36,15 +36,36 @@ public class Territory {
 		Random random = new Random();
 		return linkedTerritories.get(random.nextInt(linkedTerritories.size()));
 	}
-	public void attackTerritory(Territory from, Territory to)
+	public void attackTerritory(Territory to)
 	{
+		int unitsFrom = getUnitCount();
+		int unitsTo = to.getUnitCount();
 		
+		int diceFrom = Math.min(unitsFrom-1, 3);
+		int diceTo = Math.min(unitsTo, 2);
+		
+		for(int i=0;i<diceFrom;++i)
+		{
+			//TODO: Roll attacking dice
+		}
+		for(int i=0;i<diceTo;++i)
+		{
+			//TODO: Roll defending dice
+		}
+	}
+	private int getUnitCount()
+	{
+		return getOwner().getUnitsInTerritory(this);
 	}
 	public Player getOwner()
 	{
-		for ( Player player : RiskAI.getPlayerList())
+		for (Player player : RiskAI.getPlayerList())
 		{
-			if(player)
+			if(player.isOwnerOf(this))
+			{
+				return player;
+			}
 		}
+		return null; //no owner
 	}
 }
