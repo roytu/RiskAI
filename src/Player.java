@@ -19,7 +19,7 @@ public class Player {
 	{
 		//TODO: Be shitty and place everything in one territory randomly
 		Territory territory = getRandomControlledTerritory();
-		addToTerritory(territory, 3);
+		addToTerritory(territory, number);
 	}
 	public void attack()
 	{
