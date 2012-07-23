@@ -5,17 +5,40 @@
 #name;continent;Number_of_ajacent_territories;ajacent territory names,linked by, commas,; <-notice the comma at the end
 #
 #NOTE: No extra whitespace allowed!
-#
-#
-#
 #########################
 #
-#NOTE: spelled Kamchatka
+#NOTE: upper right territory spelled 'Kamchatka'
+#
 ##NORTH AMERICA##
+#
 Alaska;North America;2;Northwest Territory,Alberta,;
 Northwest Territory;North America;4;Alaska,Alberta,Ontario,Greenland,;
-Greenland;North America;4;Northwest Territory,Ontario,Quebec,;
+Greenland;North America;4;Northwest Territory,Ontario,Quebec,Iceland;
 Alberta;North America;4;Alaska,Northwest Territory,Ontario,Western United States,;
 Ontario;North America;6;Northwest Territory,Alberta,Western United States,Eastern United States,Quebec,Greenland,;
 Quebec;North America;3;Greenland,Ontario,Eastern United States,;
-Mexico;North America;2;Western United States,Eastern United States,;
+Central America;North America;3;Western United States,Eastern United States,Venezuela,;
+#
+##SOUTH AMERICA##
+#
+Venezuela;South America;3;Central America,Peru,Brazil,;
+Peru;South America;3;Venezuela,Brazil,Argentina,;
+Brazil;South America;4;Venezuela,Peru,Argentina,North Africa,;
+Argentina;South America;2;Peru,Brazil,;
+#
+##EUROPE##
+#
+Iceland;Europe;3;Greenland,Great Britain,Scandinavia,;
+Scandinavia;Europe;4;Iceland,Great Britain,Northern Europe,Ukraine,;
+Great Britain;Europe;4;Iceland,Scandinavia,Northern Europe,Western Europe,;
+Northern Europe;Europe;5;Great Britain,Scandinavia,Ukraine,Western Europe,Southern Europe,;
+Ukraine;Europe;6;Scandinavia,Northern Europe,Southern Europe,;
+###ukraine has many other countries as well- addd later.###
+Western Europe;Europe;4;Great Britain,Northern Europe,Southern Europe,North Africa,;
+Southern Europe;Europe;6;Western Europe,Northern Europe,Ukraine,North Africa,Egypt,;
+##S.E. also has mid-east
+#
+##AFRICA##
+#
+North Africa;Africa;6;Western Europe,Southern Europe,Brazil,;
+

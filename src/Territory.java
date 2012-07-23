@@ -27,4 +27,8 @@ public class Territory {
 	{
 		linkedTerritories.add(territory);
 	}
+	public int getNumberOfAjacentTerritories()
+	{
+		return linkedTerritories.size();
+	}
 }
