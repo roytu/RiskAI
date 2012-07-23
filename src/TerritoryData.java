@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.BadStringOperationException;
+
 
 public class TerritoryData {
-	public static List<Territory> initTerritoryData()
+	public static List<Territory> init(List<Continent> continentList)
 	{
 		List<Territory> territoryList = new ArrayList<Territory>();
 		
@@ -26,7 +28,10 @@ public class TerritoryData {
 			while((line= reader.readLine())!= null)
 			{
 				//DO FILE STUFF HERE
-				territoryList.add(initTerritory(line));
+				if(line.charAt(0)!='#')//#=comment symbol
+				{
+					territoryList.add(initTerritory(line, continentList));
+				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -34,7 +39,7 @@ public class TerritoryData {
 		}
 		return territoryList;
 	}
-	private static Territory initTerritory(String territoryData, List<Continent> continentList)
+	public static Territory initTerritory(String territoryData, List<Continent> continentList)
 	{
 		char currentChar;
 		int currentDataIndex=0;
@@ -80,7 +85,6 @@ public class TerritoryData {
 			if(i.name==territoryName) return i;
 		}
 		return new Territory();
-		}
 	}
 	
 	public void linkTerritories(List<Territory> territoryList)
