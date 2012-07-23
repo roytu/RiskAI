@@ -38,7 +38,7 @@ public class GameData {
 	{
 		Territory terrFrom = player.getRandomControlledTerritory();
 		Territory terrTo = terrFrom.getRandomLinkedTerritory();
-		terrFrom.attackTerritory(terrTo);
+		player.attack(terrFrom,terrTo);
 		
 	}
 	private Player getPlayer(int playerID)

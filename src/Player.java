@@ -55,7 +55,7 @@ public class Player {
 	}
 	public void attack(Territory from,Territory to)
 	{
-		int unitsFrom = getUnitCount();
+		int unitsFrom = from.getUnitCount();
 		int unitsTo = to.getUnitCount();
 		
 		int countDiceFrom = Math.min(unitsFrom-1, 3);
@@ -91,7 +91,7 @@ public class Player {
 			else
 			{
 				//defender wins
-				getOwner().addToTerritory(this, -1);
+				addToTerritory(from, -1);
 			}
 		}
 	}
