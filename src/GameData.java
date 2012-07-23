@@ -15,10 +15,16 @@ public class GameData {
 	public GameData(int playerCount)
 	{
 		playerList = new ArrayList<Player>(playerCount);
+		while(true) //while game is running
+		{
+			for(Player player : playerList)
+			{
+				movePlayer(player);
+			}
+		}
 	}
-	public void movePlayer(int playerID)
+	public void movePlayer(Player player)
 	{
-		Player player = getPlayer(playerID);
 		giveReinforcements(player);
 		doAttack(player);
 		//TODO: Player fortifies
@@ -34,7 +40,7 @@ public class GameData {
 	{
 		Territory terrFrom = player.getRandomControlledTerritory();
 		Territory terrTo = terrFrom.getRandomLinkedTerritory();
-		terrFrom.attackTerritory(to);
+		terrFrom.attackTerritory(terrTo);
 		
 	}
 	private Player getPlayer(int playerID)

@@ -4,7 +4,6 @@ import java.util.List;
 public class RiskAI {
 	static RiskAI riskAI;
 	static GameData currentGame;
-	static TerritoryData aaa= new TerritoryData();
 	static List<Continent> continentData;
 	static List<Territory> territoryData;
 	public static void main(String args[])
