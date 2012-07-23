@@ -40,5 +40,10 @@ Southern Europe;Europe;6;Western Europe,Northern Europe,Ukraine,North Africa,Egy
 #
 ##AFRICA##
 #
-North Africa;Africa;6;Western Europe,Southern Europe,Brazil,;
+North Africa;Africa;6;Western Europe,Southern Europe,Brazil,Egypt,East Africa,Congo,;
+Egypt;Africa;4;North Africa,Southern Europe,Middle East,East Africa,;
+East Africa;Africa;6;North Africa,Egypt,Middle East,Congo,South Africa,Madagascar,;
+Congo;Africa;3;North Africa,East Africa,South Africa,;
+South Africa;Africa;3;Congo,East Africa,Madagascar,;
+
 
