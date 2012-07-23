@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.BadStringOperationException;
-
 
 public class ContinentData {
 	public static List<Continent> init()

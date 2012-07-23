@@ -3,7 +3,7 @@ import java.util.*;
 public class Territory {
 	private List<Territory> linkedTerritories;
 	public String name;
-	private Continent continent;
+	//private Continent continent;
 	private List<String> linkedTerritoryNames;
 	public Territory()
 	{
@@ -13,7 +13,7 @@ public class Territory {
 	{
 		linkedTerritoryNames= new LinkedList<String>(ajacentTerritoryNames);
 		this.name=name;
-		this.continent=continent;
+		//this.continent=continent;
 	}
 	public List<String> getAjacentTerritoryNameList()
 	{

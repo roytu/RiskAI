@@ -7,15 +7,11 @@ public class RiskAI {
 	static TerritoryData aaa= new TerritoryData();
 	static List<Continent> continentData;
 	static List<Territory> territoryData;
-	public static void main(String args[])
+	public static void main(String[] args)
 	{
 		continentData=new ArrayList<Continent>(ContinentData.init());
 		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
-		riskAI = new RiskAI();
-	}
-	public RiskAI()
-	{
-		currentGame = new GameData(4); //4 player game
+		currentGame = new GameData(4); //4 player game by default
 	}
 	public static GameData getCurrentGameData()
 	{
