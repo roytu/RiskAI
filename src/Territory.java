@@ -5,6 +5,9 @@ public class Territory {
 	public String name;
 	//private Continent continent;
 	private List<String> linkedTerritoryNames;
+	private int units;
+	private Player owner;
+	
 	public Territory()
 	{
 		linkedTerritories = new ArrayList<Territory>();
@@ -32,61 +35,14 @@ public class Territory {
 		Random random = new Random();
 		return linkedTerritories.get(random.nextInt(linkedTerritories.size()));
 	}
-	public void attackTerritory(Territory to)
+	
+	public int getUnitCount()
 	{
-		int unitsFrom = getUnitCount();
-		int unitsTo = to.getUnitCount();
-		
-		int countDiceFrom = Math.min(unitsFrom-1, 3);
-		int countDiceTo = Math.min(unitsTo, 2);
-		
-		List<Integer> diceFromList = new ArrayList<Integer>();
-		List<Integer> diceToList = new ArrayList<Integer>();
-		
-		Random random = new Random();
-		for(int i=0;i<countDiceFrom;++i)
-		{
-			//TODO: Roll attacking dice
-			diceFromList.add(random.nextInt(6)+1);
-		}
-		for(int i=0;i<countDiceTo;++i)
-		{
-			//TODO: Roll defending dice
-			diceToList.add(random.nextInt(6)+1);
-		}
-		
-		Collections.sort(diceFromList);
-		Collections.reverse(diceFromList);
-		Collections.sort(diceToList);
-		Collections.reverse(diceToList);
-		
-		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
-		{
-			if(countDiceFrom > countDiceTo)
-			{
-				//attacker wins
-				to.getOwner().addToTerritory(to, -1);
-			}
-			else
-			{
-				//defender wins
-				getOwner().addToTerritory(this, -1);
-			}
-		}
+		return units;
 	}
-	private int getUnitCount()
-	{
-		return getOwner().getUnitsInTerritory(this);
-	}
+	
 	public Player getOwner()
 	{
-		for (Player player : RiskAI.getPlayerList())
-		{
-			if(player.isOwnerOf(this))
-			{
-				return player;
-			}
-		}
-		return null; //no owner
+		return owner;
 	}
 }
