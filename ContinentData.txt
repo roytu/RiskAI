@@ -1,0 +1,8 @@
+#CONTINENT DATA GOES IN THIS FILE
+#NAME;BONUS (then anything else you want, ignores everything after bonus, but put no space between ; and bonus)
+Australia;2
+South America;2
+Africa;3
+North America;5
+Europe;5
+Asia;7
