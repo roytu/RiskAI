@@ -35,5 +35,16 @@ public class Territory {
 	{
 		Random random = new Random();
 		return linkedTerritories.get(random.nextInt(linkedTerritories.size()));
-	}	
+	}
+	public void attackTerritory(Territory from, Territory to)
+	{
+		
+	}
+	public Player getOwner()
+	{
+		for ( Player player : RiskAI.getPlayerList())
+		{
+			if(player)
+		}
+	}
 }

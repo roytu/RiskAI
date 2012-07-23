@@ -19,14 +19,13 @@ public class Player {
 	{
 		//TODO: Be shitty and place everything in one territory randomly
 		Territory territory = getRandomControlledTerritory();
-		unitMap.put(territory, unitMap.get(territory)+3);
+		addToTerritory(territory, 3);
 	}
 	public void attack()
 	{
-		Territory terrFrom = getRandomControlledTerritory();
 		
 	}
-	private Territory getRandomControlledTerritory()
+	public Territory getRandomControlledTerritory()
 	{
 		Set<Territory> territories = unitMap.keySet();
 		Random random = new Random();
@@ -41,6 +40,14 @@ public class Player {
 			++i;
 		}
 		throw new RuntimeException("wat");
+	}
+	private void addToTerritory(Territory territory, int number)
+	{
+		unitMap.put(territory, unitMap.get(territory)+number);
+	}
+	public boolean isOwnerOf(Territory territory)
+	{
+		return unitMap.containsKey(territory);
 	}
 
 }
