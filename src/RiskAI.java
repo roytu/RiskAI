@@ -8,6 +8,7 @@ public class RiskAI {
 	static List<Territory> territoryData;
 	public static void main(String args[])
 	{
+		Gfx testwindow=new Gfx();
 		continentData=new ArrayList<Continent>(ContinentData.init());
 		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
 		riskAI = new RiskAI();
