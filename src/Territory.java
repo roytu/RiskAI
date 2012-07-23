@@ -15,10 +15,6 @@ public class Territory {
 		this.name=name;
 		this.continent=continent;
 	}
-	public static void initializeTerritory()
-	{
-		
-	}
 	public List<String> getAjacentTerritoryNameList()
 	{
 		return new LinkedList<String>(linkedTerritoryNames);
