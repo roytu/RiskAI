@@ -56,7 +56,7 @@ public class TerritoryData {
 			{
 				if(currentDataIndex==0)name+=currentChar;
 				if(currentDataIndex==1)continent+=currentChar;
-				if(currentDataIndex==2)numberOfAjacentTerritories+=(int)currentChar;
+				if(currentDataIndex==2)numberOfAjacentTerritories+=(currentChar-'0');
 				if(currentDataIndex==3)
 				{
 					if(currentChar!=',')

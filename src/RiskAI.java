@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RiskAI {
@@ -11,7 +10,7 @@ public class RiskAI {
 	public static void main(String args[])
 	{
 		continentData=new ArrayList<Continent>(ContinentData.init());
-		//territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
+		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
 		riskAI = new RiskAI();
 	}
 	public RiskAI()
