@@ -41,16 +41,41 @@ public class Territory {
 		int unitsFrom = getUnitCount();
 		int unitsTo = to.getUnitCount();
 		
-		int diceFrom = Math.min(unitsFrom-1, 3);
-		int diceTo = Math.min(unitsTo, 2);
+		int countDiceFrom = Math.min(unitsFrom-1, 3);
+		int countDiceTo = Math.min(unitsTo, 2);
 		
-		for(int i=0;i<diceFrom;++i)
+		List<Integer> diceFromList = new ArrayList<Integer>();
+		List<Integer> diceToList = new ArrayList<Integer>();
+		
+		Random random = new Random();
+		for(int i=0;i<countDiceFrom;++i)
 		{
 			//TODO: Roll attacking dice
+			diceFromList.add(random.nextInt(6)+1);
 		}
-		for(int i=0;i<diceTo;++i)
+		for(int i=0;i<countDiceTo;++i)
 		{
 			//TODO: Roll defending dice
+			diceToList.add(random.nextInt(6)+1);
+		}
+		
+		Collections.sort(diceFromList);
+		Collections.reverse(diceFromList);
+		Collections.sort(diceToList);
+		Collections.reverse(diceToList);
+		
+		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
+		{
+			if(countDiceFrom > countDiceTo)
+			{
+				//attacker wins
+				to.getOwner().addToTerritory(to, -1);
+			}
+			else
+			{
+				//defender wins
+				getOwner().addToTerritory(this, -1);
+			}
 		}
 	}
 	private int getUnitCount()

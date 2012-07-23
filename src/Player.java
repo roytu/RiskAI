@@ -41,7 +41,7 @@ public class Player {
 		}
 		throw new RuntimeException("wat");
 	}
-	private void addToTerritory(Territory territory, int number)
+	public void addToTerritory(Territory territory, int number)
 	{
 		unitMap.put(territory, unitMap.get(territory)+number);
 	}
