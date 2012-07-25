@@ -1,33 +1,14 @@
-###RISK Territory Data###
-#
-#format:
-#
-#name;continent;Number_of_ajacent_territories;ajacent territory names,linked by, commas,; <-notice the comma at the end
-#
-#NOTE: No extra whitespace allowed!
-#########################
-#
-#NOTE: upper right territory spelled 'Kamchatka'
-#
-##NORTH AMERICA##
-#
 Alaska;North America;3;Northwest Territory,Alberta,Kamchatka,;
 Northwest Territory;North America;4;Alaska,Alberta,Ontario,Greenland,;
-Greenland;North America;4;Northwest Territory,Ontario,Quebec,Iceland;
+Greenland;North America;3;Northwest Territory,Ontario,Quebec,;
 Alberta;North America;4;Alaska,Northwest Territory,Ontario,Western United States,;
 Ontario;North America;6;Northwest Territory,Alberta,Western United States,Eastern United States,Quebec,Greenland,;
 Quebec;North America;3;Greenland,Ontario,Eastern United States,;
 Central America;North America;3;Western United States,Eastern United States,Venezuela,;
-#
-##SOUTH AMERICA##
-#
 Venezuela;South America;3;Central America,Peru,Brazil,;
 Peru;South America;3;Venezuela,Brazil,Argentina,;
 Brazil;South America;4;Venezuela,Peru,Argentina,North Africa,;
 Argentina;South America;2;Peru,Brazil,;
-#
-##EUROPE##
-#
 Iceland;Europe;3;Greenland,Great Britain,Scandinavia,;
 Scandinavia;Europe;4;Iceland,Great Britain,Northern Europe,Ukraine,;
 Great Britain;Europe;4;Iceland,Scandinavia,Northern Europe,Western Europe,;
@@ -35,18 +16,12 @@ Northern Europe;Europe;5;Great Britain,Scandinavia,Ukraine,Western Europe,Southe
 Ukraine;Europe;6;Scandinavia,Northern Europe,Southern Europe,Ural,Afghanistan,Middle East,;
 Western Europe;Europe;4;Great Britain,Northern Europe,Southern Europe,North Africa,;
 Southern Europe;Europe;6;Western Europe,Northern Europe,Ukraine,North Africa,Egypt,Middle East,;
-#
-##AFRICA##
-#
 North Africa;Africa;6;Western Europe,Southern Europe,Brazil,Egypt,East Africa,Congo,;
 Egypt;Africa;4;North Africa,Southern Europe,Middle East,East Africa,;
 East Africa;Africa;6;North Africa,Egypt,Middle East,Congo,South Africa,Madagascar,;
 Congo;Africa;3;North Africa,East Africa,South Africa,;
 South Africa;Africa;3;Congo,East Africa,Madagascar,;
 Madagascar;Africa;2;South Africa,East Africa,;
-#
-##ASIA##
-#
 Ural;Asia;4;Ukraine,Siberia,Afghanistan,China,;
 Siberia;Asia;5;Ural,Yakutsk,Irkutsk,Mongolia,China,;
 Yakutsk;Asia;3;Siberia,Kamchatka,Irkutsk,;
@@ -58,9 +33,6 @@ Japan;Asia;2;Kamchatka,Mongolia,;
 Middle East;Asia;6;Southern Europe,Ukraine,Afghanistan,Egypt,East Africa,India,;
 India;Asia;4;Afghanistan,China,Middle East,Siam,;
 Siam;Asia;3;India,China,Indonesia,;
-#
-##AUSTRALIA##
-#
 Indonesia;Australia;3;Siam,New Guinea,Western Australia,;
 New Guinea;Australia;3;Indonesia,Western Australia,Eastern Australia,;
 Western Australia;Australia;3;Indonesia,New Guinea,Eastern Australia,;

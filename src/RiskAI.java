@@ -9,20 +9,19 @@ public class RiskAI {
 	
 	static int territoryIndex=0;
 	
-	
-	public static void main(String args[])
+	public static void main(String[] args)
 	{
 		Gfx testwindow=new Gfx();
 		continentData=new ArrayList<Continent>(ContinentData.init());
 		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
-		riskAI = new RiskAI();
-	}
-	public RiskAI()
-	{
-		currentGame = new GameData(4); //4 player game
+		/*for (Territory t : territoryData)
+		{
+			t.writeToFile();
+		}*/
+		//currentGame = new GameData(4); //4 player game by default, but atm all it does is infinite loop
 	}
 	public static GameData getCurrentGameData()
-	{
+	{	
 		return currentGame;
 	}
 	public static List<Player> getPlayerList()

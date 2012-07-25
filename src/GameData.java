@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GameData {
 	public List<Player> playerList;
@@ -40,8 +38,8 @@ public class GameData {
 	{
 		Territory terrFrom = player.getRandomControlledTerritory();
 		Territory terrTo = terrFrom.getRandomLinkedTerritory();
+		player.attack(terrFrom,terrTo);
 		player.attack(terrFrom, terrTo);
-		
 	}
 	private Player getPlayer(int playerID)
 	{

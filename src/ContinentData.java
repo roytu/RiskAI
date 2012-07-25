@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.BadStringOperationException;
-
 
 public class ContinentData {
 	public static List<Continent> init()
@@ -48,7 +46,7 @@ public class ContinentData {
 	{
 		for (Continent i:continentList)
 		{
-			if(i.name==continentName) return i;
+			if(i.name.equals(continentName)) return i;
 		}
 		return new Continent("BAD");
 		//throw new BadStringOperationException(continentName);
