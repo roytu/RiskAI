@@ -1,22 +1,33 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class Territory {
 	private List<Territory> linkedTerritories;
 	public String name;
-	//private Continent continent;
+	private Continent continent; //Only for data retrieval
 	private List<String> linkedTerritoryNames;
 	private int units;
 	private Player owner;
+	private static BufferedWriter territoryDataWriter;
 	
 	public Territory()
 	{
 		linkedTerritories = new ArrayList<Territory>();
+		try {			
+			territoryDataWriter = new BufferedWriter(new PrintWriter(new FileWriter("TerritoryWriteData.txt")));
+		} catch (IOException e) {
+			throw new RuntimeException("WTF ECLIPSE");
+		}
 	}
 	public Territory(String name, Continent continent, List<String> ajacentTerritoryNames)
 	{
+		this();
 		linkedTerritoryNames= new LinkedList<String>(ajacentTerritoryNames);
 		this.name=name;
-		//this.continent=continent;
+		this.continent=continent;
 	}
 	public List<String> getAjacentTerritoryNameList()
 	{
@@ -44,5 +55,41 @@ public class Territory {
 	public Player getOwner()
 	{
 		return owner;
+	}
+	
+	public String toString()
+	{
+		String namePart = name + ", ";
+		String linkedPart = "linked to ";
+		for (String str : linkedTerritoryNames)
+		{
+			linkedPart = linkedPart + str + " and ";
+		}
+		String continentPart = "on continent " + continent.name;
+		String ownerPart = ", with " + units + " armies on it";
+		return namePart + linkedPart + continentPart + ownerPart;
+	}
+	
+	public String semicolonForm()
+	{
+		String line = name + ";";
+		line += continent.name + ";";
+		line+=linkedTerritoryNames.size() + ";";
+		for (String str : linkedTerritoryNames)
+		{
+			line += str + ",";
+		}
+		line+=";";
+		return line;
+	}
+	
+	public void writeToFile()
+	{
+		try {
+			territoryDataWriter.write(semicolonForm() + "\n");
+			territoryDataWriter.flush();
+		} catch (IOException e) {
+			throw new RuntimeException("WTF JAVA");
+		}
 	}
 }

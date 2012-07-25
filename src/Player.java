@@ -21,10 +21,6 @@ public class Player {
 		Territory territory = getRandomControlledTerritory();
 		addToTerritory(territory, number);
 	}
-	public void attack()
-	{
-		
-	}
 	public Territory getRandomControlledTerritory()
 	{
 		Set<Territory> territories = unitMap.keySet();
@@ -92,6 +88,7 @@ public class Player {
 			{
 				//defender wins
 				addToTerritory(from, -1);
+				from.getOwner().addToTerritory(from, -1);
 			}
 		}
 	}

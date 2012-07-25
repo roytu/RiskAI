@@ -46,7 +46,7 @@ public class ContinentData {
 	{
 		for (Continent i:continentList)
 		{
-			if(i.name==continentName) return i;
+			if(i.name.equals(continentName)) return i;
 		}
 		return new Continent("BAD");
 		//throw new BadStringOperationException(continentName);

@@ -11,7 +11,7 @@
 #
 ##NORTH AMERICA##
 #
-Alaska;North America;2;Northwest Territory,Alberta,;
+Alaska;North America;3;Northwest Territory,Alberta,Kamchatka,;
 Northwest Territory;North America;4;Alaska,Alberta,Ontario,Greenland,;
 Greenland;North America;4;Northwest Territory,Ontario,Quebec,Iceland;
 Alberta;North America;4;Alaska,Northwest Territory,Ontario,Western United States,;

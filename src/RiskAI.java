@@ -10,10 +10,14 @@ public class RiskAI {
 	{
 		continentData=new ArrayList<Continent>(ContinentData.init());
 		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
-		currentGame = new GameData(4); //4 player game by default
+		for (Territory t : territoryData)
+		{
+			t.writeToFile();
+		}
+		//currentGame = new GameData(4); //4 player game by default, but atm all it does is infinite loop
 	}
 	public static GameData getCurrentGameData()
-	{
+	{	
 		return currentGame;
 	}
 	public static List<Player> getPlayerList()
