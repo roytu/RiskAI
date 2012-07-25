@@ -86,7 +86,7 @@ public class Territory {
 	public void writeToFile()
 	{
 		try {
-			territoryDataWriter.write(semicolonForm() + "\n");
+			territoryDataWriter.write(semicolonForm() + System.getProperty("line.separator"));
 			territoryDataWriter.flush();
 		} catch (IOException e) {
 			throw new RuntimeException("WTF JAVA");
