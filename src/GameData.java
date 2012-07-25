@@ -8,18 +8,20 @@ public class GameData {
 		/*readfile of territory- name:continent:ajacentTerritories
 		
 		
-		Middle East:5:6:Ukraine,Afghanistan,India,East Africa,Egypt,Southern Europe*/
+		Middle East:5:6:Ukraine,Afghanistan,India,East Africa,Egypt,Southern Europe
+		Not being used at the moment, files are in territory data*/
 	}
 	public GameData(int playerCount)
 	{
 		playerList = new ArrayList<Player>(playerCount);
-		while(true) //while game is running
+		//initialize players here
+		/*while(true) //while game is running
 		{
 			for(Player player : playerList)
 			{
 				movePlayer(player);
 			}
-		}
+		}*/
 	}
 	public void movePlayer(Player player)
 	{
@@ -41,7 +43,7 @@ public class GameData {
 		player.attack(terrFrom,terrTo);
 		player.attack(terrFrom, terrTo);
 	}
-	private Player getPlayer(int playerID)
+	public Player getPlayer(int playerID)
 	{
 		return playerList.get(playerID);
 	}

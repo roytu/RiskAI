@@ -11,6 +11,7 @@ public class Territory {
 	private List<String> linkedTerritoryNames;
 	private int units;
 	private Player owner;
+	private TerritoryNode graphic;
 	private static BufferedWriter territoryDataWriter;
 	
 	public Territory()
@@ -21,6 +22,8 @@ public class Territory {
 		} catch (IOException e) {
 			throw new RuntimeException("WTF ECLIPSE");
 		}
+		graphic = new TerritoryNode(this);
+		graphic.setCoords(100, 100);
 	}
 	public Territory(String name, Continent continent, List<String> ajacentTerritoryNames)
 	{

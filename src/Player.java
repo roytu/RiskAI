@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,11 +9,12 @@ import java.util.Set;
 
 
 public class Player {
-	private List<Card> cardList;
+	//private List<Card> cardList;
+	//need a color for identification
 	private Map<Territory, Integer> unitMap;
 	public Player()
 	{
-		cardList = new ArrayList<Card>();
+		//cardList = new ArrayList<Card>();
 		unitMap = new HashMap<Territory, Integer>();
 	}
 	public void placeReinforcements(int number)
@@ -92,5 +94,8 @@ public class Player {
 			}
 		}
 	}
-
+	public Color getColor()
+	{
+		return Color.WHITE;
+	}
 }
