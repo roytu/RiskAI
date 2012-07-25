@@ -6,6 +6,10 @@ public class RiskAI {
 	static GameData currentGame;
 	static List<Continent> continentData;
 	static List<Territory> territoryData;
+	
+	static int territoryIndex=0;
+	
+	
 	public static void main(String args[])
 	{
 		Gfx testwindow=new Gfx();
