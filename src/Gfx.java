@@ -21,8 +21,9 @@ public class Gfx extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Risk!");
 		setVisible(true);
-		this.addMouseListener(RiskAI.riskAI);
 		TerritoryGraphics.picture = this;
+		
+		addMouseListener(RiskAI.clickHandler);
 	}
 
 	/**

@@ -3,27 +3,29 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RiskAI implements MouseListener{
+public class RiskAI{
 	static RiskAI riskAI;
 	static GameData currentGame;
 	static List<Continent> continentData;
 	static List<Territory> territoryData;
-	static boolean mouseHasClicked=true;//this and line below
-	static int territoryIndex=0;
-	static boolean allTerritoriesDone=false;
+	
+	public static HandleClick clickHandler;
 	
 	public static void main(String[] args)
 	{
+		clickHandler = new HandleClick();
+		
 		riskAI=new RiskAI();
 		Gfx testwindow=new Gfx();
 		continentData=new ArrayList<Continent>(ContinentData.init());
 		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
+		
 	}
 	
 	public RiskAI()
-	{}
-	
-	
+	{
+
+	}
 	
 	public static GameData getCurrentGameData()
 	{	
@@ -33,6 +35,7 @@ public class RiskAI implements MouseListener{
 	{
 		return getCurrentGameData().playerList;
 	}
+<<<<<<< HEAD
 	
 	@Override
 	public void mouseClicked(MouseEvent e)
@@ -81,4 +84,6 @@ public class RiskAI implements MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
+=======
+>>>>>>> 8a7fd1dec150508377811a857d3284ef5eecc691
 }
