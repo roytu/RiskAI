@@ -21,20 +21,7 @@ public class RiskAI{
 		
 		riskAI = new RiskAI();
 		continentData = new ArrayList<Continent>(ContinentData.init());
-<<<<<<< HEAD
 		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
-	}
-	public RiskAI()
-	{
-		Gfx testwindow = new Gfx();
-=======
-		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));		
-		Gfx testwindow = new Gfx();
-		
-		continentData = new ArrayList<Continent>(ContinentData.init());
-		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
-		
-		riskAI = new RiskAI();
 	}
 	public RiskAI()
 	{
