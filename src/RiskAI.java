@@ -16,18 +16,29 @@ public class RiskAI{
 		//Initialize system information
 		init();
 		
+		TerritoryData.findTerritoryByName("Ural",territoryData).setOwner(currentGame.getPlayer(1));
+		TerritoryData.findTerritoryByName("Afghanistan",territoryData).setOwner(currentGame.getPlayer(2));
+		currentGame.getPlayer(1).reinforce(terrName("Ural"),3);
+		currentGame.getPlayer(2).reinforce(terrName("Afghanistan"),3);
+		currentGame.getPlayer(1).attack(terrName("Ural"),terrName("Afghanistan"));		
+		
 	}
 	private static void init()
 	{
 		clickHandler = new HandleClick();
 		riskAI = new RiskAI();
+		currentGame = new GameData(PLAYERS_HUMAN, PLAYERS_COMP);
 		continentData = ContinentData.init();
 		territoryData = TerritoryData.init(continentData);
 		Gfx testwindow = new Gfx();
 	}
 	public RiskAI()
 	{
-		currentGame = new GameData(PLAYERS_HUMAN, PLAYERS_COMP);
+	}
+	
+	private static Territory terrName(String name)
+	{
+		return TerritoryData.findTerritoryByName(name, territoryData);
 	}
 	
 	public static GameData getCurrentGameData()

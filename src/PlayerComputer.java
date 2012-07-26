@@ -17,7 +17,7 @@ public class PlayerComputer extends Player {
 	{
 		//TODO: Be shitty and place everything in one territory randomly
 		Territory territory = getRandomControlledTerritory();
-		addToTerritory(territory, number);
+		reinforce(territory, number);
 	}
 
 	public void doAttackPhase()

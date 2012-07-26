@@ -15,7 +15,7 @@ public class PlayerHuman extends Player {
 	protected void placeReinforcements(int number) {
 		// TODO Auto-generated method stub
 		Territory territory = getRandomControlledTerritory();
-		addToTerritory(territory, number);
+		reinforce(territory, number);
 	}
 	
 	public void doAttackPhase()

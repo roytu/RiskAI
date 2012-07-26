@@ -15,6 +15,12 @@ public abstract class Player {
 	private int playerID;
 	private Color color;
 	
+	/*player1.calculateReinforcements();
+	player2.setReinforcements(5);
+	player1.reinforce(Ural,3);
+	player2.reinforce(Afghanistan,3);
+	player1.attack(Ural, Afghanistan);*/
+		
 	public Player(int playerID)
 	{
 		this.playerID = playerID;
@@ -27,7 +33,23 @@ public abstract class Player {
 		this(playerID);
 		this.color = color;
 	}
+	
 	protected abstract void placeReinforcements(int number);
+	protected abstract void doAttackPhase();	
+	
+	
+	/**
+	 * Adds a number of units into a territory.  Units are friendly to the player
+	 * currently controlling the specified territory.
+	 * @param territory Territory to add units to
+	 * @param number Number of units to add
+	 */
+	public void reinforce(Territory territory, int number)
+	{
+		unitMap.put(territory, unitMap.get(territory)+number);
+		territory.setUnitNumber(number);
+	}
+	
 	public void attack(Territory from, Territory to) 
 	{
 		int unitsFrom = from.getUnitCount();
@@ -39,9 +61,8 @@ public abstract class Player {
 		List<Integer> diceFromList = new ArrayList<Integer>();
 		List<Integer> diceToList = new ArrayList<Integer>();
 		
-		//DEBUG
+		//NEXT LINE DEBUG
 		System.out.println(from.name+" attacks "+to.name);
-		//END DEBUG
 		
 		Random random = new Random();
 		for(int i=0;i<countDiceFrom;++i)
@@ -59,28 +80,31 @@ public abstract class Player {
 		Collections.reverse(diceFromList);
 		Collections.sort(diceToList);
 		Collections.reverse(diceToList);
+		//DEBUG
 		System.out.println(diceFromList.toString());
 		System.out.println(diceToList.toString());
+		//END DEBUG
 		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
 		{
 			if(countDiceFrom > countDiceTo)
 			{
 				//attacker wins
-				to.getOwner().addToTerritory(to, -1);
-				//DEBUG
+				to.getOwner().reinforce(to, -1);
+				//NEXT LINE DEBUG
 				System.out.println("attacker wins");
 			}
 			else
 			{
 				//defender wins
-				addToTerritory(from, -1);
-				from.getOwner().addToTerritory(from, -1);
+				reinforce(from, -1);
+				from.getOwner().reinforce(from, -1);
+				//NEXT LINE DEBUG
 				System.out.println("defender wins");
 			}
 		}
 	}
 	
-	public abstract void doAttackPhase();
+	
 	
 	/**
 	 * Gets a random territory in which the player has units.
@@ -103,18 +127,8 @@ public abstract class Player {
 		}
 		throw new RuntimeException("wat");
 	}
-	/**
-	 * Adds a number of units into a territory.  Units are friendly to the player
-	 * currently controlling the specified territory.
-	 * @param territory Territory to add units to
-	 * @param number Number of units to add
-	 */
-	public void addToTerritory(Territory territory, int number)
-	{
-		unitMap.put(territory, unitMap.get(territory)+number);
-		territory.setUnitNumber(number);
-	}
-	
+
+
 	/**
 	 * Gets whether the territory is owned by the player
 	 * @param territory
