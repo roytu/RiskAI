@@ -16,14 +16,13 @@ public class RiskAI{
 		clickHandler = new HandleClick();
 		
 		riskAI = new RiskAI();
-		Gfx testwindow = new Gfx();
 		continentData = new ArrayList<Continent>(ContinentData.init());
 		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
 	}
 	
 	public RiskAI()
 	{
-		
+		Gfx testwindow = new Gfx();
 	}
 	
 	public static GameData getCurrentGameData()

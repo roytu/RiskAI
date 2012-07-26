@@ -5,23 +5,11 @@ public class GameData {
 	public List<Player> playerList;
 	public void initTerritories()
 	{
-		/*readfile of territory- name:continent:ajacentTerritories
 		
-		
-		Middle East:5:6:Ukraine,Afghanistan,India,East Africa,Egypt,Southern Europe
-		Not being used at the moment, files are in territory data*/
 	}
 	public GameData(int playerCount)
 	{
 		playerList = new ArrayList<Player>(playerCount);
-		//initialize players here
-		/*while(true) //while game is running
-		{
-			for(Player player : playerList)
-			{
-				movePlayer(player);
-			}
-		}*/
 	}
 	public void movePlayer(Player player)
 	{
