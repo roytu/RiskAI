@@ -4,18 +4,18 @@ import java.util.List;
 import java.util.Random;
 
 
-public class PlayerComputer extends Player {
+public class PlayerHuman extends Player {
+
 	@Override
-	public void placeReinforcements(int number)
-	{
-		//TODO: Be shitty and place everything in one territory randomly
+	protected void placeReinforcements(int number) {
+		// TODO Auto-generated method stub
 		Territory territory = getRandomControlledTerritory();
 		addToTerritory(territory, number);
 	}
 
 	@Override
-	public void attack(Territory from, Territory to)
-	{
+	protected void attack(Territory from, Territory to) {
+		// TODO Auto-generated method stub
 		int unitsFrom = from.getUnitCount();
 		int unitsTo = to.getUnitCount();
 		
@@ -57,4 +57,5 @@ public class PlayerComputer extends Player {
 			}
 		}
 	}
+
 }
