@@ -4,9 +4,9 @@ import java.awt.event.MouseListener;
 
 public class HandleClick implements MouseListener {
 	
-	static boolean mouseHasClicked=true;//this and line below
-	static int territoryIndex=0;
-	static boolean allTerritoriesDone=false;
+	static boolean mouseHasClicked = true;//this and line below
+	static int territoryIndex = 0;
+	static boolean allTerritoriesDone = false;
 
 	public HandleClick()
 	{
@@ -21,20 +21,20 @@ public class HandleClick implements MouseListener {
 			RiskAI.territoryData.get(territoryIndex).setCoordinates(e.getX(), e.getY());
 			System.out.println("Coordinates for "+RiskAI.territoryData.get(territoryIndex).name+" set.");
 			territoryIndex++;
-			if(territoryIndex==RiskAI.territoryData.size())
+			if(territoryIndex == RiskAI.territoryData.size())
 				{
-					allTerritoriesDone=true;
+					allTerritoriesDone = true;
 					for (Territory t : RiskAI.territoryData)
 					{
 						t.writeToFile();
 					}
 				}
-			mouseHasClicked=true;
+			mouseHasClicked = true;
 		}
-		if(mouseHasClicked==true && allTerritoriesDone==false)
+		if(mouseHasClicked == true && allTerritoriesDone == false)
 		{
 			System.out.println(RiskAI.territoryData.get(territoryIndex).name);
-			mouseHasClicked=false;
+			mouseHasClicked = false;
 		}
 	}
 
