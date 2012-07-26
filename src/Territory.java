@@ -1,7 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 
 public class Territory {
@@ -85,6 +82,8 @@ public class Territory {
 			line += str + ",";
 		}
 		line+=";";
+		line+=String.valueOf(getXCoord()) + ";";
+		line+=String.valueOf(getYCoord()) + ";";
 		return line;
 	}
 	
