@@ -50,4 +50,10 @@ public class GameData {
 	{
 		return playerList.get(playerID);
 	}
+	
+	public void onClick(Territory clickedOn)
+	{
+		//TODO implement this
+		System.out.println("Clicked on " + clickedOn);
+	}
 }
