@@ -16,8 +16,8 @@ public class RiskAI{
 		//Initialize system information
 		init();
 		
-		TerritoryData.findTerritoryByName("Ural",territoryData).setOwner(currentGame.getPlayer(1));
-		TerritoryData.findTerritoryByName("Afghanistan",territoryData).setOwner(currentGame.getPlayer(2));
+		terrName("Ural").setOwner(currentGame.getPlayer(1));
+		terrName("Afghanistan").setOwner(currentGame.getPlayer(2));
 		currentGame.getPlayer(1).reinforce(terrName("Ural"),3);
 		currentGame.getPlayer(2).reinforce(terrName("Afghanistan"),3);
 		currentGame.getPlayer(1).attack(terrName("Ural"),terrName("Afghanistan"));		
