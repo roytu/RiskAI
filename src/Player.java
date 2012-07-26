@@ -93,7 +93,7 @@ public abstract class Player {
 		//END DEBUG
 		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
 		{
-			if(countDiceFrom > countDiceTo)
+			if(diceFromList.get(i) > diceToList.get(i))
 			{
 				//attacker wins
 				to.getOwner().reinforce(to, -1);

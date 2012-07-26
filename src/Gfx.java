@@ -67,6 +67,6 @@ public class Gfx extends JFrame{
 		FontMetrics metrics = g2.getFontMetrics(new Font("Arial", Font.PLAIN, 10));
 		int stringWidth = metrics.stringWidth(str);
 		int stringHeight = metrics.getHeight();
-		g2.drawString(str, icon.xCoord - stringWidth/2, icon.yCoord);
+		g2.drawString(str, icon.xCoord - stringWidth/2, icon.yCoord + stringHeight/2);
 	}
 }
