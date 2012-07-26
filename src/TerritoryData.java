@@ -97,7 +97,7 @@ public class TerritoryData {
 		{
 			if(i.name.equals(territoryName)) return i;
 		}
-		return new Territory(100,100);
+		return null;
 	}
 	
 	public void linkTerritories(List<Territory> territoryList)

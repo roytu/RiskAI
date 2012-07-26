@@ -5,7 +5,14 @@ import java.util.List;
 public class GameData {
 	public List<Player> playerList;
 	//Colors to initialize the first 6 players with, in order
-	private static final Color[] playerColors = {Color.BLUE,Color.RED,Color.GREEN,Color.ORANGE,Color.YELLOW,Color.LIGHT_GRAY};
+	private static final Color[] playerColors = 
+	{
+		new Color(95,95,255),
+		new Color(255,95,95),
+		new Color(95,255,95),
+		new Color(255,127,0),
+		new Color(255,255,0),
+		new Color(0xF0,0xF0,0xF0)}; 
 	
 	/**
 	 * Creates GameData object
