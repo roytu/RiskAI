@@ -4,6 +4,12 @@ import java.awt.event.MouseListener;
 
 public class HandleClick implements MouseListener {
 	
+	static enum ClickStates {
+		EDIT_MAP,
+		MOVE_HUMAN,
+		MOVE_COMPUTER
+	};
+	
 	static boolean mouseHasClicked = true;//this and line below
 	static int territoryIndex = 0;
 	static boolean allTerritoriesDone = false;
