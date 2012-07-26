@@ -16,7 +16,7 @@ public class HandleClick implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(mouseHasClicked==false && allTerritoriesDone==false)
+		/*if(mouseHasClicked==false && allTerritoriesDone==false)
 		{
 			RiskAI.territoryData.get(territoryIndex).setCoordinates(e.getX(), e.getY());
 			System.out.println("Coordinates for "+RiskAI.territoryData.get(territoryIndex).name+" set.");
@@ -35,7 +35,7 @@ public class HandleClick implements MouseListener {
 		{
 			System.out.println(RiskAI.territoryData.get(territoryIndex).name);
 			mouseHasClicked=false;
-		}
+		}*/
 	}
 
 	@Override

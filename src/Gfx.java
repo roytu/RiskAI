@@ -43,7 +43,7 @@ public class Gfx extends JFrame{
 	{
 		g2 = (Graphics2D) g;
 		g2.drawImage(backgroundImage, 10, 40, this);
-		//g2.draw(new Rectangle2D.Double(5,5,60,70));		
+		drawTerritoryGraphics
 	}
 	/**
 	 * Draws a TerritoryGraphics.

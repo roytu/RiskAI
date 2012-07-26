@@ -44,6 +44,8 @@ public class TerritoryData {
 		String continent="";
 		int numberOfAjacentTerritories=0;
 		String tempAjacentName="";
+		int xPos=0;
+		int yPos=0;
 		List<String> ajacentTerritoryNames = new ArrayList<String>();
 		
 		
@@ -72,6 +74,12 @@ public class TerritoryData {
 						ajacentTerritoryNames.add(tempAjacentName);
 						tempAjacentName=new String("");
 					}
+					break;
+				case 4:
+					xPos=xPos*10+(currentChar-'0');
+					break;
+				case 5:
+					yPos=yPos*10+(currentChar-'0');
 					break;
 				}
 			}
