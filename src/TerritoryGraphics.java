@@ -13,7 +13,7 @@ public class TerritoryGraphics
 	public int xCoord; //coords
 	public int yCoord;
 	public static final int SIDE_LENGTH = 20; //The length of the sides of the rectangle enclosing the oval.
-	public TerritoryGraphics(int xCoord,int yCoord,Territory parent)
+	public TerritoryGraphics(int xCoord, int yCoord, Territory parent)
 	{
 		this.parent = parent;
 		this.xCoord = xCoord;
