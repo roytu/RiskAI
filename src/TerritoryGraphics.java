@@ -16,12 +16,8 @@ public class TerritoryGraphics
 	public int xCoord; //coords
 	public int yCoord;
 	public static final int SIDE_LENGTH = 20; //The length of the sides of the rectangle enclosing the oval.
-<<<<<<< HEAD
-	public TerritoryGraphics(int xCoord, int yCoord, Territory parent)
-=======
 	public Ellipse2D.Double icon;
 	public TerritoryGraphics(int xCoord,int yCoord,Territory parent)
->>>>>>> 0e11ed25431e5463b68109c06d59778b4275f04f
 	{
 		this.parent = parent;
 		this.xCoord = xCoord;
