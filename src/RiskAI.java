@@ -19,7 +19,6 @@ public class RiskAI{
 		Gfx testwindow=new Gfx();
 		continentData=new ArrayList<Continent>(ContinentData.init());
 		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
-		
 	}
 	
 	public RiskAI()
