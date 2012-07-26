@@ -19,6 +19,7 @@ public class Territory {
 		} catch (IOException e) {
 			throw new RuntimeException("WTF ECLIPSE");
 		}
+		units = 0;
 		//graphic = new TerritoryNode(this);
 		//graphic.setCoords(100, 100);
 		graphic = new TerritoryGraphics(this);
@@ -111,5 +112,9 @@ public class Territory {
 	public TerritoryGraphics getTerritoryGraphic()
 	{
 		return this.graphic;
+	}
+	public void setUnitNumber(int number)
+	{
+		units = number;
 	}
 }

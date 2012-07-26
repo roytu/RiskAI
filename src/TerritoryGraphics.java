@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 
 /**
  * This class is the small picture showing the color and number of armies that a territory shows.
@@ -27,5 +29,11 @@ public class TerritoryGraphics
 	{
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
+	}
+	
+	public Color getColor()
+	{
+		if (parent.getOwner() == null) return Color.WHITE;
+		return parent.getOwner().getColor();
 	}
 }

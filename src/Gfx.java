@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.awt.geom.*;
 
 import javax.imageio.ImageIO;
@@ -57,7 +56,7 @@ public class Gfx extends JFrame{
 	 */
 	public void drawTerritoryGraphics(TerritoryGraphics icon)
 	{
-		g2.setColor(Color.WHITE); //TODO:PLACEHOLDER COLOR
+		g2.setColor(icon.getColor());
 		//drawCircle(CenterXCoordinate,CenterYCoordinate, side length, side length
 		double circleCornerX = icon.xCoord-TerritoryGraphics.SIDE_LENGTH/2;
 		double circleCornerY = icon.yCoord-TerritoryGraphics.SIDE_LENGTH/2;
