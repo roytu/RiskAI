@@ -23,7 +23,7 @@ public class Gfx extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Risk!");
 		setVisible(true);
-		TerritoryNode.picture = this;
+		//TerritoryNode.picture = this;
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Gfx extends JFrame{
 	 * More precisely, draws an oval in the node's owner's color, then puts
 	 * the number of armies in text on top of it.
 	 */
-	public void drawTerritoryNode(TerritoryNode node) //RectangularShape is Rectangle2D, Ellipse2D, and 
+	/*public void drawTerritoryNode(TerritoryNode node) //RectangularShape is Rectangle2D, Ellipse2D, and 
 								//RoundRectangle2D, also Arc2D
 	{
 		//At the moment this doesn't work because g2 is not initialized.
@@ -60,7 +60,7 @@ public class Gfx extends JFrame{
 			//at the moment there are no coords, these (90 and 90, that is) are placeholders
 //		g2.setColor(Color.BLACK);
 //		g2.drawString(String.valueOf(node.parent.getUnitCount()), 95, 95);
-	}
+	}*/
 	
 
 }
