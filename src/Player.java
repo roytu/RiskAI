@@ -54,6 +54,7 @@ public abstract class Player {
 		{
 			unitMap.put(territory, number);
 		}
+		System.out.println(territory.name+" reinforced");
 	}
 	
 	public void attack(Territory from, Territory to) 
