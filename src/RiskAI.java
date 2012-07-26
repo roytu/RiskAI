@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public class RiskAI{
@@ -18,8 +17,8 @@ public class RiskAI{
 		clickHandler = new HandleClick();
 		
 		riskAI = new RiskAI();
-		continentData = new ArrayList<Continent>(ContinentData.init());
-		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
+		continentData = ContinentData.init();
+		territoryData = TerritoryData.init(continentData);
 	}
 	public RiskAI()
 	{
