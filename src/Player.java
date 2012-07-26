@@ -151,7 +151,14 @@ public abstract class Player {
 	 */
 	public int getUnitsInTerritory(Territory territory)
 	{
-		return unitMap.get(territory);
+		if(unitMap.containsKey(territory))
+		{
+			return unitMap.get(territory);
+		}
+		else
+		{
+			return 0;
+		}
 	}
 	
 	/**
