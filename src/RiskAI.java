@@ -2,7 +2,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RiskAI {
+public class RiskAI implements MouseInput{
 	static RiskAI riskAI;
 	static GameData currentGame;
 	static List<Continent> continentData;
@@ -33,7 +33,7 @@ public class RiskAI {
 	{
 		if(mouseHasClicked=false)
 		{
-			territoryData.get(territoryIndex).)
+			territoryData.get(territoryIndex).setCoordinates(e.getX(), e.getY());
 		}
 		if(mouseHasClicked==true)
 		{
