@@ -4,30 +4,38 @@ import java.awt.event.MouseListener;
 
 public class HandleClick implements MouseListener {
 	
-	static enum ClickStates {
+	public static enum ClickStates {
 		EDIT_MAP,
 		MOVE_HUMAN,
 		MOVE_COMPUTER
 	};
 	
+	private static ClickStates clickState;
+	
+	/*
 	static boolean mouseHasClicked = true;//this and line below
 	static int territoryIndex = 0;
 	static boolean allTerritoriesDone = false;
+	*/
 
 	public HandleClick()
 	{
-		
+		clickState = ClickStates.MOVE_HUMAN;
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		/*if(mouseHasClicked==false && allTerritoriesDone==false)
+		switch(clickState)
 		{
-			RiskAI.territoryData.get(territoryIndex).setCoordinates(e.getX(), e.getY());
-			System.out.println("Coordinates for "+RiskAI.territoryData.get(territoryIndex).name+" set.");
-			territoryIndex++;
-			if(territoryIndex == RiskAI.territoryData.size())
+		case EDIT_MAP:
+			/*
+			if(mouseHasClicked==false && allTerritoriesDone==false)
+			{
+				RiskAI.territoryData.get(territoryIndex).setCoordinates(e.getX(), e.getY());
+				System.out.println("Coordinates for "+RiskAI.territoryData.get(territoryIndex).name+" set.");
+				territoryIndex++;
+				if(territoryIndex == RiskAI.territoryData.size())
 				{
 					allTerritoriesDone = true;
 					for (Territory t : RiskAI.territoryData)
@@ -36,12 +44,18 @@ public class HandleClick implements MouseListener {
 					}
 				}
 			mouseHasClicked = true;
+			}
+			if(mouseHasClicked == true && allTerritoriesDone == false)
+			{
+				System.out.println(RiskAI.territoryData.get(territoryIndex).name);
+				mouseHasClicked=false;
+			}
+			 */
+			break;
+		case MOVE_HUMAN:
+			
+			break;
 		}
-		if(mouseHasClicked == true && allTerritoriesDone == false)
-		{
-			System.out.println(RiskAI.territoryData.get(territoryIndex).name);
-			mouseHasClicked=false;
-		}*/
 	}
 
 	@Override

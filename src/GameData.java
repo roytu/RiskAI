@@ -3,25 +3,25 @@ import java.util.List;
 
 public class GameData {
 	public List<Player> playerList;
-	public void initTerritories()
+	
+	/**
+	 * Creates GameData object
+	 * @param int Number of human players
+	 * @param int Number of computer players 
+	 */
+	public GameData(int humanCount, int computerCount)
 	{
-		/*readfile of territory- name:continent:ajacentTerritories
-		
-		
-		Middle East:5:6:Ukraine,Afghanistan,India,East Africa,Egypt,Southern Europe
-		Not being used at the moment, files are in territory data*/
-	}
-	public GameData(int playerCount)
-	{
-		playerList = new ArrayList<Player>(playerCount);
-		//initialize players here
-		/*while(true) //while game is running
+		playerList = new ArrayList<Player>();
+		for(int i=0;i<humanCount;i++)
 		{
-			for(Player player : playerList)
-			{
-				movePlayer(player);
-			}
-		}*/
+			Player player = new PlayerHuman(i);
+			playerList.add(player);
+		}
+		for(int i=0;i<computerCount;i++)
+		{
+			Player player = new PlayerComputer(i);
+			playerList.add(player);
+		}
 	}
 	public void movePlayer(Player player)
 	{
