@@ -18,28 +18,15 @@ public class RiskAI{
 	{
 		//Initialize system information
 		clickHandler = new HandleClick();
-<<<<<<< HEAD
 		
 		riskAI = new RiskAI();
 		continentData = new ArrayList<Continent>(ContinentData.init());
 		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));		
 		Gfx testwindow = new Gfx();
-		
-=======
-		continentData = new ArrayList<Continent>(ContinentData.init());
-		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
-		
-		riskAI = new RiskAI();
->>>>>>> 942950b2cff394fd0cedc0325afe954e8b2ee688
 	}
 	public RiskAI()
 	{
-<<<<<<< HEAD
-
-=======
-		Gfx testwindow = new Gfx();
 		currentGame = new GameData(PLAYERS_HUMAN, PLAYERS_COMP);
->>>>>>> 942950b2cff394fd0cedc0325afe954e8b2ee688
 	}
 	
 	public static GameData getCurrentGameData()
