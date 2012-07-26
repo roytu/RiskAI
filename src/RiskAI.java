@@ -15,12 +15,13 @@ public class RiskAI{
 	{
 		//Initialize system information
 		init();
+		currentGame.setupGameboard(territoryData);
 		
-		terrName("Ural").setOwner(currentGame.getPlayer(1));
+		/*terrName("Ural").setOwner(currentGame.getPlayer(1));
 		terrName("Afghanistan").setOwner(currentGame.getPlayer(2));
 		currentGame.getPlayer(1).reinforce(terrName("Ural"),3);
 		currentGame.getPlayer(2).reinforce(terrName("Afghanistan"),3);
-		currentGame.getPlayer(1).attack(terrName("Ural"),terrName("Afghanistan"));		
+		currentGame.getPlayer(1).attack(terrName("Ural"),terrName("Afghanistan"));		*/
 		
 	}
 	private static void init()

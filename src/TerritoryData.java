@@ -34,6 +34,7 @@ public class TerritoryData {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		linkTerritories(territoryList);
 		return territoryList;
 	}
 	public static Territory initTerritory(String territoryData, List<Continent> continentList)
@@ -100,7 +101,7 @@ public class TerritoryData {
 		return null;
 	}
 	
-	public void linkTerritories(List<Territory> territoryList)
+	public static void linkTerritories(List<Territory> territoryList)
 	{
 		for (Territory territory : territoryList)
 		{

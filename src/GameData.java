@@ -33,6 +33,23 @@ public class GameData {
 			playerList.add(player);
 		}
 	}
+	
+	public void setupGameboard(List<Territory> territoryList)
+	{
+		//List<List<Territory>> playerTerritoryLists = new ArrayList<List<Territory>>(playerList.size());
+		List<Territory> tempTerritoryList=new ArrayList<Territory>(territoryList);
+		int nextPlayerIndex=0;
+		int numberOfPlayers=playerList.size();
+		int random=0;
+		while (tempTerritoryList.size()>0)
+		{
+			random=(int) (Math.random()*tempTerritoryList.size());
+			tempTerritoryList.get(random).setOwner(getPlayer(nextPlayerIndex));
+			tempTerritoryList.remove(random);
+			nextPlayerIndex=++nextPlayerIndex%numberOfPlayers;			
+		}
+	}
+	
 	public void movePlayer(Player player)
 	{
 		giveReinforcements(player);
