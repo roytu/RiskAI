@@ -89,7 +89,7 @@ public class TerritoryData {
 			}
 			
 		}
-		return new Territory(name, ContinentData.findContinentByName(continent,continentList), ajacentTerritoryNames);
+		return new Territory(name, ContinentData.findContinentByName(continent,continentList), ajacentTerritoryNames, xPos, yPos);
 	}
 	public static Territory findTerritoryByName(String territoryName, List<Territory> territoryList)
 	{
@@ -97,7 +97,7 @@ public class TerritoryData {
 		{
 			if(i.name==territoryName) return i;
 		}
-		return new Territory();
+		return new Territory(100,100);
 	}
 	
 	public void linkTerritories(List<Territory> territoryList)

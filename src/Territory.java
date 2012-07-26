@@ -11,7 +11,7 @@ public class Territory {
 	private TerritoryGraphics graphic;
 	private static BufferedWriter territoryDataWriter;
 	
-	public Territory()
+	public Territory(int x, int y)
 	{
 		linkedTerritories = new ArrayList<Territory>();
 		try {			
@@ -22,11 +22,11 @@ public class Territory {
 		//graphic = new TerritoryNode(this);
 		//graphic.setCoords(100, 100);
 		graphic = new TerritoryGraphics(this);
-		graphic.setCoords(100, 100);
+		graphic.setCoords(x, y);
 	}
-	public Territory(String name, Continent continent, List<String> ajacentTerritoryNames)
+	public Territory(String name, Continent continent, List<String> ajacentTerritoryNames, int x, int y)
 	{
-		this();
+		this(x,y);
 		linkedTerritoryNames= new LinkedList<String>(ajacentTerritoryNames);
 		this.name=name;
 		this.continent=continent;
@@ -81,9 +81,9 @@ public class Territory {
 		{
 			line += str + ",";
 		}
-		line+=";";
-		line+=String.valueOf(getXCoord()) + ";";
-		line+=String.valueOf(getYCoord()) + ";";
+		line += ";";
+		line += String.valueOf(getXCoord()) + ";";
+		line += String.valueOf(getYCoord()) + ";";
 		return line;
 	}
 	

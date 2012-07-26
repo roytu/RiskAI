@@ -43,7 +43,7 @@ public class Gfx extends JFrame{
 	{
 		g2 = (Graphics2D) g;
 		g2.drawImage(backgroundImage, 10, 40, this);
-		drawTerritoryGraphics
+		
 	}
 	/**
 	 * Draws a TerritoryGraphics.
@@ -55,11 +55,11 @@ public class Gfx extends JFrame{
 	{
 		//At the moment this doesn't work because g2 is not initialized.
 		//Once that is fixed uncomment this.
-//		g2.setColor(icon.parent.getOwner().getColor()); //implement player.getColor()
-//		g2.drawOval(90,90,TerritoryGraphics.SIDE_LENGTH,TerritoryGraphics.SIDE_LENGTH);
+		g2.setColor(icon.parent.getOwner().getColor()); //implement player.getColor()
+		g2.drawOval(90,90,TerritoryGraphics.SIDE_LENGTH,TerritoryGraphics.SIDE_LENGTH);
 			//at the moment there are no coords, these (90 and 90, that is) are placeholders
-//		g2.setColor(Color.BLACK);
-//		g2.drawString(String.valueOf(icon.parent.getUnitCount()), 95, 95);
+		g2.setColor(Color.BLACK);
+		g2.drawString(String.valueOf(icon.parent.getUnitCount()), 95, 95);
 	}
 	
 
