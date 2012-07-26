@@ -21,11 +21,19 @@ public class RiskAI{
 		
 		riskAI = new RiskAI();
 		continentData = new ArrayList<Continent>(ContinentData.init());
+<<<<<<< HEAD
 		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
 	}
 	public RiskAI()
 	{
 		Gfx testwindow = new Gfx();
+=======
+		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));		
+		Gfx testwindow = new Gfx();
+	}
+	public RiskAI()
+	{
+>>>>>>> d176a461b1466e8a4f82206c454739a3f53cee43
 		currentGame = new GameData(PLAYERS_HUMAN, PLAYERS_COMP);
 	}
 	
