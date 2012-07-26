@@ -83,6 +83,8 @@ public class Territory {
 			line += str + ",";
 		}
 		line+=";";
+		line+=String.valueOf(getXCoord()) + ";";
+		line+=String.valueOf(getYCoord()) + ";";
 		return line;
 	}
 	
