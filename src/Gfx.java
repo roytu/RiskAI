@@ -17,13 +17,11 @@ public class Gfx extends JFrame{
 	public Gfx()
 	{
 		setSize(1080,700);
-		
 		backgroundImage=getBackgroundImage();
-		//this.getContentPane().add(test);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Risk!");
 		setVisible(true);
-		//TerritoryNode.picture = this;
+		TerritoryGraphics.picture = this;
 	}
 
 	/**
@@ -46,21 +44,21 @@ public class Gfx extends JFrame{
 		//g2.draw(new Rectangle2D.Double(5,5,60,70));		
 	}
 	/**
-	 * Draws a TerritoryNode.
-	 * More precisely, draws an oval in the node's owner's color, then puts
+	 * Draws a TerritoryGraphics.
+	 * More precisely, draws an oval in the territory's owner's color, then puts
 	 * the number of armies in text on top of it.
 	 */
-	/*public void drawTerritoryNode(TerritoryNode node) //RectangularShape is Rectangle2D, Ellipse2D, and 
+	public void drawTerritoryGraphics(TerritoryGraphics icon) //RectangularShape is Rectangle2D, Ellipse2D, and 
 								//RoundRectangle2D, also Arc2D
 	{
 		//At the moment this doesn't work because g2 is not initialized.
 		//Once that is fixed uncomment this.
-//		g2.setColor(node.parent.getOwner().getColor()); //implement player.getColor()
-//		g2.drawOval(90,90,TerritoryNode.SIDE_LENGTH,TerritoryNode.SIDE_LENGTH);
+//		g2.setColor(icon.parent.getOwner().getColor()); //implement player.getColor()
+//		g2.drawOval(90,90,TerritoryGraphics.SIDE_LENGTH,TerritoryGraphics.SIDE_LENGTH);
 			//at the moment there are no coords, these (90 and 90, that is) are placeholders
 //		g2.setColor(Color.BLACK);
-//		g2.drawString(String.valueOf(node.parent.getUnitCount()), 95, 95);
-	}*/
+//		g2.drawString(String.valueOf(icon.parent.getUnitCount()), 95, 95);
+	}
 	
 
 }
