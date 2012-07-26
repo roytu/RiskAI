@@ -10,23 +10,18 @@ public class RiskAI implements MouseListener{
 	static List<Territory> territoryData;
 	static boolean mouseHasClicked=true;//this and line below
 	static int territoryIndex=0;
-	
-	RiskAI()
-	{
-		Gfx testwindow=new Gfx();
-		continentData=new ArrayList<Continent>(ContinentData.init());
-		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
-	}
-	
-	
+	static boolean allTerritoriesDone=false;
 	
 	public static void main(String[] args)
 	{
-		riskAI=new RiskAI();		
-		/*for (Territory t : territoryData)
+		riskAI=new RiskAI();
+		Gfx testwindow=new Gfx();
+		continentData=new ArrayList<Continent>(ContinentData.init());
+		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
+		for (Territory t : territoryData)
 		{
 			t.writeToFile();
-		}*/
+		}
 		//currentGame = new GameData(4); //4 player game by default, but atm all it does is infinite loop
 	}
 	
@@ -42,15 +37,25 @@ public class RiskAI implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		System.out.println("mouseClicked");
-		if(mouseHasClicked=false)
+		//System.out.println("mouseClicked");
+		if(mouseHasClicked==false&&allTerritoriesDone==false)
 		{
 			territoryData.get(territoryIndex).setCoordinates(e.getX(), e.getY());
+			System.out.println("Coordinates for "+territoryData.get(territoryIndex).name+" set.");
+			territoryIndex++;
+			if(territoryIndex==territoryData.size())
+				{
+					allTerritoriesDone=true;
+					for (Territory t : territoryData)
+					{
+						t.writeToFile();
+					}
+				}
 			mouseHasClicked=true;
 		}
-		if(mouseHasClicked==true)
+		if(mouseHasClicked==true&&allTerritoriesDone==false)
 		{
-			System.out.println(territoryData.get(territoryIndex));
+			System.out.println(territoryData.get(territoryIndex).name);
 			mouseHasClicked=false;
 		}
 	}
