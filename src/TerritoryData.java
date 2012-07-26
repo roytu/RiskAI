@@ -95,7 +95,7 @@ public class TerritoryData {
 	{
 		for (Territory i : territoryList)
 		{
-			if(i.name==territoryName) return i;
+			if(i.name.equals(territoryName)) return i;
 		}
 		return new Territory(100,100);
 	}
