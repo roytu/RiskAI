@@ -18,12 +18,16 @@ public class RiskAI implements MouseListener{
 		Gfx testwindow=new Gfx();
 		continentData=new ArrayList<Continent>(ContinentData.init());
 		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
-		for (Territory t : territoryData)
-		{
-			t.writeToFile();
-		}
-		//currentGame = new GameData(4); //4 player game by default, but atm all it does is infinite loop
 	}
+	
+	public RiskAI()
+	{
+		Gfx testwindow = new Gfx();
+		continentData = new ArrayList<Continent>(ContinentData.init());
+		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
+	}
+	
+	
 	
 	public static GameData getCurrentGameData()
 	{	
