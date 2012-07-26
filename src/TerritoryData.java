@@ -51,11 +51,18 @@ public class TerritoryData {
 		{
 			if((currentChar=territoryData.charAt(i))!=';')
 			{
-				if(currentDataIndex==0)name+=currentChar;
-				if(currentDataIndex==1)continent+=currentChar;
-				if(currentDataIndex==2)numberOfAjacentTerritories+=(currentChar-'0');
-				if(currentDataIndex==3)
+				switch(currentDataIndex)
 				{
+				case 0:
+					name+=currentChar;
+					break;
+				case 1:
+					continent+=currentChar;
+					break;
+				case 2:
+					numberOfAjacentTerritories+=(currentChar-'0');
+					break;
+				case 3:
 					if(currentChar!=',')
 					{
 						tempAjacentName+=currentChar;
@@ -65,7 +72,8 @@ public class TerritoryData {
 						ajacentTerritoryNames.add(tempAjacentName);
 						tempAjacentName=new String("");
 					}
-				}				
+					break;
+				}
 			}
 			else
 			{

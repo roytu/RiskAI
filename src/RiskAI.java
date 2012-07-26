@@ -11,18 +11,18 @@ public class RiskAI implements MouseListener{
 	static boolean mouseHasClicked=true;//this and line below
 	static int territoryIndex=0;
 	
-	RiskAI()
+	public RiskAI()
 	{
-		Gfx testwindow=new Gfx();
-		continentData=new ArrayList<Continent>(ContinentData.init());
-		territoryData= new ArrayList<Territory>(TerritoryData.init(continentData));
+		Gfx testwindow = new Gfx();
+		continentData = new ArrayList<Continent>(ContinentData.init());
+		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
 	}
 	
 	
 	
 	public static void main(String[] args)
 	{
-		riskAI=new RiskAI();		
+		riskAI = new RiskAI();		
 		/*for (Territory t : territoryData)
 		{
 			t.writeToFile();
