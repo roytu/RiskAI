@@ -11,6 +11,9 @@ public class RiskAI{
 	
 	public static HandleClick clickHandler;
 	
+	private static final int PLAYERS_HUMAN = 0;
+	private static final int PLAYERS_COMP = 4;
+	
 	public static void main(String[] args)
 	{
 		//Initialize system information
@@ -24,7 +27,7 @@ public class RiskAI{
 	public RiskAI()
 	{
 		Gfx testwindow = new Gfx();
-		currentGame = new GameData(4,0);
+		currentGame = new GameData(PLAYERS_HUMAN, PLAYERS_COMP);
 	}
 	
 	public static GameData getCurrentGameData()

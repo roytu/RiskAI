@@ -3,6 +3,12 @@ import java.util.List;
 
 public class GameData {
 	public List<Player> playerList;
+	
+	/**
+	 * Creates GameData object
+	 * @param int Number of human players
+	 * @param int Number of computer players 
+	 */
 	public GameData(int humanCount, int computerCount)
 	{
 		playerList = new ArrayList<Player>();
