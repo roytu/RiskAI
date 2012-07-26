@@ -23,7 +23,6 @@ public class RiskAI{
 	
 	public RiskAI()
 	{
-
 	}
 	
 	public static GameData getCurrentGameData()
@@ -34,55 +33,4 @@ public class RiskAI{
 	{
 		return getCurrentGameData().playerList;
 	}
-<<<<<<< HEAD
-	
-	@Override
-	public void mouseClicked(MouseEvent e)
-	{
-		//System.out.println("mouseClicked");
-		if(mouseHasClicked==false&&allTerritoriesDone==false)
-		{
-			territoryData.get(territoryIndex).setCoordinates(e.getX(), e.getY());
-			System.out.println("Coordinates for "+territoryData.get(territoryIndex).name+" set.");
-			territoryIndex++;
-			if(territoryIndex==territoryData.size())
-				{
-					allTerritoriesDone=true;
-					for (Territory t : territoryData)
-					{
-						t.writeToFile();
-					}
-				}
-			mouseHasClicked=true;
-		}
-		if(mouseHasClicked==true&&allTerritoriesDone==false)
-		{
-			System.out.println(territoryData.get(territoryIndex).name);
-			mouseHasClicked=false;
-		}
-		//System.out.println(e.getX()+"   "+e.getY());
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-=======
->>>>>>> 8a7fd1dec150508377811a857d3284ef5eecc691
 }
