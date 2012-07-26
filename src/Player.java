@@ -46,8 +46,14 @@ public abstract class Player {
 	 */
 	public void reinforce(Territory territory, int number)
 	{
-		unitMap.put(territory, unitMap.get(territory)+number);
-		territory.setUnitNumber(number);
+		if(unitMap.containsKey(territory))
+		{
+			unitMap.put(territory, unitMap.get(territory)+number);
+		}
+		else
+		{
+			unitMap.put(territory, number);
+		}
 	}
 	
 	public void attack(Territory from, Territory to) 
