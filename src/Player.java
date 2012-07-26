@@ -39,6 +39,10 @@ public abstract class Player {
 		List<Integer> diceFromList = new ArrayList<Integer>();
 		List<Integer> diceToList = new ArrayList<Integer>();
 		
+		//DEBUG
+		System.out.println(from.name+" attacks "+to.name);
+		//END DEBUG
+		
 		Random random = new Random();
 		for(int i=0;i<countDiceFrom;++i)
 		{
@@ -55,19 +59,23 @@ public abstract class Player {
 		Collections.reverse(diceFromList);
 		Collections.sort(diceToList);
 		Collections.reverse(diceToList);
-		
+		System.out.println(diceFromList.toString());
+		System.out.println(diceToList.toString());
 		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
 		{
 			if(countDiceFrom > countDiceTo)
 			{
 				//attacker wins
 				to.getOwner().addToTerritory(to, -1);
+				//DEBUG
+				System.out.println("attacker wins");
 			}
 			else
 			{
 				//defender wins
 				addToTerritory(from, -1);
 				from.getOwner().addToTerritory(from, -1);
+				System.out.println("defender wins");
 			}
 		}
 	}

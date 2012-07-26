@@ -59,9 +59,9 @@ public class Territory {
 		return owner;
 	}
 	
-	/*public String toString()
+	public String toString()
 	{
-		String namePart = name + ", ";
+		/*String namePart = name + ", ";
 		String linkedPart = "linked to ";
 		for (String str : linkedTerritoryNames)
 		{
@@ -69,8 +69,11 @@ public class Territory {
 		}
 		String continentPart = "on continent " + continent.name;
 		String ownerPart = ", with " + units + " armies on it";
-		return namePart + linkedPart + continentPart + ownerPart;
-	}*/
+		return namePart + linkedPart + continentPart + ownerPart;*/
+		
+		
+		return name;
+	}
 	
 	public String semicolonForm()
 	{

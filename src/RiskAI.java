@@ -16,8 +16,6 @@ public class RiskAI{
 		//Initialize system information
 		init();
 		
-		
-		
 	}
 	private static void init()
 	{
