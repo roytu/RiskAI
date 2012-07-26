@@ -13,13 +13,11 @@ public class TerritoryGraphics
 	public int xCoord; //coords
 	public int yCoord;
 	public static final int SIDE_LENGTH = 20; //The length of the sides of the rectangle enclosing the oval.
-	public static Gfx picture; //The Gfx to draw with. Making a Gfx will automatically assign it here. 
 	public TerritoryGraphics(int xCoord,int yCoord,Territory parent)
 	{
 		this.parent = parent;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
-		display();
 	}
 	public TerritoryGraphics(Territory parent)
 	{
@@ -29,11 +27,5 @@ public class TerritoryGraphics
 	{
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
-		display();
-	}
-	private void display()
-	{
-		picture.drawTerritoryGraphics(this);
-		
 	}
 }

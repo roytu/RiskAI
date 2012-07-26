@@ -108,4 +108,8 @@ public class Territory {
 	{
 		graphic.setCoords(x, y);
 	}
+	public TerritoryGraphics getTerritoryGraphic()
+	{
+		return this.graphic;
+	}
 }

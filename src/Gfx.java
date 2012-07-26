@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.awt.geom.*;
 
 import javax.imageio.ImageIO;
@@ -14,6 +15,7 @@ import javax.swing.JFrame;
 public class Gfx extends JFrame{
 	Graphics2D g2;
 	BufferedImage backgroundImage;
+	//public List<TerritoryGraphics> territoryGraphicsList;
 	public Gfx()
 	{
 		setSize(1080,700);
@@ -21,7 +23,6 @@ public class Gfx extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Risk!");
 		setVisible(true);
-		TerritoryGraphics.picture = this;
 		
 		addMouseListener(RiskAI.clickHandler);
 	}
@@ -43,6 +44,10 @@ public class Gfx extends JFrame{
 	{
 		g2 = (Graphics2D) g;
 		g2.drawImage(backgroundImage, 10, 40, this);
+		for(Territory i : RiskAI.territoryData)
+		{
+			drawTerritoryGraphics(i.getTerritoryGraphic());
+		}
 		
 	}
 	/**
@@ -50,14 +55,11 @@ public class Gfx extends JFrame{
 	 * More precisely, draws an oval in the territory's owner's color, then puts
 	 * the number of armies in text on top of it.
 	 */
-	public void drawTerritoryGraphics(TerritoryGraphics icon) //RectangularShape is Rectangle2D, Ellipse2D, and 
-								//RoundRectangle2D, also Arc2D
+	public void drawTerritoryGraphics(TerritoryGraphics icon)
 	{
-		//At the moment this doesn't work because g2 is not initialized.
-		//Once that is fixed uncomment this.
 		g2.setColor(icon.parent.getOwner().getColor()); //implement player.getColor()
-		g2.drawOval(90,90,TerritoryGraphics.SIDE_LENGTH,TerritoryGraphics.SIDE_LENGTH);
-			//at the moment there are no coords, these (90 and 90, that is) are placeholders
+		//drawCircle(CenterXCoordinate,CenterYCoordinate, side length, side length
+		g2.drawOval(icon.xCoord-TerritoryGraphics.SIDE_LENGTH/2,icon.yCoord-TerritoryGraphics.SIDE_LENGTH/2,TerritoryGraphics.SIDE_LENGTH,TerritoryGraphics.SIDE_LENGTH);
 		g2.setColor(Color.BLACK);
 		g2.drawString(String.valueOf(icon.parent.getUnitCount()), 95, 95);
 	}

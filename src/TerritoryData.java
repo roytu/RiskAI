@@ -85,7 +85,7 @@ public class TerritoryData {
 			}
 			else
 			{
-				currentDataIndex=++currentDataIndex%4;
+				currentDataIndex=++currentDataIndex%6;//increases currentDataIndex by 1, then modulizes(?) it by 6
 			}
 			
 		}
