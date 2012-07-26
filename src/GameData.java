@@ -48,6 +48,10 @@ public class GameData {
 			tempTerritoryList.remove(random);
 			nextPlayerIndex=++nextPlayerIndex%numberOfPlayers;			
 		}
+		for(Territory t:territoryList)
+		{
+			t.getOwner().reinforce(t, 3);
+		}
 	}
 	
 	public void movePlayer(Player player)
