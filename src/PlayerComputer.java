@@ -1,13 +1,15 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.awt.Color;
 
 
 public class PlayerComputer extends Player {
 	public PlayerComputer(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public PlayerComputer(int playerID, Color color)
+	{
+		super(playerID,color);
 	}
 
 	@Override
