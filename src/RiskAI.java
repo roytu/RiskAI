@@ -13,16 +13,18 @@ public class RiskAI{
 	
 	public static void main(String[] args)
 	{
+		//Initialize system information
 		clickHandler = new HandleClick();
-		
-		riskAI = new RiskAI();
 		continentData = new ArrayList<Continent>(ContinentData.init());
 		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
+		
+		riskAI = new RiskAI();
 	}
 	
 	public RiskAI()
 	{
 		Gfx testwindow = new Gfx();
+		currentGame = new GameData(4,0);
 	}
 	
 	public static GameData getCurrentGameData()

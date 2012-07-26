@@ -3,13 +3,19 @@ import java.util.List;
 
 public class GameData {
 	public List<Player> playerList;
-	public void initTerritories()
+	public GameData(int humanCount, int computerCount)
 	{
-		
-	}
-	public GameData(int playerCount)
-	{
-		playerList = new ArrayList<Player>(playerCount);
+		playerList = new ArrayList<Player>();
+		for(int i=0;i<humanCount;i++)
+		{
+			Player player = new PlayerHuman(i);
+			playerList.add(player);
+		}
+		for(int i=0;i<computerCount;i++)
+		{
+			Player player = new PlayerComputer(i);
+			playerList.add(player);
+		}
 	}
 	public void movePlayer(Player player)
 	{

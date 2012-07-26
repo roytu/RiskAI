@@ -13,9 +13,12 @@ public abstract class Player {
 	//need a color for identification
 	private Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
+	private int playerID;
 	
-	public Player()
+	public Player(int playerID)
 	{
+		this.playerID = playerID;
+		
 		//cardList = new ArrayList<Card>();
 		unitMap = new HashMap<Territory, Integer>();
 	}

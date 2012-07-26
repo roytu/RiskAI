@@ -5,6 +5,11 @@ import java.util.Random;
 
 
 public class PlayerComputer extends Player {
+	public PlayerComputer(int playerID) {
+		super(playerID);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void placeReinforcements(int number)
 	{
