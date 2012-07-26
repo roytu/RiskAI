@@ -12,6 +12,8 @@ public class Player {
 	//private List<Card> cardList;
 	//need a color for identification
 	private Map<Territory, Integer> unitMap;
+	protected boolean isHuman;
+	
 	public Player()
 	{
 		//cardList = new ArrayList<Card>();

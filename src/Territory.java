@@ -27,9 +27,9 @@ public class Territory {
 	public Territory(String name, Continent continent, List<String> ajacentTerritoryNames)
 	{
 		this();
-		linkedTerritoryNames= new LinkedList<String>(ajacentTerritoryNames);
-		this.name=name;
-		this.continent=continent;
+		linkedTerritoryNames = new LinkedList<String>(ajacentTerritoryNames);
+		this.name = name;
+		this.continent = continent;
 	}
 	public List<String> getAjacentTerritoryNameList()
 	{
@@ -81,9 +81,9 @@ public class Territory {
 		{
 			line += str + ",";
 		}
-		line+=";";
-		line+=String.valueOf(getXCoord()) + ";";
-		line+=String.valueOf(getYCoord()) + ";";
+		line += ";";
+		line += String.valueOf(getXCoord()) + ";";
+		line += String.valueOf(getYCoord()) + ";";
 		return line;
 	}
 	
