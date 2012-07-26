@@ -49,7 +49,7 @@ public class Territory {
 	
 	public int getUnitCount()
 	{
-		return owner.getUnitsInTerritory(this);
+		return owner!=null ? owner.getUnitsInTerritory(this) : 0;
 	}
 	
 	public Player getOwner()
