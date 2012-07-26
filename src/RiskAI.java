@@ -17,14 +17,9 @@ public class RiskAI{
 		clickHandler = new HandleClick();
 		
 		riskAI = new RiskAI();
-<<<<<<< HEAD
-		continentData = new ArrayList<Continent>(ContinentData.init());
-		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
-		Gfx testwindow = new Gfx();
-=======
 		continentData = ContinentData.init();
 		territoryData = TerritoryData.init(continentData);
->>>>>>> 71ba33e69fddccc5bef84d80ad20fe6eb42e0a52
+		Gfx testwindow = new Gfx();
 	}
 	public RiskAI()
 	{
