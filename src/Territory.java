@@ -6,7 +6,6 @@ public class Territory {
 	public String name;
 	private Continent continent; //Only for data retrieval
 	private List<String> linkedTerritoryNames;
-	private int units;
 	private Player owner;
 	private TerritoryGraphics graphic;
 	private static BufferedWriter territoryDataWriter;
@@ -19,7 +18,6 @@ public class Territory {
 		} catch (IOException e) {
 			throw new RuntimeException("WTF ECLIPSE");
 		}
-		units = 0;
 		//graphic = new TerritoryNode(this);
 		//graphic.setCoords(100, 100);
 		graphic = new TerritoryGraphics(x,y,this);
@@ -51,7 +49,7 @@ public class Territory {
 	
 	public int getUnitCount()
 	{
-		return units;
+		return owner.getUnitsInTerritory(this);
 	}
 	
 	public Player getOwner()
@@ -120,8 +118,5 @@ public class Territory {
 	{
 		return this.graphic;
 	}
-	public void setUnitNumber(int number)
-	{
-		units = number;
-	}
+
 }
