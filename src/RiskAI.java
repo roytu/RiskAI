@@ -21,11 +21,7 @@ public class RiskAI implements MouseListener{
 	}
 	
 	public RiskAI()
-	{
-		Gfx testwindow = new Gfx();
-		continentData = new ArrayList<Continent>(ContinentData.init());
-		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
-	}
+	{}
 	
 	
 	
