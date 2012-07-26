@@ -16,8 +16,8 @@ Northwest Territory;North America;4;Alaska,Alberta,Ontario,Greenland,;
 Greenland;North America;4;Northwest Territory,Ontario,Quebec,Iceland;
 Alberta;North America;4;Alaska,Northwest Territory,Ontario,Western United States,;
 Ontario;North America;6;Northwest Territory,Alberta,Western United States,Eastern United States,Quebec,Greenland,;
-Western United States;4;Alberta,Ontario,Eastern United States,Central America,;
-Eastern United States;Ontario,Quebec,Western United States,Central America,;
+Western United States;North America;4;Alberta,Ontario,Eastern United States,Central America,;
+Eastern United States;North America;4;Ontario,Quebec,Western United States,Central America,;
 Quebec;North America;3;Greenland,Ontario,Eastern United States,;
 Central America;North America;3;Western United States,Eastern United States,Venezuela,;
 #
@@ -52,6 +52,7 @@ Madagascar;Africa;2;South Africa,East Africa,;
 Ural;Asia;4;Ukraine,Siberia,Afghanistan,China,;
 Siberia;Asia;5;Ural,Yakutsk,Irkutsk,Mongolia,China,;
 Yakutsk;Asia;3;Siberia,Kamchatka,Irkutsk,;
+Irkutsk;Asia;4;Siberia,Yakutsk,Kamchatka,Mongolia,;
 Kamchatka;Asia;5;Yakutsk,Irkutsk,Mongolia,Japan,Alaska,;
 Afghanistan;Asia;5;Ukraine,Ural,Middle East,India,China,;
 China;Asia;6;Ural,Siberia,Mongolia,Afghanistan,India,Siam,;
