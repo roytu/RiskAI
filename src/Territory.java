@@ -19,10 +19,10 @@ public class Territory {
 		} catch (IOException e) {
 			throw new RuntimeException("WTF ECLIPSE");
 		}
+		units = 0;
 		//graphic = new TerritoryNode(this);
 		//graphic.setCoords(100, 100);
-		graphic = new TerritoryGraphics(this);
-		graphic.setCoords(x, y);
+		graphic = new TerritoryGraphics(x,y,this);
 	}
 	public Territory(String name, Continent continent, List<String> ajacentTerritoryNames, int x, int y)
 	{
@@ -58,10 +58,15 @@ public class Territory {
 	{
 		return owner;
 	}
+
+	public void setOwner(Player owner)
+	{
+		this.owner=owner;
+	}
 	
 	public String toString()
 	{
-		String namePart = name + ", ";
+		/*String namePart = name + ", ";
 		String linkedPart = "linked to ";
 		for (String str : linkedTerritoryNames)
 		{
@@ -69,7 +74,10 @@ public class Territory {
 		}
 		String continentPart = "on continent " + continent.name;
 		String ownerPart = ", with " + units + " armies on it";
-		return namePart + linkedPart + continentPart + ownerPart;
+		return namePart + linkedPart + continentPart + ownerPart;*/
+		
+		
+		return name;
 	}
 	
 	public String semicolonForm()
@@ -111,5 +119,9 @@ public class Territory {
 	public TerritoryGraphics getTerritoryGraphic()
 	{
 		return this.graphic;
+	}
+	public void setUnitNumber(int number)
+	{
+		units = number;
 	}
 }

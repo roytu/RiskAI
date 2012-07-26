@@ -10,11 +10,17 @@ import java.util.Set;
 
 public abstract class Player {
 	//private List<Card> cardList;
-	//need a color for identification
 	private Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
 	private int playerID;
+	private Color color;
 	
+	/*player1.calculateReinforcements();
+	player2.setReinforcements(5);
+	player1.reinforce(Ural,3);
+	player2.reinforce(Afghanistan,3);
+	player1.attack(Ural, Afghanistan);*/
+		
 	public Player(int playerID)
 	{
 		this.playerID = playerID;
@@ -22,8 +28,83 @@ public abstract class Player {
 		//cardList = new ArrayList<Card>();
 		unitMap = new HashMap<Territory, Integer>();
 	}
+	public Player(int playerID, Color color)
+	{
+		this(playerID);
+		this.color = color;
+	}
+	
 	protected abstract void placeReinforcements(int number);
-	protected abstract void attack(Territory from, Territory to);
+	protected abstract void doAttackPhase();	
+	
+	
+	/**
+	 * Adds a number of units into a territory.  Units are friendly to the player
+	 * currently controlling the specified territory.
+	 * @param territory Territory to add units to
+	 * @param number Number of units to add
+	 */
+	public void reinforce(Territory territory, int number)
+	{
+		unitMap.put(territory, unitMap.get(territory)+number);
+		territory.setUnitNumber(number);
+	}
+	
+	public void attack(Territory from, Territory to) 
+	{
+		int unitsFrom = from.getUnitCount();
+		int unitsTo = to.getUnitCount();
+		
+		int countDiceFrom = Math.min(unitsFrom-1, 3);
+		int countDiceTo = Math.min(unitsTo, 2);
+		
+		List<Integer> diceFromList = new ArrayList<Integer>();
+		List<Integer> diceToList = new ArrayList<Integer>();
+		
+		//NEXT LINE DEBUG
+		System.out.println(from.name+" attacks "+to.name);
+		
+		Random random = new Random();
+		for(int i=0;i<countDiceFrom;++i)
+		{
+			//Roll attacking dice
+			diceFromList.add(random.nextInt(6)+1);
+		}
+		for(int i=0;i<countDiceTo;++i)
+		{
+			//Roll defending dice
+			diceToList.add(random.nextInt(6)+1);
+		}
+		
+		Collections.sort(diceFromList);
+		Collections.reverse(diceFromList);
+		Collections.sort(diceToList);
+		Collections.reverse(diceToList);
+		//DEBUG
+		System.out.println(diceFromList.toString());
+		System.out.println(diceToList.toString());
+		//END DEBUG
+		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
+		{
+			if(countDiceFrom > countDiceTo)
+			{
+				//attacker wins
+				to.getOwner().reinforce(to, -1);
+				//NEXT LINE DEBUG
+				System.out.println("attacker wins");
+			}
+			else
+			{
+				//defender wins
+				reinforce(from, -1);
+				from.getOwner().reinforce(from, -1);
+				//NEXT LINE DEBUG
+				System.out.println("defender wins");
+			}
+		}
+	}
+	
+	
 	
 	/**
 	 * Gets a random territory in which the player has units.
@@ -46,17 +127,8 @@ public abstract class Player {
 		}
 		throw new RuntimeException("wat");
 	}
-	/**
-	 * Adds a number of units into a territory.  Units are friendly to the player
-	 * currently controlling the specified territory.
-	 * @param territory Territory to add units to
-	 * @param number Number of units to add
-	 */
-	public void addToTerritory(Territory territory, int number)
-	{
-		unitMap.put(territory, unitMap.get(territory)+number);
-	}
-	
+
+
 	/**
 	 * Gets whether the territory is owned by the player
 	 * @param territory
@@ -83,6 +155,7 @@ public abstract class Player {
 	 */
 	public Color getColor()
 	{
-		return Color.WHITE;
+		if (color == null) return Color.WHITE;
+		return color;
 	}
 }
