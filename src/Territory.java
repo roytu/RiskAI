@@ -11,9 +11,6 @@ public class Territory {
 	private TerritoryGraphics graphic;
 	private static BufferedWriter territoryDataWriter;
 	
-	private int x;
-	private int y;
-	
 	public Territory()
 	{
 		linkedTerritories = new ArrayList<Territory>();
