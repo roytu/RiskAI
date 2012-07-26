@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.geom.Ellipse2D;
 
 
 /**
@@ -15,11 +16,13 @@ public class TerritoryGraphics
 	public int xCoord; //coords
 	public int yCoord;
 	public static final int SIDE_LENGTH = 20; //The length of the sides of the rectangle enclosing the oval.
+	public Ellipse2D.Double icon;
 	public TerritoryGraphics(int xCoord,int yCoord,Territory parent)
 	{
 		this.parent = parent;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
+		icon = new Ellipse2D.Double(xCoord-SIDE_LENGTH/2, yCoord-SIDE_LENGTH/2, SIDE_LENGTH, SIDE_LENGTH);
 	}
 	public TerritoryGraphics(Territory parent)
 	{
@@ -29,6 +32,7 @@ public class TerritoryGraphics
 	{
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
+		icon.setFrame(xCoord-SIDE_LENGTH/2, yCoord-SIDE_LENGTH/2, SIDE_LENGTH, SIDE_LENGTH);
 	}
 	
 	public Color getColor()

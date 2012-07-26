@@ -58,12 +58,9 @@ public class Gfx extends JFrame{
 	{
 		g2.setColor(icon.getColor());
 		//drawCircle(CenterXCoordinate,CenterYCoordinate, side length, side length
-		double circleCornerX = icon.xCoord-TerritoryGraphics.SIDE_LENGTH/2;
-		double circleCornerY = icon.yCoord-TerritoryGraphics.SIDE_LENGTH/2;
-		g2.fill(new Ellipse2D.Double(circleCornerX,circleCornerY,TerritoryGraphics.SIDE_LENGTH,TerritoryGraphics.SIDE_LENGTH));
+		//g2.fill(new Ellipse2D.Double(icon.xCoord-icon.SIDE_LENGTH/2, icon.yCoord-icon.SIDE_LENGTH/2, icon.SIDE_LENGTH, icon.SIDE_LENGTH));
+		g2.fill(icon.icon);
 		g2.setColor(Color.BLACK);
 		g2.drawString(String.valueOf(icon.parent.getUnitCount()),icon.xCoord-4,icon.yCoord+5);
 	}
-	
-
 }

@@ -22,8 +22,7 @@ public class Territory {
 		units = 0;
 		//graphic = new TerritoryNode(this);
 		//graphic.setCoords(100, 100);
-		graphic = new TerritoryGraphics(this);
-		graphic.setCoords(x, y);
+		graphic = new TerritoryGraphics(x,y,this);
 	}
 	public Territory(String name, Continent continent, List<String> ajacentTerritoryNames, int x, int y)
 	{
@@ -60,7 +59,7 @@ public class Territory {
 		return owner;
 	}
 	
-	public String toString()
+	/*public String toString()
 	{
 		String namePart = name + ", ";
 		String linkedPart = "linked to ";
@@ -71,7 +70,7 @@ public class Territory {
 		String continentPart = "on continent " + continent.name;
 		String ownerPart = ", with " + units + " armies on it";
 		return namePart + linkedPart + continentPart + ownerPart;
-	}
+	}*/
 	
 	public String semicolonForm()
 	{

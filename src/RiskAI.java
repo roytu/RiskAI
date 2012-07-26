@@ -20,10 +20,10 @@ public class RiskAI{
 		riskAI = new RiskAI();
 		continentData = new ArrayList<Continent>(ContinentData.init());
 		territoryData = new ArrayList<Territory>(TerritoryData.init(continentData));
+		Gfx testwindow = new Gfx();
 	}
 	public RiskAI()
 	{
-		Gfx testwindow = new Gfx();
 		currentGame = new GameData(PLAYERS_HUMAN, PLAYERS_COMP);
 	}
 	
