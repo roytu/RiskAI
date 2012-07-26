@@ -104,4 +104,16 @@ public class Territory {
 			throw new RuntimeException("WTF JAVA");
 		}
 	}
+	public int getXCoord()
+	{
+		return graphic.xCoord;
+	}
+	public int getYCoord()
+	{
+		return graphic.yCoord;
+	}
+	public void setCoordinates(int x, int y)
+	{
+		graphic.setCoords(x, y);
+	}
 }
