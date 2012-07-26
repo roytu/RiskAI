@@ -17,12 +17,11 @@ public class Gfx extends JFrame{
 	public Gfx()
 	{
 		setSize(1080,700);
-		
 		backgroundImage=getBackgroundImage();
-		//this.getContentPane().add(test);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Risk!");
 		setVisible(true);
+		addMouseListener(RiskAI.riskAI);
 		TerritoryGraphics.picture = this;
 	}
 
