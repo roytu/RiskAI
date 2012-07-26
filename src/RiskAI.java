@@ -58,6 +58,7 @@ public class RiskAI implements MouseListener{
 			System.out.println(territoryData.get(territoryIndex).name);
 			mouseHasClicked=false;
 		}
+		//System.out.println(e.getX()+"   "+e.getY());
 	}
 
 	@Override
