@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -61,6 +63,10 @@ public class Gfx extends JFrame{
 		//g2.fill(new Ellipse2D.Double(icon.xCoord-icon.SIDE_LENGTH/2, icon.yCoord-icon.SIDE_LENGTH/2, icon.SIDE_LENGTH, icon.SIDE_LENGTH));
 		g2.fill(icon.icon);
 		g2.setColor(Color.BLACK);
-		g2.drawString(String.valueOf(icon.parent.getUnitCount()),icon.xCoord-4,icon.yCoord+5);
+		String str = String.valueOf(icon.parent.getUnitCount());
+		FontMetrics metrics = g2.getFontMetrics(new Font("Arial", Font.PLAIN, 10));
+		int stringWidth = metrics.stringWidth(str);
+		int stringHeight = metrics.getHeight();
+		g2.drawString(str, icon.xCoord - stringWidth/2, icon.yCoord);
 	}
 }
