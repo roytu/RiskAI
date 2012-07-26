@@ -57,11 +57,13 @@ public class Gfx extends JFrame{
 	 */
 	public void drawTerritoryGraphics(TerritoryGraphics icon)
 	{
-		g2.setColor(icon.parent.getOwner().getColor()); //implement player.getColor()
+		g2.setColor(Color.WHITE); //TODO:PLACEHOLDER COLOR
 		//drawCircle(CenterXCoordinate,CenterYCoordinate, side length, side length
-		g2.drawOval(icon.xCoord-TerritoryGraphics.SIDE_LENGTH/2,icon.yCoord-TerritoryGraphics.SIDE_LENGTH/2,TerritoryGraphics.SIDE_LENGTH,TerritoryGraphics.SIDE_LENGTH);
+		double circleCornerX = icon.xCoord-TerritoryGraphics.SIDE_LENGTH/2;
+		double circleCornerY = icon.yCoord-TerritoryGraphics.SIDE_LENGTH/2;
+		g2.fill(new Ellipse2D.Double(circleCornerX,circleCornerY,TerritoryGraphics.SIDE_LENGTH,TerritoryGraphics.SIDE_LENGTH));
 		g2.setColor(Color.BLACK);
-		g2.drawString(String.valueOf(icon.parent.getUnitCount()), 95, 95);
+		g2.drawString(String.valueOf(icon.parent.getUnitCount()),icon.xCoord-4,icon.yCoord+5);
 	}
 	
 
