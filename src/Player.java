@@ -48,7 +48,7 @@ public abstract class Player {
 	{
 		if(unitMap.containsKey(territory))
 		{
-			unitMap.put(territory, unitMap.get(territory)+number);
+			unitMap.put(territory, unitMap.get(territory) + number);
 		}
 		else
 		{
@@ -103,7 +103,6 @@ public abstract class Player {
 			else
 			{
 				//defender wins
-				reinforce(from, -1);
 				from.getOwner().reinforce(from, -1);
 				//NEXT LINE DEBUG
 				System.out.println("defender wins");
@@ -153,7 +152,14 @@ public abstract class Player {
 	 */
 	public int getUnitsInTerritory(Territory territory)
 	{
-		return unitMap.get(territory);
+		if(unitMap.containsKey(territory))
+		{
+			return unitMap.get(territory);
+		}
+		else
+		{
+			return 0;
+		}
 	}
 	
 	/**
