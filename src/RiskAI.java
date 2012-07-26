@@ -14,8 +14,14 @@ public class RiskAI{
 	public static void main(String[] args)
 	{
 		//Initialize system information
-		clickHandler = new HandleClick();
+		init();
 		
+		
+		
+	}
+	private static void init()
+	{
+		clickHandler = new HandleClick();
 		riskAI = new RiskAI();
 		continentData = ContinentData.init();
 		territoryData = TerritoryData.init(continentData);
