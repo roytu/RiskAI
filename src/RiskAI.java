@@ -5,7 +5,6 @@ public class RiskAI{
 	static GameData currentGame;
 	static List<Continent> continentData;
 	static List<Territory> territoryData;
-	public static Gfx window;
 	
 	public static HandleClick clickHandler;
 	public static Gfx gfx;
@@ -34,7 +33,6 @@ public class RiskAI{
 		currentGame = new GameData(PLAYERS_HUMAN, PLAYERS_COMP);
 		continentData = ContinentData.init();
 		territoryData = TerritoryData.init(continentData);
-		window = new Gfx();
 		gfx = new Gfx();
 	}
 	public RiskAI()

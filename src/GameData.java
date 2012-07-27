@@ -89,12 +89,12 @@ public class GameData {
 		//TODO implement this
 		if (whoseTurn instanceof PlayerHuman)
 			((PlayerHuman)whoseTurn).onClick(clickedOn);
-		RiskAI.window.repaint();
+		RiskAI.gfx.repaint();
 	}
 	public void onKeyPress()
 	{
 		if (whoseTurn instanceof PlayerHuman)
 			((PlayerHuman)whoseTurn).onKeyPress();
-		RiskAI.window.repaint();
+		RiskAI.gfx.repaint();
 	}
 }
