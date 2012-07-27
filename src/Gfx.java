@@ -15,13 +15,18 @@ public class Gfx extends JFrame{
 	Graphics2D g2;
 	BufferedImage backgroundImage;
 	//public List<TerritoryGraphics> territoryGraphicsList;
+	
+	GfxThread gfxThread;
+	
 	public Gfx()
 	{
 		setSize(1080,700);
-		backgroundImage=getBackgroundImage();
+		backgroundImage = getBackgroundImage();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Risk!");
 		setVisible(true);
+		
+		gfxThread = new GfxThread(this);
 		
 		addMouseListener(RiskAI.clickHandler);
 	}
@@ -39,12 +44,19 @@ public class Gfx extends JFrame{
 	{
 		g2 = (Graphics2D) g;
 		g2.drawImage(backgroundImage, 10, 40, this);
+		
 		for(Territory i : RiskAI.territoryData)
 		{
 			drawTerritoryGraphics(i.getTerritoryGraphic());
 		}
-		
+		GuiMessages.draw(g2);
 	}
+	
+	public void updateGUI()
+	{
+		repaint();
+	}
+	
 	/**
 	 * Draws a TerritoryGraphics.
 	 * More precisely, draws an oval in the territory's owner's color, then puts

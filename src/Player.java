@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 
@@ -40,12 +41,17 @@ public abstract class Player {
 	
 	protected void turn()
 	{
-		System.out.println("REINFORCEMENT PHASE");
+		Scanner scanner = new Scanner(System.in);
+		
+		GuiMessages.addMessage("REINFORCEMENT PHASE");
 		this.reinforcementPhase();
-		System.out.println("ATTACK PHASE");
+		//scanner.next();
+		GuiMessages.addMessage("ATTACK PHASE");
 		this.attackPhase();
-		System.out.println("TACTICAL MOVE PHASE");
+		//scanner.next();
+		GuiMessages.addMessage("TACTICAL MOVE PHASE");
 		this.tacticalMovePhase();
+		//scanner.next();
 	}
 	
 	protected int calculateReinforcements()
@@ -69,7 +75,7 @@ public abstract class Player {
 		{
 			unitMap.put(territory, number);
 		}
-		System.out.println(territory.name+" reinforced");
+		//System.out.println(territory.name+" reinforced");
 	}
 	
 	public void attack(Territory from, Territory to) 
@@ -84,7 +90,7 @@ public abstract class Player {
 		List<Integer> diceToList = new ArrayList<Integer>();
 		
 		//NEXT LINE DEBUG
-		System.out.println(from.name+" attacks "+to.name);
+		//System.out.println(from.name+" attacks "+to.name);
 		
 		Random random = new Random();
 		for(int i=0;i<countDiceFrom;++i)
@@ -113,14 +119,14 @@ public abstract class Player {
 				//attacker wins
 				to.getOwner().reinforce(to, -1);
 				//NEXT LINE DEBUG
-				System.out.println("attacker wins");
+				//System.out.println("attacker wins");
 			}
 			else
 			{
 				//defender wins
 				from.getOwner().reinforce(from, -1);
 				//NEXT LINE DEBUG
-				System.out.println("defender wins");
+				//System.out.println("defender wins");
 			}
 		}
 	}
@@ -136,7 +142,6 @@ public abstract class Player {
 	{
 		Set<Territory> territories = unitMap.keySet();
 		Random random = new Random();
-		System.out.println(territories.size());
 		int territoryID = random.nextInt(territories.size());
 		int i = 0;
 		for(Territory terr : territories)
