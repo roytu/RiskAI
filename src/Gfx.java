@@ -3,10 +3,11 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -14,13 +15,14 @@ import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 public class Gfx extends JFrame{
-	Graphics2D g2;
+	//Graphics2D g2;
 	BufferedImage backgroundImage;
 	//public List<TerritoryGraphics> territoryGraphicsList;
 	
 	GfxThread gfxThread;
 	
-	Image buffer;
+	//BufferedImage buffer;
+	//Graphics2D bufferGraphics;
 	
 	private static final int WIDTH = 1080;
 	private static final int HEIGHT = 700;
@@ -32,8 +34,11 @@ public class Gfx extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Risk!");
 		setVisible(true);
+		createBufferStrategy(2);
 		
-		buffer = createImage(WIDTH, HEIGHT);
+		//buffer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		//bufferGraphics = (Graphics2D) buffer.createGraphics();
+		
 		gfxThread = new GfxThread(this);
 		
 		addMouseListener(RiskAI.clickHandler);
@@ -49,16 +54,23 @@ public class Gfx extends JFrame{
 		return img;
 	}
 
-	public synchronized void paint(Graphics g)
+	public void paint(Graphics g)
 	{
-		g2 = (Graphics2D) g;
-		g2.drawImage(backgroundImage, 10, 40, this);
+		//g2 = (Graphics2D) g;
+		BufferStrategy bf = getBufferStrategy();
+		Graphics2D bufferGraphics = (Graphics2D) bf.getDrawGraphics();
+		bufferGraphics.clearRect(0, 0, WIDTH, HEIGHT);
+		
+		bufferGraphics.drawImage(backgroundImage, 10, 40, this);
 		
 		for(Territory i : RiskAI.territoryData)
 		{
-			drawTerritoryGraphics(i.getTerritoryGraphic());
+			drawTerritoryGraphics(bufferGraphics, i.getTerritoryGraphic());
 		}
-		GuiMessages.draw(g2);
+		
+		GuiMessages.draw(bufferGraphics);
+		
+		bf.show();
 	}
 	
 	public synchronized void updateGUI()
@@ -71,17 +83,15 @@ public class Gfx extends JFrame{
 	 * More precisely, draws an oval in the territory's owner's color, then puts
 	 * the number of armies in text on top of it.
 	 */
-	public void drawTerritoryGraphics(TerritoryGraphics icon)
+	public void drawTerritoryGraphics(Graphics2D g, TerritoryGraphics icon)
 	{
-		g2.setColor(icon.getColor());
-		//drawCircle(CenterXCoordinate,CenterYCoordinate, side length, side length
-		//g2.fill(new Ellipse2D.Double(icon.xCoord-icon.SIDE_LENGTH/2, icon.yCoord-icon.SIDE_LENGTH/2, icon.SIDE_LENGTH, icon.SIDE_LENGTH));
-		g2.fill(icon.icon);
-		g2.setColor(Color.BLACK);
+		g.setColor(icon.getColor());
+		g.fill(icon.icon);
+		g.setColor(Color.BLACK);
 		String str = String.valueOf(icon.parent.getUnitCount());
-		FontMetrics metrics = g2.getFontMetrics(new Font("Arial", Font.PLAIN, 10));
+		FontMetrics metrics = g.getFontMetrics(new Font("Arial", Font.PLAIN, 10));
 		int stringWidth = metrics.stringWidth(str);
 		int stringHeight = metrics.getHeight();
-		g2.drawString(str, icon.xCoord - stringWidth/2, icon.yCoord + stringHeight/2);
+		g.drawString(str, icon.xCoord - stringWidth/2, icon.yCoord + stringHeight/2);
 	}
 }
