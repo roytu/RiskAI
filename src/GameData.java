@@ -34,6 +34,17 @@ public class GameData {
 		}
 	}
 	
+	public void gameRun()
+	{
+		while(true)
+		{
+			for(Player player : playerList)
+			{
+				player.turn();
+			}
+		}
+	}
+	
 	public void setupGameboard(List<Territory> territoryList)
 	{
 		//List<List<Territory>> playerTerritoryLists = new ArrayList<List<Territory>>(playerList.size());
@@ -54,13 +65,6 @@ public class GameData {
 		}
 	}
 
-	private void doAttack(Player player)
-	{
-		Territory terrFrom = player.getRandomControlledTerritory();
-		Territory terrTo = terrFrom.getRandomLinkedTerritory();
-		player.attack(terrFrom,terrTo);
-		player.attack(terrFrom, terrTo);
-	}
 	public Player getPlayer(int playerID)
 	{
 		return playerList.get(playerID);

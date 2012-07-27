@@ -16,6 +16,7 @@ public class RiskAI{
 		//Initialize system information
 		init();
 		currentGame.setupGameboard(territoryData);
+		currentGame.gameRun();
 		
 		/*terrName("Ural").setOwner(currentGame.getPlayer(1));
 		terrName("Afghanistan").setOwner(currentGame.getPlayer(2));
@@ -31,7 +32,7 @@ public class RiskAI{
 		currentGame = new GameData(PLAYERS_HUMAN, PLAYERS_COMP);
 		continentData = ContinentData.init();
 		territoryData = TerritoryData.init(continentData);
-		Gfx testwindow = new Gfx();
+		new Gfx();
 	}
 	public RiskAI()
 	{

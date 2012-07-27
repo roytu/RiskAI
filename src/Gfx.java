@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.awt.geom.*;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
@@ -27,10 +25,6 @@ public class Gfx extends JFrame{
 		
 		addMouseListener(RiskAI.clickHandler);
 	}
-
-	/**
-	 * @param args
-	 */
 	
 	private BufferedImage getBackgroundImage()
 	{

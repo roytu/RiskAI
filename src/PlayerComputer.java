@@ -23,7 +23,9 @@ public class PlayerComputer extends Player {
 
 	@Override
 	protected void attackPhase() {
-		// TODO Auto-generated method stub
+		Territory terrFrom = getRandomControlledTerritory();
+		Territory terrTo = terrFrom.getRandomLinkedTerritory();
+		attack(terrFrom, terrTo);
 		
 	}
 

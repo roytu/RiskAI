@@ -40,8 +40,11 @@ public abstract class Player {
 	
 	protected void turn()
 	{
+		System.out.println("REINFORCEMENT PHASE");
 		this.reinforcementPhase();
+		System.out.println("ATTACK PHASE");
 		this.attackPhase();
+		System.out.println("TACTICAL MOVE PHASE");
 		this.tacticalMovePhase();
 	}
 	
@@ -66,7 +69,7 @@ public abstract class Player {
 		{
 			unitMap.put(territory, number);
 		}
-		//System.out.println(territory.name+" reinforced");
+		System.out.println(territory.name+" reinforced");
 	}
 	
 	public void attack(Territory from, Territory to) 
@@ -133,6 +136,7 @@ public abstract class Player {
 	{
 		Set<Territory> territories = unitMap.keySet();
 		Random random = new Random();
+		System.out.println(territories.size());
 		int territoryID = random.nextInt(territories.size());
 		int i = 0;
 		for(Territory terr : territories)

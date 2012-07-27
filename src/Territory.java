@@ -26,6 +26,7 @@ public class Territory {
 	{
 		this(x,y);
 		linkedTerritoryNames= new LinkedList<String>(ajacentTerritoryNames);
+		System.out.println(linkedTerritoryNames);
 		this.name=name;
 		this.continent=continent;
 	}
