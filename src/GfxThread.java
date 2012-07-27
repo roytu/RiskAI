@@ -11,7 +11,7 @@ public class GfxThread implements Runnable {
 		thread.start();
 	}
 	@Override
-	public void run()
+	public synchronized void run()
 	{
 		while(true)
 		{

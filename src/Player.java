@@ -13,7 +13,7 @@ public abstract class Player {
 	//private List<Card> cardList;
 	private Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
-	private int playerID;
+	protected int playerID;
 	private Color color;
 	
 	/*player1.calculateReinforcements();
@@ -41,17 +41,22 @@ public abstract class Player {
 	
 	protected void turn()
 	{
-		Scanner scanner = new Scanner(System.in);
-		
-		GuiMessages.addMessage("REINFORCEMENT PHASE");
-		this.reinforcementPhase();
-		//scanner.next();
-		GuiMessages.addMessage("ATTACK PHASE");
-		this.attackPhase();
-		//scanner.next();
-		GuiMessages.addMessage("TACTICAL MOVE PHASE");
-		this.tacticalMovePhase();
-		//scanner.next();
+		try
+		{
+			GuiMessages.addMessage("REINFORCEMENT PHASE");
+			reinforcementPhase();
+			Thread.sleep(1000);
+			GuiMessages.addMessage("ATTACK PHASE");
+			attackPhase();
+			Thread.sleep(1000);
+			GuiMessages.addMessage("TACTICAL MOVE PHASE");
+			tacticalMovePhase();
+			Thread.sleep(1000);
+		}
+		catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	protected int calculateReinforcements()

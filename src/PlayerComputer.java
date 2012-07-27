@@ -19,14 +19,15 @@ public class PlayerComputer extends Player {
 		Territory territory = getRandomControlledTerritory();
 		int number = 3; //TODO temporary
 		reinforce(territory, number);
+		GuiMessages.addMessage("Player " + playerID + " reinforced " + territory.name);
 	}
 
 	@Override
 	protected void attackPhase() {
 		Territory terrFrom = getRandomControlledTerritory();
-		Territory terrTo = terrFrom.getRandomLinkedTerritory();
+		Territory terrTo = terrFrom.getRandomLinkedUnownedTerritory(this);
 		attack(terrFrom, terrTo);
-		
+		GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
 	}
 
 	@Override

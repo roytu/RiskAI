@@ -40,7 +40,7 @@ public class GameData {
 		{
 			for(Player player : playerList)
 			{
-				//player.turn();
+				player.turn();
 			}
 		}
 	}
