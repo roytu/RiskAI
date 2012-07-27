@@ -39,6 +39,5 @@ public class PlayerComputer extends Player {
 		//Move random
 		Territory terrFrom = getRandomControlledTerritory();
 		Territory terrTo = terrFrom.getRandomLinkedOwnedTerritory(this);
-		
 	}
 }

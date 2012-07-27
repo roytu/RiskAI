@@ -142,12 +142,12 @@ public abstract class Player {
 				//System.out.println("defender wins");
 			}
 		}
-		
-		//Put troops in new country if defeated
-		if(to.getUnitCount()<=0)
+		if (to.getUnitCount() == 0)
 		{
-			this.reinforce(to, countDiceFrom);
-			to.setOwner(this);
+			int movedArmies = from.getUnitCount()-1;
+			from.getOwner().reinforce(from, -movedArmies);
+			to.setOwner(from.getOwner());
+			to.getOwner().reinforce(to, movedArmies);
 		}
 	}
 	

@@ -29,6 +29,7 @@ public class Gfx extends JFrame{
 		gfxThread = new GfxThread(this);
 		
 		addMouseListener(RiskAI.clickHandler);
+		addKeyListener(RiskAI.clickHandler);
 	}
 	
 	private BufferedImage getBackgroundImage()

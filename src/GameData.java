@@ -4,6 +4,7 @@ import java.util.List;
 
 public class GameData {
 	public List<Player> playerList;
+	private Player whoseTurn;
 	//Colors to initialize the first 6 players with, in order
 	private static final Color[] playerColors = 
 	{
@@ -63,8 +64,21 @@ public class GameData {
 		{
 			t.getOwner().reinforce(t, 3);
 		}
+		while(true)
+		{
+			int playerIndex = indexOfTurn(); //indexOfTurn shifts turn to next player and returns index of present mover
+			whoseTurn = playerList.get(playerIndex);
+			whoseTurn.turn();
+		}
 	}
-
+	
+	private int indexOfTurn()
+	{
+		int present = playerList.indexOf(whoseTurn);
+		present++;
+		present %= playerList.size(); //restart if it was too high
+		return present;
+	}
 	public Player getPlayer(int playerID)
 	{
 		return playerList.get(playerID);
@@ -73,6 +87,17 @@ public class GameData {
 	public void onClick(Territory clickedOn)
 	{
 		//TODO implement this
-		System.out.println("Clicked on " + clickedOn);
+		System.out.println(clickedOn);
+		if (whoseTurn instanceof PlayerHuman)
+			((PlayerHuman)whoseTurn).onClick(clickedOn);
+		System.out.println(clickedOn.getUnitCount());
+		RiskAI.window.repaint();
+	}
+	public void onKeyPress()
+	{
+		System.out.println("key pressed");
+		if (whoseTurn instanceof PlayerHuman)
+			((PlayerHuman)whoseTurn).onKeyPress();
+		RiskAI.window.repaint();
 	}
 }
