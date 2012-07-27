@@ -30,7 +30,7 @@ public class GameData {
 		}
 		for(int i=0;i<computerCount;i++)
 		{
-			Player player = new PlayerComputer(i,playerColors[i]);
+			Player player = new PlayerComputer(humanCount+i,playerColors[humanCount+i]);
 			playerList.add(player);
 		}
 	}
@@ -87,15 +87,12 @@ public class GameData {
 	public void onClick(Territory clickedOn)
 	{
 		//TODO implement this
-		System.out.println(clickedOn);
 		if (whoseTurn instanceof PlayerHuman)
 			((PlayerHuman)whoseTurn).onClick(clickedOn);
-		System.out.println(clickedOn.getUnitCount());
 		RiskAI.window.repaint();
 	}
 	public void onKeyPress()
 	{
-		System.out.println("key pressed");
 		if (whoseTurn instanceof PlayerHuman)
 			((PlayerHuman)whoseTurn).onKeyPress();
 		RiskAI.window.repaint();

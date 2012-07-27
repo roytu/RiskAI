@@ -100,19 +100,16 @@ public class HandleClick implements MouseListener, KeyListener
 	}
 
 	public void keyPressed(KeyEvent arg0) {
-		System.out.println("awesome");
 		RiskAI.currentGame.onKeyPress();
 		
 	}
 
 	public void keyReleased(KeyEvent arg0) {
-		System.out.println("awesome2");
 		// TODO Auto-generated method stub
 		
 	}
 
 	public void keyTyped(KeyEvent arg0) {
-		System.out.println("awesome3");
 		// TODO Auto-generated method stub
 		
 	}

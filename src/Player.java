@@ -44,7 +44,7 @@ public abstract class Player {
 		try
 		{
 			GuiMessages.addMessage("REINFORCEMENT PHASE");
-			//reinforcementPhase();
+			reinforcementPhase();
 			//Thread.sleep(1000);
 			
 			GuiMessages.addMessage("ATTACK PHASE");
@@ -121,10 +121,6 @@ public abstract class Player {
 		Collections.reverse(diceFromList);
 		Collections.sort(diceToList);
 		Collections.reverse(diceToList);
-		//DEBUG
-		System.out.println(diceFromList.toString());
-		System.out.println(diceToList.toString());
-		//END DEBUG
 		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
 		{
 			if(diceFromList.get(i) > diceToList.get(i))
