@@ -30,7 +30,7 @@ public class GameData {
 		}
 		for(int i=0;i<computerCount;i++)
 		{
-			Player player = new PlayerComputer(humanCount+i,playerColors[i]);
+			Player player = new PlayerComputer(humanCount+i,playerColors[humanCount+i]);
 			playerList.add(player);
 		}
 	}
