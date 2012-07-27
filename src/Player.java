@@ -34,9 +34,21 @@ public abstract class Player {
 		this.color = color;
 	}
 	
-	protected abstract void placeReinforcements(int number);
-	protected abstract void doAttackPhase();	
+	protected abstract void reinforcementPhase();
+	protected abstract void attackPhase();
+	protected abstract void tacticalMovePhase();
 	
+	protected void turn()
+	{
+		this.reinforcementPhase();
+		this.attackPhase();
+		this.tacticalMovePhase();
+	}
+	
+	protected int calculateReinforcements()
+	{
+		return 3;
+	}
 	
 	/**
 	 * Adds a number of units into a territory.  Units are friendly to the player
@@ -108,6 +120,13 @@ public abstract class Player {
 				System.out.println("defender wins");
 			}
 		}
+		if (to.getUnitCount() == 0)
+		{
+			int movedArmies = from.getUnitCount()-1;
+			from.getOwner().reinforce(from, -movedArmies);
+			to.setOwner(from.getOwner());
+			to.getOwner().reinforce(to, movedArmies);
+		}
 	}
 	
 	
@@ -144,6 +163,7 @@ public abstract class Player {
 	{
 		return unitMap.containsKey(territory);
 	}
+	
 	/**
 	 * Gets the number of units currently in the specified territory.
 	 * Territory must be owned by the current player.

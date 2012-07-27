@@ -8,12 +8,12 @@ public class GameData {
 	//Colors to initialize the first 6 players with, in order
 	private static final Color[] playerColors = 
 	{
-		new Color(95,95,255),
-		new Color(255,95,95),
-		new Color(95,255,95),
-		new Color(255,127,0),
-		new Color(255,255,0),
-		new Color(0xF0,0xF0,0xF0)}; 
+		new Color(95,95,255),//blue
+		new Color(255,95,95),//red
+		new Color(95,255,95),//green
+		new Color(255,255,0),//yellow
+		new Color(255,127,0),//orange
+		new Color(0xF0,0xF0,0xF0)}; //grey
 	
 	/**
 	 * Creates GameData object
@@ -53,29 +53,22 @@ public class GameData {
 		{
 			t.getOwner().reinforce(t, 3);
 		}
-		whoseTurn = playerList.get(0);
-		movePlayer(whoseTurn);
+		while(true)
+		{
+			int playerIndex = indexOfTurn(); //indexOfTurn shifts turn to next player and returns index of present mover
+			whoseTurn = playerList.get(playerIndex);
+			whoseTurn.turn();
+		}
 	}
 	
-	public void movePlayer(Player player)
+	private int indexOfTurn()
 	{
-		giveReinforcements(player);
-		doAttack(player);
-		//TODO: Player fortifies
+		int present = playerList.indexOf(whoseTurn);
+		present++;
+		present %= playerList.size(); //restart if it was too high
+		return present;
 	}
-	private void giveReinforcements(Player player)
-	{
-		//TODO: Give players number of units at beginning of turn
-		//Give 3 for now
-		player.placeReinforcements(3);
-	}
-	private void doAttack(Player player)
-	{
-		Territory terrFrom = player.getRandomControlledTerritory();
-		Territory terrTo = terrFrom.getRandomLinkedTerritory();
-		player.attack(terrFrom,terrTo);
-		player.attack(terrFrom, terrTo);
-	}
+	
 	public Player getPlayer(int playerID)
 	{
 		return playerList.get(playerID);
@@ -84,7 +77,17 @@ public class GameData {
 	public void onClick(Territory clickedOn)
 	{
 		//TODO implement this
+		System.out.println(clickedOn);
 		if (whoseTurn instanceof PlayerHuman)
 			((PlayerHuman)whoseTurn).onClick(clickedOn);
+		System.out.println(clickedOn.getUnitCount());
+		RiskAI.window.repaint();
+	}
+	public void onKeyPress()
+	{
+		System.out.println("key pressed");
+		if (whoseTurn instanceof PlayerHuman)
+			((PlayerHuman)whoseTurn).onKeyPress();
+		RiskAI.window.repaint();
 	}
 }

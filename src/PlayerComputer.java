@@ -13,15 +13,27 @@ public class PlayerComputer extends Player {
 	}
 
 	@Override
-	public void placeReinforcements(int number)
+	public void reinforcementPhase()
 	{
 		//TODO: Be shitty and place everything in one territory randomly
 		Territory territory = getRandomControlledTerritory();
-		reinforce(territory, number);
+		reinforce(territory, 3);
 	}
 
 	public void doAttackPhase()
 	{
 		//TODO implement this
+	}
+
+	@Override
+	protected void attackPhase() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void tacticalMovePhase() {
+		// TODO Auto-generated method stub
+		
 	}
 }

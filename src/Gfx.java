@@ -26,6 +26,7 @@ public class Gfx extends JFrame{
 		setVisible(true);
 		
 		addMouseListener(RiskAI.clickHandler);
+		addKeyListener(RiskAI.clickHandler);
 	}
 
 	/**
