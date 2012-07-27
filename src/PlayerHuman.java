@@ -12,15 +12,23 @@ public class PlayerHuman extends Player {
 	}
 
 	@Override
-	protected void placeReinforcements(int number) {
+	protected void reinforcementPhase() {
 		// TODO Auto-generated method stub
 		Territory territory = getRandomControlledTerritory();
+		int number = 3; //TODO actual reinforcement count
 		reinforce(territory, number);
 	}
-	
-	public void doAttackPhase()
-	{
-		//TODO implement this
+
+	@Override
+	protected void attackPhase() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void tacticalMovePhase() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
