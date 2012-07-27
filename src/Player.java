@@ -15,12 +15,7 @@ public abstract class Player {
 	protected boolean isHuman;
 	protected int playerID;
 	private Color color;
-	
-	/*player1.calculateReinforcements();
-	player2.setReinforcements(5);
-	player1.reinforce(Ural,3);
-	player2.reinforce(Afghanistan,3);
-	player1.attack(Ural, Afghanistan);*/
+	protected String name;
 		
 	public Player(int playerID)
 	{
@@ -33,6 +28,7 @@ public abstract class Player {
 	{
 		this(playerID);
 		this.color = color;
+		this.name=this.getColor().toString();
 	}
 	
 	protected abstract void reinforcementPhase();
@@ -43,15 +39,17 @@ public abstract class Player {
 	{
 		try
 		{
-			GuiMessages.addMessage("REINFORCEMENT PHASE");
+			GuiMessages.addMessage(name+"'s turn begins");			
+			
+			GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
 			reinforcementPhase();
 			//Thread.sleep(1000);
 			
-			GuiMessages.addMessage("ATTACK PHASE");
+			GuiMessages.addMessage("ATTACK PHASE BEGINS");
 			attackPhase();
 			//Thread.sleep(1000);
 			
-			GuiMessages.addMessage("TACTICAL MOVE PHASE");
+			GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
 			tacticalMovePhase();
 			Thread.sleep(100);
 		}
@@ -82,7 +80,7 @@ public abstract class Player {
 		{
 			unitMap.put(territory, number);
 		}
-		//System.out.println(territory.name+" reinforced");
+		if(number>0) GuiMessages.addMessage(territory.name+" reinforced");
 	}
 	
 	public void move(Territory from, Territory to, int number)
@@ -121,6 +119,10 @@ public abstract class Player {
 		Collections.reverse(diceFromList);
 		Collections.sort(diceToList);
 		Collections.reverse(diceToList);
+		//DEBUG
+		System.out.println(diceFromList.toString());
+		System.out.println(diceToList.toString());
+		//END DEBUG
 		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
 		{
 			if(diceFromList.get(i) > diceToList.get(i))
