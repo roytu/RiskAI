@@ -26,8 +26,11 @@ public class PlayerComputer extends Player {
 	protected void attackPhase() {
 		Territory terrFrom = getRandomControlledTerritory();
 		Territory terrTo = terrFrom.getRandomLinkedUnownedTerritory(this);
-		attack(terrFrom, terrTo);
-		GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
+		if(terrTo != null)
+		{
+			attack(terrFrom, terrTo);
+			GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
+		}
 	}
 
 	@Override

@@ -1,3 +1,5 @@
+import java.util.ConcurrentModificationException;
+
 
 public class GfxThread implements Runnable {
 
@@ -11,16 +13,15 @@ public class GfxThread implements Runnable {
 		thread.start();
 	}
 	@Override
-	public synchronized void run()
+	public void run()
 	{
 		while(true)
 		{
-			gfx.updateGUI();
 			try {
-				thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				gfx.updateGUI();
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				//e.printStackTrace();
 			}
 		}
 	}

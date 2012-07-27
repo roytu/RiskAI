@@ -9,7 +9,7 @@ public class GuiMessages {
 	
 	private static Queue<String> messageQueue = new LinkedList<String>();
 	
-	public static void addMessage(String m)
+	public synchronized static void addMessage(String m)
 	{
 		messageQueue.offer(m);
 		if(messageQueue.size()>MAX_MESSAGES)
@@ -18,7 +18,7 @@ public class GuiMessages {
 		}
 	}
 	
-	public static void draw(Graphics g)
+	public synchronized static void draw(Graphics g)
 	{
 		Iterator<String> it = messageQueue.iterator();
 		int i = 0;

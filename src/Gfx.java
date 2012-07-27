@@ -40,7 +40,7 @@ public class Gfx extends JFrame{
 		return img;
 	}
 
-	public void paint(Graphics g)
+	public synchronized void paint(Graphics g)
 	{
 		g2 = (Graphics2D) g;
 		g2.drawImage(backgroundImage, 10, 40, this);
@@ -52,7 +52,7 @@ public class Gfx extends JFrame{
 		GuiMessages.draw(g2);
 	}
 	
-	public void updateGUI()
+	public synchronized void updateGUI()
 	{
 		repaint();
 	}

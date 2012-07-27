@@ -44,14 +44,16 @@ public abstract class Player {
 		try
 		{
 			GuiMessages.addMessage("REINFORCEMENT PHASE");
-			reinforcementPhase();
-			Thread.sleep(1000);
+			//reinforcementPhase();
+			//Thread.sleep(1000);
+			
 			GuiMessages.addMessage("ATTACK PHASE");
 			attackPhase();
-			Thread.sleep(1000);
+			//Thread.sleep(1000);
+			
 			GuiMessages.addMessage("TACTICAL MOVE PHASE");
 			tacticalMovePhase();
-			Thread.sleep(1000);
+			Thread.sleep(1);
 		}
 		catch (InterruptedException e) {
 			// TODO Auto-generated catch block
