@@ -49,7 +49,6 @@ public abstract class Player {
 			GuiMessages.addMessage("ATTACK PHASE BEGINS");
 			attackPhase();
 			//Thread.sleep(1000);
-			
 			GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
 			tacticalMovePhase();
 			Thread.sleep(100);
