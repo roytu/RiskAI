@@ -19,7 +19,7 @@ public class GfxThread implements Runnable {
 		{
 			try {
 				gfx.updateGUI();
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (Exception e) {
 				//e.printStackTrace();
 			}

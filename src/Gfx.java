@@ -3,9 +3,11 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
@@ -18,14 +20,20 @@ public class Gfx extends JFrame{
 	
 	GfxThread gfxThread;
 	
+	Image buffer;
+	
+	private static final int WIDTH = 1080;
+	private static final int HEIGHT = 700;
+	
 	public Gfx()
 	{
-		setSize(1080,700);
+		setSize(WIDTH, HEIGHT);
 		backgroundImage = getBackgroundImage();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Risk!");
 		setVisible(true);
 		
+		buffer = createImage(WIDTH, HEIGHT);
 		gfxThread = new GfxThread(this);
 		
 		addMouseListener(RiskAI.clickHandler);
