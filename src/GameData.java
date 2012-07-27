@@ -53,20 +53,7 @@ public class GameData {
 			t.getOwner().reinforce(t, 3);
 		}
 	}
-	
-	public void movePlayer(Player player)
-	{
-		giveReinforcements(player);
-		doAttack(player);
-		//TODO: Player fortifies
-		//TODO: Player gets cards
-	}
-	private void giveReinforcements(Player player)
-	{
-		//TODO: Give players number of units at beginning of turn
-		//Give 3 for now
-		player.placeReinforcements(3);
-	}
+
 	private void doAttack(Player player)
 	{
 		Territory terrFrom = player.getRandomControlledTerritory();
