@@ -8,8 +8,8 @@ public class RiskAI{
 	
 	public static HandleClick clickHandler;
 	
-	private static final int PLAYERS_HUMAN = 0;
-	private static final int PLAYERS_COMP = 4;
+	private static final int PLAYERS_HUMAN = 3;
+	private static final int PLAYERS_COMP = 0;
 	
 	public static void main(String[] args)
 	{

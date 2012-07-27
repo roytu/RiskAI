@@ -22,5 +22,10 @@ public class PlayerHuman extends Player {
 	{
 		//TODO implement this
 	}
+	
+	public void onClick(Territory t)
+	{
+		
+	}
 
 }

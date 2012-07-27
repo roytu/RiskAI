@@ -4,6 +4,7 @@ import java.util.List;
 
 public class GameData {
 	public List<Player> playerList;
+	private Player whoseTurn;
 	//Colors to initialize the first 6 players with, in order
 	private static final Color[] playerColors = 
 	{
@@ -52,6 +53,8 @@ public class GameData {
 		{
 			t.getOwner().reinforce(t, 3);
 		}
+		whoseTurn = playerList.get(0);
+		movePlayer(whoseTurn);
 	}
 	
 	public void movePlayer(Player player)
@@ -59,7 +62,6 @@ public class GameData {
 		giveReinforcements(player);
 		doAttack(player);
 		//TODO: Player fortifies
-		//TODO: Player gets cards
 	}
 	private void giveReinforcements(Player player)
 	{
@@ -82,6 +84,7 @@ public class GameData {
 	public void onClick(Territory clickedOn)
 	{
 		//TODO implement this
-		System.out.println("Clicked on " + clickedOn);
+		if (whoseTurn instanceof PlayerHuman)
+			((PlayerHuman)whoseTurn).onClick(clickedOn);
 	}
 }
