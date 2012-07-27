@@ -59,18 +59,24 @@ public class Gfx extends JFrame{
 	public void paint(Graphics g)
 	{
 		//g2 = (Graphics2D) g;
-		
-		bufferGraphics.clearRect(0, 0, WIDTH, HEIGHT);
-		bufferGraphics.drawImage(backgroundImage, 10, 40, this);
-		
-		for(Territory i : RiskAI.territoryData)
+		try
 		{
-			drawTerritoryGraphics(bufferGraphics, i.getTerritoryGraphic());
+			bufferGraphics.clearRect(0, 0, WIDTH, HEIGHT);
+			bufferGraphics.drawImage(backgroundImage, 10, 40, this);
+			
+			for(Territory i : RiskAI.territoryData)
+			{
+				drawTerritoryGraphics(bufferGraphics, i.getTerritoryGraphic());
+			}
+			
+			GuiMessages.draw(bufferGraphics);
+			
+			buffer.show();
 		}
-		
-		GuiMessages.draw(bufferGraphics);
-		
-		buffer.show();
+		catch(Exception e)
+		{
+			
+		}
 	}
 	
 	public synchronized void updateGUI()

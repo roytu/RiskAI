@@ -10,7 +10,7 @@ public class RiskAI{
 	public static HandleClick clickHandler;
 	public static Gfx gfx;
 	
-	private static final int PLAYERS_HUMAN = 1;
+	private static final int PLAYERS_HUMAN = 2;
 	private static final int PLAYERS_COMP = 1;
 	
 	public static void main(String[] args)

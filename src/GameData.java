@@ -13,7 +13,8 @@ public class GameData {
 		new Color(95,255,95),//green
 		new Color(255,255,0),//yellow
 		new Color(255,127,0),//orange
-		new Color(0xF0,0xF0,0xF0)}; //grey
+		new Color(0xF0,0xF0,0xF0)//grey
+	}; 
 	
 	/**
 	 * Creates GameData object
@@ -30,7 +31,7 @@ public class GameData {
 		}
 		for(int i=0;i<computerCount;i++)
 		{
-			Player player = new PlayerComputer(humanCount+i,playerColors[humanCount+i]);
+			Player player = new PlayerComputer(humanCount+i,playerColors[i]);
 			playerList.add(player);
 		}
 	}
@@ -81,6 +82,8 @@ public class GameData {
 		present %= playerList.size(); //restart if it was too high
 		return present;
 	}
+	
+	
 	public Player getPlayer(int playerID)
 	{
 		return playerList.get(playerID);
@@ -88,13 +91,15 @@ public class GameData {
 	
 	public void onClick(Territory clickedOn)
 	{
-		//TODO implement this
+		System.out.println(clickedOn.getOwner());
 		if (whoseTurn instanceof PlayerHuman)
 			((PlayerHuman)whoseTurn).onClick(clickedOn);
+		System.out.println(clickedOn.getUnitCount());
 		RiskAI.window.repaint();
 	}
 	public void onKeyPress()
 	{
+		System.out.println("key pressed");
 		if (whoseTurn instanceof PlayerHuman)
 			((PlayerHuman)whoseTurn).onKeyPress();
 		RiskAI.window.repaint();

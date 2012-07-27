@@ -17,7 +17,7 @@ public class PlayerComputer extends Player {
 	{
 		//TODO: Be shitty and place everything in one territory randomly
 		Territory territory = getRandomControlledTerritory();
-		int number = 3; //TODO temporary
+		int number = calculateReinforcements();
 		reinforce(territory, number);
 		GuiMessages.addMessage("Player " + playerID + " reinforced " + territory.name);
 	}
@@ -47,4 +47,6 @@ public class PlayerComputer extends Player {
 			move(terrFrom, terrTo, terrFrom.getUnitCount()-1);
 		}
 	}
+
+
 }
