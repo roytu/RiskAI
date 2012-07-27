@@ -65,6 +65,24 @@ public class Territory {
 		return null; //no attackable countries
 	}
 	
+	public Territory getRandomLinkedOwnedTerritory(Player player)
+	{
+		List<Territory> territoryList = new ArrayList<Territory>();
+		for(int i=0;i<linkedTerritories.size();i++)
+		{
+			territoryList.add(linkedTerritories.get(i));
+		}
+		Collections.shuffle(territoryList);
+		for(Territory territory : territoryList)
+		{
+			if(territory.getOwner() == player)
+			{
+				return territory;
+			}
+		}
+		return null; //no neighboring friendly countries
+	}
+	
 	public int getUnitCount()
 	{
 		return owner!=null ? owner.getUnitsInTerritory(this) : 0;

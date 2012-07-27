@@ -36,6 +36,9 @@ public class PlayerComputer extends Player {
 	@Override
 	protected void tacticalMovePhase() {
 		// TODO Auto-generated method stub
+		//Move random
+		Territory terrFrom = getRandomControlledTerritory();
+		Territory terrTo = terrFrom.getRandomLinkedOwnedTerritory(this);
 		
 	}
 }

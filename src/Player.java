@@ -85,6 +85,12 @@ public abstract class Player {
 		//System.out.println(territory.name+" reinforced");
 	}
 	
+	public void move(Territory from, Territory to, int number)
+	{
+		reinforce(from, -number);
+		reinforce(to, number);
+	}
+	
 	public void attack(Territory from, Territory to) 
 	{
 		int unitsFrom = from.getUnitCount();
