@@ -41,8 +41,10 @@ public class PlayerHuman extends Player {
 	{
 		switch (stage) {
 		case 1: //reinforcement phase
+			
 			if (t.getOwner() == this)
 			{
+				
 				reinforce(t,1);
 				armiesLeft--;
 			}
@@ -92,7 +94,6 @@ public class PlayerHuman extends Player {
 	protected void reinforcementPhase() {
 		stage = 1;
 		placeReinforcements(calculateReinforcements());
-
 	}
 
 	@Override

@@ -21,8 +21,8 @@ public class Gfx extends JFrame{
 	
 	GfxThread gfxThread;
 	
-	//BufferedImage buffer;
-	//Graphics2D bufferGraphics;
+	BufferStrategy buffer;
+	Graphics2D bufferGraphics;
 	
 	private static final int WIDTH = 1080;
 	private static final int HEIGHT = 700;
@@ -38,6 +38,8 @@ public class Gfx extends JFrame{
 		
 		//buffer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		//bufferGraphics = (Graphics2D) buffer.createGraphics();
+		buffer = getBufferStrategy();
+		bufferGraphics = (Graphics2D) buffer.getDrawGraphics();
 		
 		gfxThread = new GfxThread(this);
 		
@@ -57,10 +59,8 @@ public class Gfx extends JFrame{
 	public void paint(Graphics g)
 	{
 		//g2 = (Graphics2D) g;
-		BufferStrategy bf = getBufferStrategy();
-		Graphics2D bufferGraphics = (Graphics2D) bf.getDrawGraphics();
-		bufferGraphics.clearRect(0, 0, WIDTH, HEIGHT);
 		
+		bufferGraphics.clearRect(0, 0, WIDTH, HEIGHT);
 		bufferGraphics.drawImage(backgroundImage, 10, 40, this);
 		
 		for(Territory i : RiskAI.territoryData)
@@ -70,7 +70,7 @@ public class Gfx extends JFrame{
 		
 		GuiMessages.draw(bufferGraphics);
 		
-		bf.show();
+		buffer.show();
 	}
 	
 	public synchronized void updateGUI()

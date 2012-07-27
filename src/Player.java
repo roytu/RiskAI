@@ -44,6 +44,7 @@ public abstract class Player {
 		try
 		{
 			GuiMessages.addMessage("REINFORCEMENT PHASE");
+			System.out.println("CLiCKED");
 			reinforcementPhase();
 			//Thread.sleep(1000);
 			
