@@ -7,8 +7,7 @@ import java.util.List;
 
 
 public class ContinentData {
-	public static List<Continent> init()
-	{
+	public static List<Continent> init(){
 		List<Continent> continentList = new ArrayList<Continent>();
 //		continentList.add(new Continent("North America", 5)); //hard continent code, now use
 //		continentList.add(new Continent("South America", 2)); //	ContinentData.txt
@@ -17,21 +16,17 @@ public class ContinentData {
 //		continentList.add(new Continent("Asia", 7));
 //		continentList.add(new Continent("Australia", 2));
 		BufferedReader reader;
-		try
-		{
+		try{
 			reader = new BufferedReader(new FileReader("ContinentData.txt"));
 		}
-		catch(FileNotFoundException e)
-		{
+		catch(FileNotFoundException e){
 			throw new RuntimeException("Continent Data File Not Found");
 		}
 		String line=null;
 		try {
-			while((line= reader.readLine())!= null)
-			{
+			while((line= reader.readLine())!= null){
 				//DO FILE STUFF HERE
-				if(line.charAt(0)!='#')//#=comment symbol
-				{
+				if(line.charAt(0)!='#'){//#=comment symbol
 					continentList.add(initContinent(line, continentList));
 				}
 			}
@@ -40,24 +35,19 @@ public class ContinentData {
 			e.printStackTrace();
 		}
 		return continentList;
-		
 	}
-	static public Continent findContinentByName(String continentName, List<Continent> continentList) //throws BadStringOperationException
-	{
-		for (Continent i:continentList)
-		{
+	static public Continent findContinentByName(String continentName, List<Continent> continentList){ //throws BadStringOperationException
+		for (Continent i:continentList){
 			if(i.name.equals(continentName)) return i;
 		}
 		return new Continent("BAD");
 		//throw new BadStringOperationException(continentName);
 	}
 	
-	public static Continent initContinent(String line, List<Continent> continentList)
-	{
+	public static Continent initContinent(String line, List<Continent> continentList){
 		//Format: name;bonus  (anything else you want, like comments)
 		String[] parts = line.split(";");
 		Continent newContinent = new Continent(parts[0],Integer.parseInt(parts[1].substring(0,1)));
 		return newContinent;
 	}
-
 }

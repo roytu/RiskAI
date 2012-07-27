@@ -21,8 +21,7 @@ public class GameData {
 	 * @param int Number of human players
 	 * @param int Number of computer players 
 	 */
-	public GameData(int humanCount, int computerCount)
-	{
+	public GameData(int humanCount, int computerCount){
 		playerList = new ArrayList<Player>();
 		for(int i=0;i<humanCount;i++)
 		{
@@ -31,17 +30,14 @@ public class GameData {
 		}
 		for(int i=0;i<computerCount;i++)
 		{
-			Player player = new PlayerComputer(humanCount+i,playerColors[i]);
+			Player player = new PlayerComputer(humanCount+i,playerColors[humanCount+i]);
 			playerList.add(player);
 		}
 	}
 	
-	public void gameRun()
-	{
-		while(true)
-		{
-			for(Player player : playerList)
-			{
+	public void gameRun(){
+		while(true){
+			for(Player player : playerList){
 				player.turn();
 			}
 		}
