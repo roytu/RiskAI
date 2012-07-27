@@ -39,7 +39,8 @@ public abstract class Player {
 	{
 		try
 		{
-			GuiMessages.addMessage(name+"'s turn begins");			
+			GuiMessages.addMessage("REINFORCEMENT PHASE");
+			GuiMessages.addMessage(name+"'s turn begins");
 			
 			GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
 			GuiMessages.addMessage(name+" recieves "+calculateReinforcements()+" reinforcements.");

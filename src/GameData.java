@@ -61,12 +61,14 @@ public class GameData {
 		{
 			t.getOwner().reinforce(t, 3);
 		}
+		/*
 		while(true)
 		{
 			int playerIndex = indexOfTurn(); //indexOfTurn shifts turn to next player and returns index of present mover
 			whoseTurn = playerList.get(playerIndex);
 			whoseTurn.turn();
 		}
+		*/
 	}
 	
 	private int indexOfTurn()

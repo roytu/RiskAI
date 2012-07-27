@@ -24,6 +24,12 @@ public class PlayerHuman extends Player {
 	{
 		switch (stage) {
 		case 1: //reinforcement phase
+			if (t.getOwner() == this)
+			{
+				
+				reinforce(t,1);
+				armiesLeft--;
+			}
 			reinforcements(t);
 			break;
 		case 2: //attack phase
