@@ -7,12 +7,12 @@ public class GameData {
 	//Colors to initialize the first 6 players with, in order
 	private static final Color[] playerColors = 
 	{
-		new Color(95,95,255),
-		new Color(255,95,95),
-		new Color(95,255,95),
-		new Color(255,127,0),
-		new Color(255,255,0),
-		new Color(0xF0,0xF0,0xF0)}; 
+		new Color(95,95,255),//blue
+		new Color(255,95,95),//red
+		new Color(95,255,95),//green
+		new Color(255,255,0),//yellow
+		new Color(255,127,0),//orange
+		new Color(0xF0,0xF0,0xF0)}; //grey
 	
 	/**
 	 * Creates GameData object
