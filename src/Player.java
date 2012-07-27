@@ -44,7 +44,7 @@ public abstract class Player {
 		try
 		{
 			GuiMessages.addMessage("REINFORCEMENT PHASE");
-			//reinforcementPhase();
+			reinforcementPhase();
 			//Thread.sleep(1000);
 			
 			GuiMessages.addMessage("ATTACK PHASE");
@@ -53,7 +53,7 @@ public abstract class Player {
 			
 			GuiMessages.addMessage("TACTICAL MOVE PHASE");
 			tacticalMovePhase();
-			Thread.sleep(1);
+			Thread.sleep(100);
 		}
 		catch (InterruptedException e) {
 			// TODO Auto-generated catch block

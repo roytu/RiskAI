@@ -24,12 +24,15 @@ public class PlayerComputer extends Player {
 
 	@Override
 	protected void attackPhase() {
-		Territory terrFrom = getRandomControlledTerritory();
-		Territory terrTo = terrFrom.getRandomLinkedUnownedTerritory(this);
-		if(terrTo != null)
+		for(int i=0;i<20;i++)
 		{
-			attack(terrFrom, terrTo);
-			GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
+			Territory terrFrom = getRandomControlledTerritory();
+			Territory terrTo = terrFrom.getRandomLinkedUnownedTerritory(this);
+			if(terrTo != null)
+			{
+				attack(terrFrom, terrTo);
+				GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
+			}
 		}
 	}
 
@@ -39,5 +42,9 @@ public class PlayerComputer extends Player {
 		//Move random
 		Territory terrFrom = getRandomControlledTerritory();
 		Territory terrTo = terrFrom.getRandomLinkedOwnedTerritory(this);
+		if(terrTo != null && terrFrom.getUnitCount()>1)
+		{
+			move(terrFrom, terrTo, terrFrom.getUnitCount()-1);
+		}
 	}
 }
