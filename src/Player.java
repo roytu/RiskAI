@@ -134,6 +134,13 @@ public abstract class Player {
 				//System.out.println("defender wins");
 			}
 		}
+		
+		//Put troops in new country if defeated
+		if(to.getUnitCount()<=0)
+		{
+			this.reinforce(to, countDiceFrom);
+			to.setOwner(this);
+		}
 	}
 	
 	
