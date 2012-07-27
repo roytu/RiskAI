@@ -35,6 +35,17 @@ public class GameData {
 		}
 	}
 	
+	public void gameRun()
+	{
+		while(true)
+		{
+			for(Player player : playerList)
+			{
+				player.turn();
+			}
+		}
+	}
+	
 	public void setupGameboard(List<Territory> territoryList)
 	{
 		//List<List<Territory>> playerTerritoryLists = new ArrayList<List<Territory>>(playerList.size());
@@ -68,7 +79,6 @@ public class GameData {
 		present %= playerList.size(); //restart if it was too high
 		return present;
 	}
-	
 	public Player getPlayer(int playerID)
 	{
 		return playerList.get(playerID);

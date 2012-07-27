@@ -8,15 +8,17 @@ public class RiskAI{
 	public static Gfx window;
 	
 	public static HandleClick clickHandler;
+	public static Gfx gfx;
 	
 	private static final int PLAYERS_HUMAN = 3;
-	private static final int PLAYERS_COMP = 0;
+	private static final int PLAYERS_COMP = 3;
 	
 	public static void main(String[] args)
 	{
 		//Initialize system information
 		init();
 		currentGame.setupGameboard(territoryData);
+		currentGame.gameRun();
 		
 		/*terrName("Ural").setOwner(currentGame.getPlayer(1));
 		terrName("Afghanistan").setOwner(currentGame.getPlayer(2));
@@ -33,6 +35,7 @@ public class RiskAI{
 		continentData = ContinentData.init();
 		territoryData = TerritoryData.init(continentData);
 		window = new Gfx();
+		gfx = new Gfx();
 	}
 	public RiskAI()
 	{

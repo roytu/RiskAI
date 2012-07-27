@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Set;
 
 
@@ -12,7 +13,7 @@ public abstract class Player {
 	//private List<Card> cardList;
 	private Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
-	private int playerID;
+	protected int playerID;
 	private Color color;
 	
 	/*player1.calculateReinforcements();
@@ -40,9 +41,24 @@ public abstract class Player {
 	
 	protected void turn()
 	{
-		this.reinforcementPhase();
-		this.attackPhase();
-		this.tacticalMovePhase();
+		try
+		{
+			GuiMessages.addMessage("REINFORCEMENT PHASE");
+			//reinforcementPhase();
+			//Thread.sleep(1000);
+			
+			GuiMessages.addMessage("ATTACK PHASE");
+			attackPhase();
+			//Thread.sleep(1000);
+			
+			GuiMessages.addMessage("TACTICAL MOVE PHASE");
+			tacticalMovePhase();
+			Thread.sleep(1);
+		}
+		catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	protected int calculateReinforcements()
@@ -81,7 +97,7 @@ public abstract class Player {
 		List<Integer> diceToList = new ArrayList<Integer>();
 		
 		//NEXT LINE DEBUG
-		System.out.println(from.name+" attacks "+to.name);
+		//System.out.println(from.name+" attacks "+to.name);
 		
 		Random random = new Random();
 		for(int i=0;i<countDiceFrom;++i)
@@ -110,14 +126,14 @@ public abstract class Player {
 				//attacker wins
 				to.getOwner().reinforce(to, -1);
 				//NEXT LINE DEBUG
-				System.out.println("attacker wins");
+				//System.out.println("attacker wins");
 			}
 			else
 			{
 				//defender wins
 				from.getOwner().reinforce(from, -1);
 				//NEXT LINE DEBUG
-				System.out.println("defender wins");
+				//System.out.println("defender wins");
 			}
 		}
 		if (to.getUnitCount() == 0)

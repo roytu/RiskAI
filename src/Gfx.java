@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.awt.geom.*;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
@@ -17,21 +15,22 @@ public class Gfx extends JFrame{
 	Graphics2D g2;
 	BufferedImage backgroundImage;
 	//public List<TerritoryGraphics> territoryGraphicsList;
+	
+	GfxThread gfxThread;
+	
 	public Gfx()
 	{
 		setSize(1080,700);
-		backgroundImage=getBackgroundImage();
+		backgroundImage = getBackgroundImage();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Risk!");
 		setVisible(true);
 		
+		gfxThread = new GfxThread(this);
+		
 		addMouseListener(RiskAI.clickHandler);
 		addKeyListener(RiskAI.clickHandler);
 	}
-
-	/**
-	 * @param args
-	 */
 	
 	private BufferedImage getBackgroundImage()
 	{
@@ -42,16 +41,23 @@ public class Gfx extends JFrame{
 		return img;
 	}
 
-	public void paint(Graphics g)
+	public synchronized void paint(Graphics g)
 	{
 		g2 = (Graphics2D) g;
 		g2.drawImage(backgroundImage, 10, 40, this);
+		
 		for(Territory i : RiskAI.territoryData)
 		{
 			drawTerritoryGraphics(i.getTerritoryGraphic());
 		}
-		
+		GuiMessages.draw(g2);
 	}
+	
+	public synchronized void updateGUI()
+	{
+		repaint();
+	}
+	
 	/**
 	 * Draws a TerritoryGraphics.
 	 * More precisely, draws an oval in the territory's owner's color, then puts
