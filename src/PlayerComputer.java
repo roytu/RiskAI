@@ -53,39 +53,74 @@ public class PlayerComputer extends Player {
 			move(terrFrom, terrTo, terrFrom.getUnitCount()-1);
 		}
 	}
-	private void evaluateStartingPosition()
+	private List<Territory> evaluateStartingPosition()
 	{
 		//not quite sure what i'm doing here.
 		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(unitMap);
 
 		List<Territory> discoveredTerritories = new ArrayList<Territory>();
+		List<Territory> bestTerritory = new ArrayList<Territory>()
+	List<List<Territory> > contiguousTerritoryListList = new ArrayList<List<Territory>>();
 		for(Territory t : ownedTerritories.keySet())
 		{
 			if(!discoveredTerritories.contains(t))
 			{
-				Queue<Territory> localQueue = new LinkedList<Territory>();
-				ownedTerritories.put(t, floodFill(localQueue, discoveredTerritories));
+				List<Territory> contiguousTerritories = new ArrayList<Territory>();
+				floodFill(t, contiguousTerritories);
+				discoveredTerritories.addAll(contiguousTerritories);
+				/*if(ownedTerritories.get(t)>ownedTerritories.get(bestTerritory))
+					bestTerritory=t;*/
 			}
 		}
+		bestTerritory = contiguousTerritoryListList.get(0);
+		for(List<Territory> lt:contiguousTerritoryListList)
+		{
+			if(lt.size()>bestTerritory.size()) bestTerritory= lt;
+		}
+		return bestTerritory;
 	}
-
-	private int floodFill(Queue<Territory> localqueue, List<Territory> discoveredTerritories)
+	private Map<Territory, Integer> ajacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
 	{
-		Territory currentTerritory = localqueue.poll();
-		discoveredTerritories.add(currentTerritory);
-		int contiguousTerritories=0;
-		for (Territory t: currentTerritory.getAjacentTerritories())// ajacent To currentTerritory owned by this player&& not in mapping)
+		Map<Terrigtory,Integer> ajacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Integer>();
+		for (Territory t:contiguousTerritories)
+		{
+			for (Territory u:t.getAjacentTerritoryList())
+			{
+				if(u.getOwner()!=this)
+				{
+					ajacentEnemyTerritoryHeuristicMap.put(u,ajacentEnemyTerritories(u))
+				}
+			}
+		}
+		return ajacentEnemyTerritoryHeuristicMap; 
+	}
+	
+	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
+	{
+		discoveredTerritories.add(startingTerritory);
+		for (Territory t: startingTerritory.getAjacentTerritories())// ajacent To currentTerritory owned by this player&& not in mapping)
 		{
 			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
 			else
 			{
-				contiguousTerritories++;//t is a new, contiguous, unmapped territory
-				localqueue.offer(t);
-				contiguousTerritories+=floodFill(localqueue, discoveredTerritories);
+				floodFill(t, discoveredTerritories);
 			}
 		}
-		return contiguousTerritories;
 	}
+	private void getLargestValue
+	{
+		for(Territory t:ownedTerritories
+	}
+	
+	private int numberOfAjacentEnemyTerritories(Territory territory)
+	{
+		int numberOfAjacentEnemiyTerritories = 0;
+		for (Territory t:territory.getAjacentTerritoryList)
+		{
+			if(t.getOwner()!=this) numberOfAjacentEnemyTerritories++;
+		}
+	}
+	
 
 
 
