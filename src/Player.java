@@ -11,12 +11,13 @@ import java.util.Set;
 
 public abstract class Player {
 	//private List<Card> cardList;
-	private Map<Territory, Integer> unitMap;
+	protected Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
 	protected int playerID;
 	private Color color;
 	protected String name;
-		
+	
+	
 	public Player(int playerID)
 	{
 		this.playerID = playerID;
@@ -39,7 +40,6 @@ public abstract class Player {
 	{
 		try
 		{
-			GuiMessages.addMessage("REINFORCEMENT PHASE");
 			GuiMessages.addMessage(name+"'s turn begins");
 			
 			GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
@@ -86,8 +86,8 @@ public abstract class Player {
 	
 	public void move(Territory from, Territory to, int number)
 	{
-		reinforce(from, -number);
-		reinforce(to, number);
+		unitMap.put(from, unitMap.get(from)-number);
+		unitMap.put(to, unitMap.get(to)+number);
 	}
 	
 	public void attack(Territory from, Territory to) 

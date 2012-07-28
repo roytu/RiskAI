@@ -1,4 +1,10 @@
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 
 public class PlayerComputer extends Player {
@@ -47,6 +53,40 @@ public class PlayerComputer extends Player {
 			move(terrFrom, terrTo, terrFrom.getUnitCount()-1);
 		}
 	}
+	private void evaluateStartingPosition()
+	{
+		//not quite sure what i'm doing here.
+		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(unitMap);
+
+		List<Territory> discoveredTerritories = new ArrayList<Territory>();
+		for(Territory t : ownedTerritories.keySet())
+		{
+			if(!discoveredTerritories.contains(t))
+			{
+				Queue<Territory> localQueue = new LinkedList<Territory>();
+				ownedTerritories.put(t, floodFill(localQueue, discoveredTerritories));
+			}
+		}
+	}
+
+	private int floodFill(Queue<Territory> localqueue, List<Territory> discoveredTerritories)
+	{
+		Territory currentTerritory = localqueue.poll();
+		discoveredTerritories.add(currentTerritory);
+		int contiguousTerritories=0;
+		for (Territory t: currentTerritory.getAjacentTerritories())// ajacent To currentTerritory owned by this player&& not in mapping)
+		{
+			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
+			else
+			{
+				contiguousTerritories++;//t is a new, contiguous, unmapped territory
+				localqueue.offer(t);
+				contiguousTerritories+=floodFill(localqueue, discoveredTerritories);
+			}
+		}
+		return contiguousTerritories;
+	}
+
 
 
 }
