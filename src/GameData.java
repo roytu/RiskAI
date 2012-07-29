@@ -32,6 +32,7 @@ public class GameData {
 		for(int i=0;i<computerCount;i++)
 		{
 			Player player;
+			/*
 			if(i==seecretPlayerNumber)
 			{
 				player = new PlayerComputerBetter(humanCount+i,playerColors[humanCount+i]);
@@ -39,7 +40,8 @@ public class GameData {
 			else
 			{
 				player = new PlayerComputer(humanCount+i,playerColors[humanCount+i]);
-			}
+			}*/
+			player = new PlayerComputer(humanCount+i,playerColors[humanCount+i]);
 			playerList.add(player);
 		}
 	}
