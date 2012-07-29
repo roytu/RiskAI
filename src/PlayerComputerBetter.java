@@ -67,7 +67,6 @@ public class PlayerComputerBetter extends Player {
 		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
 	}
 	
-	
 	private List<Territory> evaluateStartingPosition()
 	{
 		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(unitMap);
@@ -152,5 +151,17 @@ public class PlayerComputerBetter extends Player {
 	}
 
 
+	private void getTerritoryAttackList()
+	{
+		Map<Territory, Integer> ajacentEnemyTerritoryList = ajacentEnemyTerritoryHeuristic(currentCluster);
+		double ajacentEnemyTerritoryFactor = 1.0;
+		/*
+		Map<Territory, Integer> HeuristicList2 = Heuristic2(currentCluster);
+		double HeuristicFactor = 1.0;
+		
+		etc.
+		 */
+		/*return ListA*factorA+ListB*FactorB;*/
+	}
 
 }
