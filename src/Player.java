@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 500;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 200;
 	//private List<Card> cardList;
 	protected Map<Territory, Integer> unitMap;
 	protected boolean isHuman;

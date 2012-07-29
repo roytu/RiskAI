@@ -62,7 +62,7 @@ public class PlayerComputerBetter extends Player {
 	
 	private void aiThinking()//this is all TEMPOROARY. I will implemet it neater and better.
 	{
-		if(currentCluster == null) currentCluster = evaluateStartingPosition();
+		/*if(currentCluster == null)*/ currentCluster = evaluateStartingPosition();
 		territoriesToAttack = ajacentEnemyTerritoryHeuristic(currentCluster);
 		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
 	}
@@ -145,7 +145,8 @@ public class PlayerComputerBetter extends Player {
 		Territory currentLowestCostTerritory=null;
 		for (Territory i:territoryMap.keySet())
 		{
-			if(territoryMap.get(i)>territoryMap.get(currentLowestCostTerritory)) currentLowestCostTerritory=i;
+			if(currentLowestCostTerritory==null)currentLowestCostTerritory=i;//to prevent null pointer exception in next step
+			if(territoryMap.get(i)<territoryMap.get(currentLowestCostTerritory)) currentLowestCostTerritory=i;
 		}
 		return currentLowestCostTerritory;
 	}
