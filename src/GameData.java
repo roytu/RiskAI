@@ -34,7 +34,7 @@ public class GameData {
 			Player player;
 			if(i==seecretPlayerNumber)
 			{
-				player = new PlayerComputerBetter(humanCount+i,playerColors[humanCount+i]);
+				player = new PlayerComputerB(humanCount+i,playerColors[humanCount+i]);
 			}
 			else
 			{
