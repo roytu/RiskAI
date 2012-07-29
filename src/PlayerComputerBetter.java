@@ -7,17 +7,17 @@ import java.util.Map;
 import java.util.Queue;
 
 
-public class PlayerComputer extends Player {
+public class PlayerComputerBetter extends Player {
 	List<Territory> currentCluster;
 	Map<Territory, Integer> territoriesToAttack;
 	Territory territoryTargeted;
 	
-	public PlayerComputer(int playerID) {
+	public PlayerComputerBetter(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PlayerComputer(int playerID, Color color)
+	public PlayerComputerBetter(int playerID, Color color)
 	{
 		super(playerID,color);
 	}
@@ -36,16 +36,16 @@ public class PlayerComputer extends Player {
 
 	@Override
 	protected void attackPhase() {
-		for(int i=0;i<20;i++)
-		{
-			Territory terrFrom = getRandomControlledTerritory();
-			Territory terrTo = terrFrom.getRandomLinkedUnownedTerritory(this);
+		/*for(int i=0;i<20;i++)
+		{*/
+			Territory terrFrom = getOwnedTerritoryAjacentTo(territoryTargeted);
+			Territory terrTo = territoryTargeted;
 			if(terrTo != null)
 			{
 				attack(terrFrom, terrTo);
 				GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
 			}
-		}
+		/*}*/
 	}
 
 	@Override
