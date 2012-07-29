@@ -82,6 +82,7 @@ public class PlayerComputerBetter extends Player {
 				List<Territory> contiguousTerritories = new ArrayList<Territory>();
 				floodFill(t, contiguousTerritories);
 				discoveredTerritories.addAll(contiguousTerritories);
+				contiguousTerritoryListList.add(contiguousTerritories);
 			}
 		}
 		bestTerritoryGroup = contiguousTerritoryListList.get(0);

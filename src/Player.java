@@ -10,6 +10,7 @@ import java.util.Set;
 
 
 public abstract class Player {
+	public static final int COMPUTER_PLAYER_DELAY_MS = 500;
 	//private List<Card> cardList;
 	protected Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
@@ -52,7 +53,7 @@ public abstract class Player {
 			//Thread.sleep(1000);
 			GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
 			tacticalMovePhase();
-			Thread.sleep(100);
+			Thread.sleep(COMPUTER_PLAYER_DELAY_MS);
 		}
 		catch (InterruptedException e) {
 			// TODO Auto-generated catch block
