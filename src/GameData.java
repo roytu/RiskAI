@@ -32,7 +32,7 @@ public class GameData {
 		for(int i=0;i<computerCount;i++)
 		{
 			Player player;
-			if(i==seecretPlayerNumber)
+			if(i==seecretPlayerNumber && false)
 			{
 				player = new PlayerComputerBetter(humanCount+i,playerColors[humanCount+i]);
 			}
@@ -47,6 +47,7 @@ public class GameData {
 	public void gameRun(){
 		while(true){
 			for(Player player : playerList){
+				whoseTurn = player;
 				player.turn();
 			}
 		}
@@ -96,17 +97,16 @@ public class GameData {
 	
 	public void onClick(Territory clickedOn)
 	{
-		System.out.println(clickedOn.getOwner());
 		if (whoseTurn instanceof PlayerHuman)
+		{
 			((PlayerHuman)whoseTurn).onClick(clickedOn);
-		System.out.println(clickedOn.getUnitCount());
-		RiskAI.window.repaint();
+		}
+		RiskAI.gfx.repaint();
 	}
 	public void onKeyPress()
 	{
-		System.out.println("key pressed");
 		if (whoseTurn instanceof PlayerHuman)
 			((PlayerHuman)whoseTurn).onKeyPress();
-		RiskAI.window.repaint();
+		RiskAI.gfx.repaint();
 	}
 }
