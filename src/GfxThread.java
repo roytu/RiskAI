@@ -1,6 +1,4 @@
 
-
-
 public class GfxThread implements Runnable {
 
 	Gfx gfx;

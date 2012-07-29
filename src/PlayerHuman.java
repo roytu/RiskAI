@@ -71,7 +71,7 @@ public class PlayerHuman extends Player {
 			from = null;
 			to = null;
 			while (to == null) if (hasQuitPhase) {stage = 0; return;} //wait for both territories to be picked, if player quits stage end turn
-			System.out.println("fortifying from " + from + " to " + to);
+			GuiMessages.addMessage(this.name+"fortifies from " + from + " to " + to);
 			reinforce(from, -1);
 			reinforce(to,1);
 		}
@@ -92,14 +92,12 @@ public class PlayerHuman extends Player {
 			if (t.getOwner() == this)
 			{
 				from = t;
-				System.out.println("attacking from " + from);
 			}
 		}
 		else if (to == null){
 			if (t.getOwner() != this)
 			{
 				to = t;
-				System.out.println("attacking from " + from + " to " + to);
 			}
 		}
 	}
@@ -110,14 +108,12 @@ public class PlayerHuman extends Player {
 			if (t.getOwner() == this && getUnitsInTerritory(t) > 1)
 			{
 				from = t;
-				System.out.println("fortifying from " + from);
 			}
 		}
 		else if (to == null){
 			if (t.getOwner() == this)
 			{
 				to = t;
-				System.out.println("fortifying from " + from + " to " + to);
 			}
 		}
 	}
