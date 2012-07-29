@@ -47,6 +47,7 @@ public class GameData {
 	public void gameRun(){
 		while(true){
 			for(Player player : playerList){
+				whoseTurn = player;
 				player.turn();
 			}
 		}
@@ -97,12 +98,13 @@ public class GameData {
 	public void onClick(Territory clickedOn)
 	{
 		if (whoseTurn instanceof PlayerHuman)
+		{
 			((PlayerHuman)whoseTurn).onClick(clickedOn);
+		}
 		RiskAI.gfx.repaint();
 	}
 	public void onKeyPress()
 	{
-		System.out.println("key pressed");
 		if (whoseTurn instanceof PlayerHuman)
 			((PlayerHuman)whoseTurn).onKeyPress();
 		RiskAI.gfx.repaint();
