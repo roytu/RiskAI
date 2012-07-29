@@ -10,14 +10,13 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 200;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 20;
 	//private List<Card> cardList;
-	protected Map<Territory, Integer> unitMap;
+	protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
 	protected int playerID;
 	private Color color;
 	protected String name;
-	
 	
 	public Player(int playerID)
 	{
@@ -37,23 +36,34 @@ public abstract class Player {
 	protected abstract void attackPhase();
 	protected abstract void tacticalMovePhase();
 	
+	private boolean isAlive()
+	{
+		if(unitMap.keySet().size()>0){
+			return true;
+		}
+		return false;
+	}
+	
 	protected void turn()
 	{
 		try
 		{
-			GuiMessages.addMessage(name+"'s turn begins");
+			if(isAlive())
+			{
+				GuiMessages.addMessage(name+"'s turn begins");
 			
-			GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
-			GuiMessages.addMessage(name+" recieves "+calculateReinforcements()+" reinforcements.");
-			reinforcementPhase();
-			//Thread.sleep(1000);
+				GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
+				GuiMessages.addMessage(name+" recieves "+calculateReinforcements()+" reinforcements.");
+				reinforcementPhase();
+				//Thread.sleep(1000);
 			
-			GuiMessages.addMessage("ATTACK PHASE BEGINS");
-			attackPhase();
-			//Thread.sleep(1000);
-			GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
-			tacticalMovePhase();
-			Thread.sleep(COMPUTER_PLAYER_DELAY_MS);
+				GuiMessages.addMessage("ATTACK PHASE BEGINS");
+				attackPhase();
+				//Thread.sleep(1000);
+				GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
+				tacticalMovePhase();
+				Thread.sleep(COMPUTER_PLAYER_DELAY_MS);
+			}
 		}
 		catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -93,6 +103,8 @@ public abstract class Player {
 	
 	public void attack(Territory from, Territory to) 
 	{
+		if(from.getUnitCount()<=1 || to.getUnitCount()<1 || from.getOwner() == to.getOwner())
+			return;
 		int unitsFrom = from.getUnitCount();
 		int unitsTo = to.getUnitCount();
 		
@@ -146,6 +158,7 @@ public abstract class Player {
 		{
 			int movedArmies = from.getUnitCount()-1;
 			from.getOwner().reinforce(from, -movedArmies);
+			to.getOwner().unitMap.remove(to);
 			to.setOwner(from.getOwner());
 			to.getOwner().reinforce(to, movedArmies);
 		}
@@ -183,7 +196,14 @@ public abstract class Player {
 	 */
 	public boolean isOwnerOf(Territory territory)
 	{
-		return unitMap.containsKey(territory);
+		if(unitMap.containsKey(territory))
+		{
+			if(unitMap.get(territory)>0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
