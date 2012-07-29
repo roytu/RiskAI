@@ -33,6 +33,10 @@ public class Territory {
 	{
 		return new LinkedList<String>(linkedTerritoryNames);
 	}
+	public List<Territory> getAjacentTerritoryList()
+	{
+		return new LinkedList<Territory>(linkedTerritories);
+	}
 	public void link(Territory territory)
 	{
 		linkedTerritories.add(territory);

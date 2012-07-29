@@ -23,6 +23,7 @@ public class GameData {
 	 */
 	public GameData(int humanCount, int computerCount){
 		playerList = new ArrayList<Player>();
+		int seecretPlayerNumber=(int) (Math.random()*computerCount);
 		for(int i=0;i<humanCount;i++)
 		{
 			Player player = new PlayerHuman(i,playerColors[i]);
@@ -30,7 +31,15 @@ public class GameData {
 		}
 		for(int i=0;i<computerCount;i++)
 		{
-			Player player = new PlayerComputer(humanCount+i,playerColors[humanCount+i]);
+			Player player;
+			if(i==seecretPlayerNumber)
+			{
+				player = new PlayerComputerBetter(humanCount+i,playerColors[humanCount+i]);
+			}
+			else
+			{
+				player = new PlayerComputer(humanCount+i,playerColors[humanCount+i]);
+			}
 			playerList.add(player);
 		}
 	}
@@ -61,12 +70,14 @@ public class GameData {
 		{
 			t.getOwner().reinforce(t, 3);
 		}
+		/*
 		while(true)
 		{
 			int playerIndex = indexOfTurn(); //indexOfTurn shifts turn to next player and returns index of present mover
 			whoseTurn = playerList.get(playerIndex);
 			whoseTurn.turn();
 		}
+		*/
 	}
 	
 	private int indexOfTurn()

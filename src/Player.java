@@ -10,13 +10,15 @@ import java.util.Set;
 
 
 public abstract class Player {
+	public static final int COMPUTER_PLAYER_DELAY_MS = 500;
 	//private List<Card> cardList;
-	private Map<Territory, Integer> unitMap;
+	protected Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
 	protected int playerID;
 	private Color color;
 	protected String name;
-		
+	
+	
 	public Player(int playerID)
 	{
 		this.playerID = playerID;
@@ -39,9 +41,10 @@ public abstract class Player {
 	{
 		try
 		{
-			GuiMessages.addMessage(name+"'s turn begins");			
+			GuiMessages.addMessage(name+"'s turn begins");
 			
 			GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
+			GuiMessages.addMessage(name+" recieves "+calculateReinforcements()+" reinforcements.");
 			reinforcementPhase();
 			//Thread.sleep(1000);
 			
@@ -50,7 +53,7 @@ public abstract class Player {
 			//Thread.sleep(1000);
 			GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
 			tacticalMovePhase();
-			Thread.sleep(100);
+			Thread.sleep(COMPUTER_PLAYER_DELAY_MS);
 		}
 		catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -84,8 +87,8 @@ public abstract class Player {
 	
 	public void move(Territory from, Territory to, int number)
 	{
-		reinforce(from, -number);
-		reinforce(to, number);
+		unitMap.put(from, unitMap.get(from)-number);
+		unitMap.put(to, unitMap.get(to)+number);
 	}
 	
 	public void attack(Territory from, Territory to) 
