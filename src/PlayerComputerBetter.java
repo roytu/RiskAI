@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public class PlayerComputerBetter extends Player {
 	List<Territory> currentCluster;
-	Map<Territory, Integer> territoriesToAttack;
+	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
 	
 	public PlayerComputerBetter(int playerID) {
@@ -63,7 +63,7 @@ public class PlayerComputerBetter extends Player {
 	private void aiThinking()//this is all TEMPOROARY. I will implemet it neater and better.
 	{
 		/*if(currentCluster == null)*/ currentCluster = evaluateStartingPosition();
-		territoriesToAttack = ajacentEnemyTerritoryHeuristic(currentCluster);
+		territoriesToAttack = getTerritoryAttackList();
 		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
 	}
 	
@@ -139,7 +139,7 @@ public class PlayerComputerBetter extends Player {
 		}
 		return null;
 	}
-	private Territory getLowestCostTerritory(Map<Territory, Integer> territoryMap)
+	private Territory getLowestCostTerritory(Map<Territory, Double> territoryMap)
 	{
 		Territory currentLowestCostTerritory=null;
 		for (Territory i:territoryMap.keySet())
@@ -151,7 +151,7 @@ public class PlayerComputerBetter extends Player {
 	}
 
 
-	private void getTerritoryAttackList()
+	private Map<Territory, Double> getTerritoryAttackList()
 	{
 		Map<Territory, Integer> ajacentEnemyTerritoryList = ajacentEnemyTerritoryHeuristic(currentCluster);
 		double ajacentEnemyTerritoryFactor = 1.0;
@@ -162,6 +162,43 @@ public class PlayerComputerBetter extends Player {
 		etc.
 		 */
 		/*return ListA*factorA+ListB*FactorB;*/
+		Map<Territory, Double> ajacentEnemyWeightedList =multiplyListWeights(ajacentEnemyTerritoryList,ajacentEnemyTerritoryFactor);
+		return addTerritoryWeights(ajacentEnemyWeightedList);
 	}
-
+	private Map<Territory, Double> multiplyListWeights(Map<Territory, Integer> mapping, double factor)
+	{
+		Map<Territory, Double> doubleMap= new HashMap<Territory, Double>();
+		for(Territory t:mapping.keySet())
+		{
+			int valueT=mapping.get(t);
+			doubleMap.put(t,valueT*factor);
+		}
+		return doubleMap;
+	}
+	//use this as soon as we implement another heuristic.
+	/*private Map<Territory, Double> addTerritoryWeights(Map<Territory, Double>[] territoryListArray)
+	{
+		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
+		for(Map<Territory, Double> mapInArray : territoryListArray)
+		{
+			for(Territory t:mapInArray.keySet())
+			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
+				double mappedTerritoryValue= mapInArray.get(t);
+				double currentCompositeTerritoryValue = compositeMap.get(t);
+				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
+			}
+		}			
+		return compositeMap;
+	}*/
+	private Map<Territory, Double> addTerritoryWeights(Map<Territory, Double> territoryListArray)
+	{
+		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
+			for(Territory t:territoryListArray.keySet())
+			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
+				double mappedTerritoryValue= territoryListArray.get(t);
+				double currentCompositeTerritoryValue = compositeMap.get(t);
+				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
+			}
+		return compositeMap;
+	}
 }
