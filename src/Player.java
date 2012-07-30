@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 20;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 1000;
 	//private List<Card> cardList;
 	protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
@@ -55,14 +55,14 @@ public abstract class Player {
 				GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
 				GuiMessages.addMessage(name+" recieves "+calculateReinforcements()+" reinforcements.");
 				reinforcementPhase();
-				//Thread.sleep(1000);
+				Thread.sleep(COMPUTER_PLAYER_DELAY_MS/3);
 			
 				GuiMessages.addMessage("ATTACK PHASE BEGINS");
 				attackPhase();
-				//Thread.sleep(1000);
+				Thread.sleep(COMPUTER_PLAYER_DELAY_MS/3);
 				GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
 				tacticalMovePhase();
-				Thread.sleep(COMPUTER_PLAYER_DELAY_MS);
+				Thread.sleep(COMPUTER_PLAYER_DELAY_MS/3);
 			}
 		}
 		catch (InterruptedException e) {

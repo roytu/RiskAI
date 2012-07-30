@@ -11,7 +11,7 @@ public class PlayerComputerBetter extends Player {
 	List<Territory> currentCluster;
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
-	
+	double cost_limit = 5;
 	public PlayerComputerBetter(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub
@@ -28,7 +28,7 @@ public class PlayerComputerBetter extends Player {
 		//TODO: Be shitty and place everything in one territory randomly
 		
 		aiThinking();
-		Territory territory = getOwnedTerritoryAjacentTo(territoryTargeted);
+		Territory territory = getOwnedTerritoryWithHighestUnitCountAjacentTo(territoryTargeted);
 		int number = calculateReinforcements();
 		reinforce(territory, number);
 		GuiMessages.addMessage("Player " + playerID + " reinforced " + territory.name);
@@ -36,28 +36,30 @@ public class PlayerComputerBetter extends Player {
 
 	@Override
 	protected void attackPhase() {
-		/*for(int i=0;i<20;i++)
-		{*/
-			Territory terrFrom = getOwnedTerritoryAjacentTo(territoryTargeted);
+		for(int i=0;i<5;i++)
+		{
+			aiThinking();
+			if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
+			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountAjacentTo(territoryTargeted);
 			Territory terrTo = territoryTargeted;
 			if(terrTo != null)
 			{
 				attack(terrFrom, terrTo);
 				GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
 			}
-		/*}*/
+		}
 	}
 
 	@Override
 	protected void tacticalMovePhase() {
 		// TODO Auto-generated method stub
 		//Move random
-		Territory terrFrom = getRandomControlledTerritory();
+		/*Territory terrFrom = getRandomControlledTerritory();
 		Territory terrTo = terrFrom.getRandomLinkedOwnedTerritory(this);
 		if(terrTo != null && terrFrom.getUnitCount()>1)
 		{
 			move(terrFrom, terrTo, terrFrom.getUnitCount()-1);
-		}
+		}*/
 	}
 	
 	private void aiThinking()//this is all TEMPOROARY. I will implemet it neater and better.
@@ -65,6 +67,7 @@ public class PlayerComputerBetter extends Player {
 		/*if(currentCluster == null)*/ currentCluster = evaluateStartingPosition();
 		territoriesToAttack = getTerritoryAttackList();
 		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
+		if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
 	}
 	
 	private List<Territory> evaluateStartingPosition()
@@ -139,6 +142,25 @@ public class PlayerComputerBetter extends Player {
 		}
 		return null;
 	}
+	private Territory getOwnedTerritoryWithHighestUnitCountAjacentTo(Territory targetTerritory)
+	{
+		int currentHighestTroopCount=-1;
+		Territory currentHighestTroopTerritory=null;
+		for (Territory i:targetTerritory.getAjacentTerritoryList())
+		{
+			if(i.getOwner()==this)
+			{
+				if(i.getUnitCount()>currentHighestTroopCount)
+				{
+					currentHighestTroopCount=i.getUnitCount();
+					currentHighestTroopTerritory=i;
+				}
+			}
+		}
+		if(currentHighestTroopTerritory==null) throw new RuntimeException("Computer screwed up: no owned territories ajacent to selected territory");
+		return currentHighestTroopTerritory;
+	}
+	
 	private Territory getLowestCostTerritory(Map<Territory, Double> territoryMap)
 	{
 		Territory currentLowestCostTerritory=null;
@@ -148,6 +170,15 @@ public class PlayerComputerBetter extends Player {
 			if(territoryMap.get(i)<territoryMap.get(currentLowestCostTerritory)) currentLowestCostTerritory=i;
 		}
 		return currentLowestCostTerritory;
+	}
+	private Double getLowestCost(Map<Territory, Double> territoryMap)
+	{
+		double currentLowestCost=99999;
+		for (Territory i:territoryMap.keySet())
+		{
+			if(territoryMap.get(i)<currentLowestCost) currentLowestCost=territoryMap.get(i);
+		}
+		return currentLowestCost;
 	}
 
 
