@@ -1,16 +1,10 @@
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+import java.util.Set;
 
 
 public class PlayerComputerB extends Player {
-	List<Territory> currentCluster;
-	Map<Territory, Integer> territoriesToAttack;
-	Territory territoryTargeted;
 	
 	public PlayerComputerB(int playerID) {
 		super(playerID);
@@ -25,8 +19,8 @@ public class PlayerComputerB extends Player {
 	@Override
 	public void reinforcementPhase()
 	{
-		//TODO: Be shitty and place everything in one territory randomly
-		Territory territory = getRandomControlledTerritory();
+		//TODO: Reinforce strong heuristic countries
+		Territory territory = getMostValuableTerritory(RiskAI.territoryData);
 		int number = calculateReinforcements();
 		reinforce(territory, number);
 		GuiMessages.addMessage("Player " + playerID + " reinforced " + territory.name);
@@ -56,5 +50,33 @@ public class PlayerComputerB extends Player {
 		{
 			move(terrFrom, terrTo, terrFrom.getUnitCount()-1);
 		}
+	}
+	
+	private int getTerritoryHeuristic(Territory territory)
+	{
+		int h = 0;
+		h += 10-territory.getNumberOfAjacentTerritories();
+		if(territory.getNumberOfAjacentTerritories() > 0)
+		{
+			System.out.println("HI");
+			h += 100;
+		}
+		return h;
+	}
+	
+	private Territory getMostValuableTerritory(List<Territory> territoryList)
+	{
+		int largestUtility = -9999;
+		Territory largestTerritory = null;
+		for(Territory territory : territoryList)
+		{
+			int utility = getTerritoryHeuristic(territory);
+			if(utility > largestUtility)
+			{
+				largestUtility = utility;
+				largestTerritory = territory;
+			}
+		}
+		return largestTerritory;
 	}
 }

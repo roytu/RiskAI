@@ -69,6 +69,16 @@ public class Territory {
 		return null; //no attackable countries
 	}
 	
+	private int getAjacentEnemyTerritories()
+	{
+		int numberOfAjacentEnemyTerritories = 0;
+		for (Territory t : getAjacentTerritoryList())
+		{
+			if(t.getOwner()!=getOwner()) numberOfAjacentEnemyTerritories++;
+		}
+		return numberOfAjacentEnemyTerritories;
+	}
+	
 	public Territory getRandomLinkedOwnedTerritory(Player player)
 	{
 		List<Territory> territoryList = new ArrayList<Territory>();
