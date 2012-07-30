@@ -1,5 +1,14 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 public class Territory {
 	private List<Territory> linkedTerritories;
@@ -69,14 +78,35 @@ public class Territory {
 		return null; //no attackable countries
 	}
 	
-	public int getAjacentEnemyTerritories()
+	/**
+	 * Returns the number of troops on a territory minus the number of enemy
+	 * troops on surrounding territories
+	 * @return int
+	 */
+	public int getRelativeStrength()
 	{
-		int numberOfAjacentEnemyTerritories = 0;
+		int enemyTroops = 0;
+		for(Territory territory : getAjacentEnemyTerritories())
+		{
+			enemyTroops += territory.getUnitCount();
+		}
+		return getUnitCount() - enemyTroops;
+	}
+	
+	
+	/**
+	 * Returns a set of adjacent enemy territories
+	 * @return Set<Territory>
+	 */
+	public Set<Territory> getAjacentEnemyTerritories()
+	{
+		Set<Territory> adjacentTerritories = new HashSet<Territory>();
 		for (Territory t : getAjacentTerritoryList())
 		{
-			if(t.getOwner()!=getOwner()) numberOfAjacentEnemyTerritories++;
+			if(t.getOwner()!=getOwner())
+				adjacentTerritories.add(t);
 		}
-		return numberOfAjacentEnemyTerritories;
+		return adjacentTerritories;
 	}
 	
 	public Territory getRandomLinkedOwnedTerritory(Player player)
