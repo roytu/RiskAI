@@ -20,7 +20,7 @@ public class PlayerComputerB extends Player {
 	public void reinforcementPhase()
 	{
 		//TODO: Reinforce strong heuristic countries
-		Territory territory = getMostValuableTerritory(RiskAI.territoryData);
+		Territory territory = getMostValuableTerritory(getOwnedTerritories());
 		int number = calculateReinforcements();
 		reinforce(territory, number);
 		GuiMessages.addMessage("Player " + playerID + " reinforced " + territory.name);
@@ -46,7 +46,7 @@ public class PlayerComputerB extends Player {
 		//Move random
 		Territory terrFrom = getRandomControlledTerritory();
 		//Territory terrTo = terrFrom.getRandomLinkedOwnedTerritory(this);
-		Territory terrTo = getMostValuableTerritory(RiskAI.territoryData);
+		Territory terrTo = getMostValuableTerritory(getOwnedTerritories());
 		if(terrTo != null && terrFrom.getUnitCount()>1)
 		{
 			move(terrFrom, terrTo, terrFrom.getUnitCount()-1);
@@ -57,15 +57,11 @@ public class PlayerComputerB extends Player {
 	{
 		int h = 0;
 		h += 10-territory.getNumberOfAjacentTerritories();
-		if(territory.getNumberOfAjacentTerritories() > 0)
-		{
-			System.out.println("HI");
-			h += 100;
-		}
+		h += territory.getAjacentEnemyTerritories() * 2;
 		return h;
 	}
 	
-	private Territory getMostValuableTerritory(List<Territory> territoryList)
+	private Territory getMostValuableTerritory(Set<Territory> territoryList)
 	{
 		int largestUtility = -9999;
 		Territory largestTerritory = null;

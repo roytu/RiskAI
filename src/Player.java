@@ -11,7 +11,7 @@ import java.util.Set;
 
 public abstract class Player {
 	
-	public static final int COMPUTER_PLAYER_DELAY_MS = 10;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 100;
 	//private List<Card> cardList;
 	protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
