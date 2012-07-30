@@ -26,6 +26,7 @@ public class PlayerComputer extends Player {
 	public void reinforcementPhase()
 	{
 		//TODO: Be shitty and place everything in one territory randomly
+		
 		Territory territory = getRandomControlledTerritory();
 		int number = calculateReinforcements();
 		reinforce(territory, number);
@@ -34,7 +35,7 @@ public class PlayerComputer extends Player {
 
 	@Override
 	protected void attackPhase() {
-		for(int i=0;i<20;i++)
+		for(int i=0;i<5;i++)
 		{
 			Territory terrFrom = getRandomControlledTerritory();
 			Territory terrTo = terrFrom.getRandomLinkedUnownedTerritory(this);

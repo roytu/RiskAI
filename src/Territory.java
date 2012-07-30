@@ -69,7 +69,7 @@ public class Territory {
 		return null; //no attackable countries
 	}
 	
-	private int getAjacentEnemyTerritories()
+	public int getAjacentEnemyTerritories()
 	{
 		int numberOfAjacentEnemyTerritories = 0;
 		for (Territory t : getAjacentTerritoryList())

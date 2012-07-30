@@ -45,6 +45,11 @@ public abstract class Player {
 		return false;
 	}
 	
+	public Set<Territory> getOwnedTerritories()
+	{
+		return unitMap.keySet();
+	}
+	
 	protected void turn()
 	{
 		try
@@ -56,14 +61,14 @@ public abstract class Player {
 				GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
 				GuiMessages.addMessage(name+" recieves "+calculateReinforcements()+" reinforcements.");
 				reinforcementPhase();
-				//Thread.sleep(1000);
+				Thread.sleep(COMPUTER_PLAYER_DELAY_MS/3);
 			
 				GuiMessages.addMessage("ATTACK PHASE BEGINS");
 				attackPhase();
-				//Thread.sleep(1000);
+				Thread.sleep(COMPUTER_PLAYER_DELAY_MS/3);
 				GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
 				tacticalMovePhase();
-				Thread.sleep(COMPUTER_PLAYER_DELAY_MS);
+				Thread.sleep(COMPUTER_PLAYER_DELAY_MS/3);
 			}
 		}
 		catch (InterruptedException e) {
