@@ -28,7 +28,7 @@ public class PlayerComputerBetter extends Player {
 		//TODO: Be shitty and place everything in one territory
 		
 		aiThinking();
-		Territory territory = getOwnedTerritoryWithHighestUnitCountAjacentTo(territoryTargeted);
+		Territory territory = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
 		int number = calculateReinforcements();
 		reinforce(territory, number);
 		GuiMessages.addMessage("Player " + playerID + " reinforced " + territory.name);
@@ -40,7 +40,7 @@ public class PlayerComputerBetter extends Player {
 		{
 			aiThinking();
 			if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
-			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountAjacentTo(territoryTargeted);
+			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
 			Territory terrTo = territoryTargeted;
 			if(terrTo != null)
 			{
@@ -113,7 +113,7 @@ public class PlayerComputerBetter extends Player {
 		}
 		return bestTerritoryGroup;
 	}
-
+	
 	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
 	{
 		discoveredTerritories.add(startingTerritory);
@@ -126,10 +126,6 @@ public class PlayerComputerBetter extends Player {
 			}
 		}
 	}
-	
-	
-	
-	
 	
 	////////
 	//Heuristics
@@ -263,12 +259,12 @@ public class PlayerComputerBetter extends Player {
 	////////
 	private int numberOfAjacentEnemyTerritories(Territory territory)
 	{
-		int numberOfAjacentEnemyTerritories = 0;
+		int numberOfAdjacentEnemyTerritories = 0;
 		for (Territory t:territory.getAjacentTerritoryList())
 		{
-			if(t.getOwner()!=this) numberOfAjacentEnemyTerritories++;
+			if(t.getOwner()!=this) numberOfAdjacentEnemyTerritories++;
 		}
-		return numberOfAjacentEnemyTerritories;
+		return numberOfAdjacentEnemyTerritories;
 	}
 	private Territory getOwnedTerritoryAjacentTo(Territory territoryToAttack)
 	{//can add in reinforce territory with most/least number of troops
@@ -278,7 +274,7 @@ public class PlayerComputerBetter extends Player {
 		}
 		throw new RuntimeException("no owned territory for " + name + " to attack " + territoryToAttack + " from");
 	}
-	private Territory getOwnedTerritoryWithHighestUnitCountAjacentTo(Territory targetTerritory)
+	private Territory getOwnedTerritoryWithHighestUnitCountAdjacentTo(Territory targetTerritory)
 	{
 		int currentHighestTroopCount=-1;
 		Territory currentHighestTroopTerritory=null;
