@@ -37,18 +37,18 @@ public class Territory {
 		//graphic.setCoords(100, 100);
 		graphic = new TerritoryGraphics(x,y,this);
 	}
-	public Territory(String name, Continent continent, List<String> ajacentTerritoryNames, int x, int y)
+	public Territory(String name, Continent continent, List<String> adjacentTerritoryNames, int x, int y)
 	{
 		this(x,y);
-		linkedTerritoryNames= new LinkedList<String>(ajacentTerritoryNames);
+		linkedTerritoryNames= new LinkedList<String>(adjacentTerritoryNames);
 		this.name=name;
 		this.continent=continent;
 	}
-	public List<String> getAjacentTerritoryNameList()
+	public List<String> getadjacentTerritoryNameList()
 	{
 		return new LinkedList<String>(linkedTerritoryNames);
 	}
-	public List<Territory> getAjacentTerritoryList()
+	public List<Territory> getadjacentTerritoryList()
 	{
 		return new LinkedList<Territory>(linkedTerritories);
 	}
@@ -56,7 +56,7 @@ public class Territory {
 	{
 		linkedTerritories.add(territory);
 	}
-	public int getNumberOfAjacentTerritories()
+	public int getNumberOfadjacentTerritories()
 	{
 		return linkedTerritories.size();
 	}
@@ -92,7 +92,7 @@ public class Territory {
 	public int getRelativeStrength()
 	{
 		int enemyTroops = 0;
-		for(Territory territory : getAjacentEnemyTerritories())
+		for(Territory territory : getadjacentEnemyTerritories())
 		{
 			enemyTroops += territory.getUnitCount();
 		}
@@ -104,10 +104,10 @@ public class Territory {
 	 * Returns a set of adjacent enemy territories
 	 * @return Set<Territory>
 	 */
-	public Set<Territory> getAjacentEnemyTerritories()
+	public Set<Territory> getadjacentEnemyTerritories()
 	{
 		Set<Territory> adjacentTerritories = new HashSet<Territory>();
-		for (Territory t : getAjacentTerritoryList())
+		for (Territory t : getadjacentTerritoryList())
 		{
 			if(t.getOwner()!=getOwner())
 				adjacentTerritories.add(t);

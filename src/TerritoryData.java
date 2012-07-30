@@ -43,11 +43,11 @@ public class TerritoryData {
 		int currentDataIndex=0;
 		String name="";
 		String continent="";
-		int numberOfAjacentTerritories=0;
-		String tempAjacentName="";
+		int numberOfadjacentTerritories=0;
+		String tempadjacentName="";
 		int xPos=0;
 		int yPos=0;
-		List<String> ajacentTerritoryNames = new ArrayList<String>();
+		List<String> adjacentTerritoryNames = new ArrayList<String>();
 		
 		
 		for(int i=0;i<territoryData.length();i++)
@@ -63,17 +63,17 @@ public class TerritoryData {
 					continent+=currentChar;
 					break;
 				case 2:
-					numberOfAjacentTerritories+=(currentChar-'0');
+					numberOfadjacentTerritories+=(currentChar-'0');
 					break;
 				case 3:
 					if(currentChar!=',')
 					{
-						tempAjacentName+=currentChar;
+						tempadjacentName+=currentChar;
 					}
 					else
 					{
-						ajacentTerritoryNames.add(tempAjacentName);
-						tempAjacentName=new String("");
+						adjacentTerritoryNames.add(tempadjacentName);
+						tempadjacentName=new String("");
 					}
 					break;
 				case 4:
@@ -90,7 +90,7 @@ public class TerritoryData {
 			}
 			
 		}
-		return new Territory(name, ContinentData.findContinentByName(continent,continentList), ajacentTerritoryNames, xPos, yPos);
+		return new Territory(name, ContinentData.findContinentByName(continent,continentList), adjacentTerritoryNames, xPos, yPos);
 	}
 	public static Territory findTerritoryByName(String territoryName, List<Territory> territoryList)
 	{
@@ -105,7 +105,7 @@ public class TerritoryData {
 	{
 		for (Territory territory : territoryList)
 		{
-			for (String name : territory.getAjacentTerritoryNameList())
+			for (String name : territory.getadjacentTerritoryNameList())
 			{
 				territory.link(TerritoryData.findTerritoryByName(name,territoryList));
 			}			
