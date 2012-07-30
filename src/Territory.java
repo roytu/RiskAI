@@ -93,7 +93,6 @@ public class Territory {
 		return getUnitCount() - enemyTroops;
 	}
 	
-	
 	/**
 	 * Returns a set of adjacent enemy territories
 	 * @return Set<Territory>
