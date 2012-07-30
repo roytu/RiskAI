@@ -58,6 +58,10 @@ public class PlayerComputerB extends Player {
 		int h = 0;
 		h += 10-territory.getNumberOfAjacentTerritories();
 		h += -territory.getRelativeStrength() * 5;
+		for(Territory enemy : territory.getAdjacentEnemyTerritories())
+		{
+			
+		}
 		return h;
 	}
 	
