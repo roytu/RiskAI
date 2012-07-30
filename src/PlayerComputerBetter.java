@@ -70,6 +70,24 @@ public class PlayerComputerBetter extends Player {
 		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
 		if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
 	}
+	private Territory getLowestCostTerritory(Map<Territory, Double> territoryMap)
+	{
+		Territory currentLowestCostTerritory = null;
+		for (Territory i:territoryMap.keySet())
+		{
+			if(currentLowestCostTerritory==null)currentLowestCostTerritory=i;//to prevent null pointer exception in next step
+			if(territoryMap.get(i)<territoryMap.get(currentLowestCostTerritory)) currentLowestCostTerritory=i;		}
+		return currentLowestCostTerritory;
+	}
+	private Double getLowestCost(Map<Territory, Double> territoryMap)
+	{
+		double currentLowestCost=99999;
+		for (Territory i:territoryMap.keySet())
+		{
+			if(territoryMap.get(i)<currentLowestCost) currentLowestCost=territoryMap.get(i);
+		}
+		return currentLowestCost;
+	}
 	
 	private List<Territory> evaluateStartingPosition()
 	{
@@ -95,6 +113,26 @@ public class PlayerComputerBetter extends Player {
 		}
 		return bestTerritoryGroup;
 	}
+	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
+	{
+		discoveredTerritories.add(startingTerritory);
+		for (Territory t: startingTerritory.getAjacentTerritoryList())// ajacent To currentTerritory owned by this player&& not in mapping)
+		{
+			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
+			else
+			{
+				floodFill(t, discoveredTerritories);
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	////////
+	//Heuristics
+	////////
 	private Map<Territory, Double> ajacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
 	{
 		Map<Territory,Double> ajacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Double>();
@@ -110,6 +148,7 @@ public class PlayerComputerBetter extends Player {
 		}
 		return ajacentEnemyTerritoryHeuristicMap; 
 	}
+	
 	/**
 	 * Note: a territory that can be attacked from multiple places will just use the highest value, it does not merge
 	 * the probabilities from the various attackers.
@@ -136,74 +175,10 @@ public class PlayerComputerBetter extends Player {
 		return conquerProbabilityHeuristicMap;
 	}
 	
-	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
-	{
-		discoveredTerritories.add(startingTerritory);
-		for (Territory t: startingTerritory.getAjacentTerritoryList())// ajacent To currentTerritory owned by this player&& not in mapping)
-		{
-			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
-			else
-			{
-				floodFill(t, discoveredTerritories);
-			}
-		}
-	}
 	
-	private int numberOfAjacentEnemyTerritories(Territory territory)
-	{
-		int numberOfAjacentEnemyTerritories = 0;
-		for (Territory t:territory.getAjacentTerritoryList())
-		{
-			if(t.getOwner()!=this) numberOfAjacentEnemyTerritories++;
-		}
-		return numberOfAjacentEnemyTerritories;
-	}
 	
-	private Territory getOwnedTerritoryAjacentTo(Territory territoryToAttack)
-	{//can add in reinforce territory with most/least number of troops
-		for (Territory i:territoryToAttack.getAjacentTerritoryList())
-		{
-			if(i.getOwner()==this) return i;
-		}
-		throw new RuntimeException("no owned territory for " + name + " to attack " + territoryToAttack + " from");
-	}
-	private Territory getOwnedTerritoryWithHighestUnitCountAjacentTo(Territory targetTerritory)
-	{
-		int currentHighestTroopCount=-1;
-		Territory currentHighestTroopTerritory=null;
-		for (Territory i:targetTerritory.getAjacentTerritoryList())
-		{
-			if(i.getOwner()==this)
-			{
-				if(i.getUnitCount()>currentHighestTroopCount)
-				{
-					currentHighestTroopCount=i.getUnitCount();
-					currentHighestTroopTerritory=i;
-				}
-			}
-		}
-		if(currentHighestTroopTerritory==null) throw new RuntimeException("Computer screwed up: no owned territories ajacent to selected territory");
-		return currentHighestTroopTerritory;
-	}
 	
-	private Territory getLowestCostTerritory(Map<Territory, Double> territoryMap)
-	{
-		Territory currentLowestCostTerritory = null;
-		for (Territory i:territoryMap.keySet())
-		{
-			if(currentLowestCostTerritory==null)currentLowestCostTerritory=i;//to prevent null pointer exception in next step
-			if(territoryMap.get(i)<territoryMap.get(currentLowestCostTerritory)) currentLowestCostTerritory=i;		}
-		return currentLowestCostTerritory;
-	}
-	private Double getLowestCost(Map<Territory, Double> territoryMap)
-	{
-		double currentLowestCost=99999;
-		for (Territory i:territoryMap.keySet())
-		{
-			if(territoryMap.get(i)<currentLowestCost) currentLowestCost=territoryMap.get(i);
-		}
-		return currentLowestCost;
-	}
+
 
 
 	private Map<Territory, Double> getTerritoryAttackList()
@@ -236,7 +211,6 @@ public class PlayerComputerBetter extends Player {
 		}
 		return doubleMap;
 	}
-	//use this as soon as we implement another heuristic.
 	private Map<Territory, Double> addTerritoryWeights(List<Map<Territory, Double>> territoryListArray)
 	{
 		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
@@ -251,15 +225,56 @@ public class PlayerComputerBetter extends Player {
 		}			
 		return compositeMap;
 	}
-	/*private Map<Territory, Double> addTerritoryWeights(Map<Territory, Double> territoryListArray)
+
+	////////
+	//Territory Functions
+	////////
+	private int numberOfAjacentEnemyTerritories(Territory territory)
 	{
-		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
-			for(Territory t:territoryListArray.keySet())
-			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
-				double mappedTerritoryValue= territoryListArray.get(t)==null?0:territoryListArray.get(t);//arr. tertiary to avoid nulls.
-				double currentCompositeTerritoryValue = compositeMap.get(t)==null?0:compositeMap.get(t);
-				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
+		int numberOfAjacentEnemyTerritories = 0;
+		for (Territory t:territory.getAjacentTerritoryList())
+		{
+			if(t.getOwner()!=this) numberOfAjacentEnemyTerritories++;
+		}
+		return numberOfAjacentEnemyTerritories;
+	}
+	private Territory getOwnedTerritoryAjacentTo(Territory territoryToAttack)
+	{//can add in reinforce territory with most/least number of troops
+		for (Territory i:territoryToAttack.getAjacentTerritoryList())
+		{
+			if(i.getOwner()==this) return i;
+		}
+		throw new RuntimeException("no owned territory for " + name + " to attack " + territoryToAttack + " from");
+	}
+	private Territory getOwnedTerritoryWithHighestUnitCountAjacentTo(Territory targetTerritory)
+	{
+		int currentHighestTroopCount=-1;
+		Territory currentHighestTroopTerritory=null;
+		for (Territory i:targetTerritory.getAjacentTerritoryList())
+		{
+			if(i.getOwner()==this)
+			{
+				if(i.getUnitCount()>currentHighestTroopCount)
+				{
+					currentHighestTroopCount=i.getUnitCount();
+					currentHighestTroopTerritory=i;
+				}
 			}
-		return compositeMap;
-	}*/
+		}
+		if(currentHighestTroopTerritory==null) throw new RuntimeException("Computer screwed up: no owned territories ajacent to selected territory");
+		return currentHighestTroopTerritory;
+	}
+	
+	////////
+	//Misc. Functions
+	////////
+	private Map<Territory, Double> normalizeMap(Map<Territory, Double> mapping, float minValue, float maxValue)
+	{
+		for (Territory t : mapping.keySet())
+		{
+			double currentValue = mapping.get(t);
+			mapping.put(t, currentValue/maxValue-minValue);
+		}
+		return mapping;
+	}
 }
