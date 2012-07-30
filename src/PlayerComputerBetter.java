@@ -195,8 +195,8 @@ public class PlayerComputerBetter extends Player {
 		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
 			for(Territory t:territoryListArray.keySet())
 			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
-				double mappedTerritoryValue= territoryListArray.get(t);
-				double currentCompositeTerritoryValue = compositeMap.get(t);
+				double mappedTerritoryValue= territoryListArray.get(t)==null?0:territoryListArray.get(t);//arr. tertiary to avoid nulls.
+				double currentCompositeTerritoryValue = compositeMap.get(t)==null?0:compositeMap.get(t);
 				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
 			}
 		return compositeMap;
