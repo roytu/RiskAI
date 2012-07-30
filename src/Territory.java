@@ -19,12 +19,6 @@ public class Territory {
 	private TerritoryGraphics graphic;
 	private static BufferedWriter territoryDataWriter;
 	
-	private static final double[][] attackChart = {
-		{0.417, 0.106, 0.027},
-		{0.754, 0.363, 0.206},
-		{0.916, 0.656, 0.470},
-	}; //D vs. A
-	
 	public Territory(int x, int y)
 	{
 		linkedTerritories = new ArrayList<Territory>();
@@ -37,18 +31,18 @@ public class Territory {
 		//graphic.setCoords(100, 100);
 		graphic = new TerritoryGraphics(x,y,this);
 	}
-	public Territory(String name, Continent continent, List<String> adjacentTerritoryNames, int x, int y)
+	public Territory(String name, Continent continent, List<String> ajacentTerritoryNames, int x, int y)
 	{
 		this(x,y);
-		linkedTerritoryNames= new LinkedList<String>(adjacentTerritoryNames);
+		linkedTerritoryNames= new LinkedList<String>(ajacentTerritoryNames);
 		this.name=name;
 		this.continent=continent;
 	}
-	public List<String> getadjacentTerritoryNameList()
+	public List<String> getAjacentTerritoryNameList()
 	{
 		return new LinkedList<String>(linkedTerritoryNames);
 	}
-	public List<Territory> getadjacentTerritoryList()
+	public List<Territory> getAjacentTerritoryList()
 	{
 		return new LinkedList<Territory>(linkedTerritories);
 	}
@@ -56,7 +50,7 @@ public class Territory {
 	{
 		linkedTerritories.add(territory);
 	}
-	public int getNumberOfadjacentTerritories()
+	public int getNumberOfAjacentTerritories()
 	{
 		return linkedTerritories.size();
 	}
@@ -103,10 +97,11 @@ public class Territory {
 	 * Returns a set of adjacent enemy territories
 	 * @return Set<Territory>
 	 */
+
 	public Set<Territory> getAdjacentEnemyTerritories()
 	{
 		Set<Territory> adjacentTerritories = new HashSet<Territory>();
-		for (Territory t : getadjacentTerritoryList())
+		for (Territory t : getAjacentTerritoryList())
 		{
 			if(t.getOwner()!=getOwner())
 				adjacentTerritories.add(t);
@@ -204,24 +199,4 @@ public class Territory {
 		return this.graphic;
 	}
 
-	public double getChanceOfSuccessfulAttack(Territory from, Territory to)
-	{
-		if(canAttack(from, to))
-		{
-			return attackChart[to.getUnitCount()-1][from.getUnitCount()-1];
-		}
-		throw new RuntimeException("Can't attack");
-	}
-	
-	public boolean canAttack(Territory from, Territory to)
-	{
-		if(from.owner != to.owner && from.getUnitCount()>1)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
 }

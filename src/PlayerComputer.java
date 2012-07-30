@@ -62,7 +62,7 @@ public class PlayerComputer extends Player {
 	private void aiThinking()//this is all TEMPOROARY. I will implemet it neater and better.
 	{
 		if(currentCluster == null) currentCluster = evaluateStartingPosition();
-		territoriesToAttack = adjacentEnemyTerritoryHeuristic(currentCluster);
+		territoriesToAttack = ajacentEnemyTerritoryHeuristic(currentCluster);
 		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
 	}
 	
@@ -92,26 +92,26 @@ public class PlayerComputer extends Player {
 		return bestTerritoryGroup;
 	}
 	
-	private Map<Territory, Integer> adjacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
+	private Map<Territory, Integer> ajacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
 	{
-		Map<Territory,Integer> adjacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Integer>();
+		Map<Territory,Integer> ajacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Integer>();
 		for (Territory t:contiguousTerritories)
 		{
-			for (Territory u:t.getadjacentTerritoryList())
+			for (Territory u:t.getAjacentTerritoryList())
 			{
 				if(u.getOwner()!=this)
 				{
-					adjacentEnemyTerritoryHeuristicMap.put(u,numberOfadjacentEnemyTerritories(u));
+					ajacentEnemyTerritoryHeuristicMap.put(u,numberOfAjacentEnemyTerritories(u));
 				}
 			}
 		}
-		return adjacentEnemyTerritoryHeuristicMap; 
+		return ajacentEnemyTerritoryHeuristicMap; 
 	}
 	
 	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
 	{
 		discoveredTerritories.add(startingTerritory);
-		for (Territory t: startingTerritory.getadjacentTerritoryList())// adjacent To currentTerritory owned by this player&& not in mapping)
+		for (Territory t: startingTerritory.getAjacentTerritoryList())// ajacent To currentTerritory owned by this player&& not in mapping)
 		{
 			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
 			else
@@ -121,19 +121,19 @@ public class PlayerComputer extends Player {
 		}
 	}
 	
-	private int numberOfadjacentEnemyTerritories(Territory territory)
+	private int numberOfAjacentEnemyTerritories(Territory territory)
 	{
-		int numberOfadjacentEnemyTerritories = 0;
-		for (Territory t:territory.getadjacentTerritoryList())
+		int numberOfAjacentEnemyTerritories = 0;
+		for (Territory t:territory.getAjacentTerritoryList())
 		{
-			if(t.getOwner()!=this) numberOfadjacentEnemyTerritories++;
+			if(t.getOwner()!=this) numberOfAjacentEnemyTerritories++;
 		}
-		return numberOfadjacentEnemyTerritories;
+		return numberOfAjacentEnemyTerritories;
 	}
 	
-	private Territory getOwnedTerritoryadjacentTo(Territory territoryToAttack)
+	private Territory getOwnedTerritoryAjacentTo(Territory territoryToAttack)
 	{//can add in reinforce territory with most/least number of troops
-		for (Territory i:territoryToAttack.getadjacentTerritoryList())
+		for (Territory i:territoryToAttack.getAjacentTerritoryList())
 		{
 			if(i.getOwner()==this) return i;
 		}

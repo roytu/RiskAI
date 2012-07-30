@@ -56,7 +56,7 @@ public class PlayerComputerB extends Player {
 	private int getTerritoryHeuristic(Territory territory)
 	{
 		int h = 0;
-		h += 10-territory.getNumberOfadjacentTerritories();
+		h += 10-territory.getNumberOfAjacentTerritories();
 		h += -territory.getRelativeStrength() * 5;
 		return h;
 	}
