@@ -25,7 +25,7 @@ public class PlayerComputerBetter extends Player {
 	@Override
 	public void reinforcementPhase()
 	{
-		//TODO: Be shitty and place everything in one territory randomly
+		//TODO: Be shitty and place everything in one territory
 		
 		aiThinking();
 		Territory territory = getOwnedTerritoryAjacentTo(territoryTargeted);
@@ -60,9 +60,9 @@ public class PlayerComputerBetter extends Player {
 		}
 	}
 	
-	private void aiThinking()//this is all TEMPOROARY. I will implemet it neater and better.
+	private void aiThinking()//this is all TEMPORARY. I will implemet it neater and better.
 	{
-		if(currentCluster == null) currentCluster = evaluateStartingPosition();
+		 currentCluster = evaluateStartingPosition(); //used to have if(currentCluster == null)
 		territoriesToAttack = ajacentEnemyTerritoryHeuristic(currentCluster);
 		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
 	}
@@ -138,14 +138,18 @@ public class PlayerComputerBetter extends Player {
 		{
 			if(i.getOwner()==this) return i;
 		}
-		return null;
+		throw new RuntimeException("no owned territory for " + name + " to attack " + territoryToAttack + " from");
 	}
 	private Territory getLowestCostTerritory(Map<Territory, Integer> territoryMap)
 	{
-		Territory currentLowestCostTerritory=null;
+		Territory currentLowestCostTerritory = null;
+		Integer greatest = 0;
 		for (Territory i:territoryMap.keySet())
 		{
-			if(territoryMap.get(i)>territoryMap.get(currentLowestCostTerritory)) currentLowestCostTerritory=i;
+			if(territoryMap.get(i)>greatest){
+				currentLowestCostTerritory=i;
+				greatest = territoryMap.get(i);
+			}
 		}
 		return currentLowestCostTerritory;
 	}

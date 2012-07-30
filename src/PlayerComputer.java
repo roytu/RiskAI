@@ -138,7 +138,7 @@ public class PlayerComputer extends Player {
 		{
 			if(i.getOwner()==this) return i;
 		}
-		return null;
+		throw new RuntimeException("no territory to attack from");
 	}
 	private Territory getLowestCostTerritory(Map<Territory, Integer> territoryMap)
 	{

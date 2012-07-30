@@ -63,7 +63,28 @@ public abstract class Player {
 	
 	protected int calculateReinforcements()
 	{
+		//commented version is actual reinforcement counter, currently at automatically 3 for debug
+		//int reinforcements = 0;
+		//List<Continent> ownedContinents = ownedContinents();
+		//for (Continent c : ownedContinents) reinforcements+=c.getBonus();
+		//reinforcements+=Math.max(unitMap.keySet().size()/3,3);
+		//return reinforcements;
 		return 3;
+	}
+	
+	private List<Continent> ownedContinents()
+	{
+		List<Continent> owned = new ArrayList<Continent>();
+		for (Continent c : RiskAI.continentData)
+		{
+			boolean isOwned = true;
+			for (Territory t : c.territories())
+			{
+				if (t.getOwner() != this) isOwned = false;
+			}
+			if (isOwned) owned.add(c);
+		}
+		return owned;
 	}
 	
 	/**
@@ -142,10 +163,11 @@ public abstract class Player {
 				//System.out.println("defender wins");
 			}
 		}
-		if (to.getUnitCount() == 0)
+		if (to.getUnitCount() == 0) //if it was conquered
 		{
 			int movedArmies = from.getUnitCount()-1;
 			from.getOwner().reinforce(from, -movedArmies);
+			to.getOwner().unitMap.remove(to);
 			to.setOwner(from.getOwner());
 			to.getOwner().reinforce(to, movedArmies);
 		}
