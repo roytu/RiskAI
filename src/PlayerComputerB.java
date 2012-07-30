@@ -45,7 +45,8 @@ public class PlayerComputerB extends Player {
 		// TODO Auto-generated method stub
 		//Move random
 		Territory terrFrom = getRandomControlledTerritory();
-		Territory terrTo = terrFrom.getRandomLinkedOwnedTerritory(this);
+		//Territory terrTo = terrFrom.getRandomLinkedOwnedTerritory(this);
+		Territory terrTo = getMostValuableTerritory(RiskAI.territoryData);
 		if(terrTo != null && terrFrom.getUnitCount()>1)
 		{
 			move(terrFrom, terrTo, terrFrom.getUnitCount()-1);
