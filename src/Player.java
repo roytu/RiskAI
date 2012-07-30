@@ -10,14 +10,16 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 500;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 20;
 	//private List<Card> cardList;
-	protected Map<Territory, Integer> unitMap;
+	protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
 	protected int playerID;
 	private Color color;
 	protected String name;
-	
+	//private static final double[][] averageArmyLoss = {{0.917902,0.338333},{1.221814,0.420921},{0.745345,0.584059}}; 
+	//this is the average number of armies you would lose in a single attack with, if it's aAL[a][b], a attackers and b defenders
+	//except for that it's reversed, attackers are 0:3, 1:2, 2:1, defenders are 0:2, 1:1, and I doubt it'll be useful 
 	
 	public Player(int playerID)
 	{
@@ -37,23 +39,34 @@ public abstract class Player {
 	protected abstract void attackPhase();
 	protected abstract void tacticalMovePhase();
 	
+	private boolean isAlive()
+	{
+		if(unitMap.keySet().size()>0){
+			return true;
+		}
+		return false;
+	}
+	
 	protected void turn()
 	{
 		try
 		{
-			GuiMessages.addMessage(name+"'s turn begins");
+			if(isAlive())
+			{
+				GuiMessages.addMessage(name+"'s turn begins");
 			
-			GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
-			GuiMessages.addMessage(name+" recieves "+calculateReinforcements()+" reinforcements.");
-			reinforcementPhase();
-			//Thread.sleep(1000);
+				GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
+				GuiMessages.addMessage(name+" recieves "+calculateReinforcements()+" reinforcements.");
+				reinforcementPhase();
+				//Thread.sleep(1000);
 			
-			GuiMessages.addMessage("ATTACK PHASE BEGINS");
-			attackPhase();
-			//Thread.sleep(1000);
-			GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
-			tacticalMovePhase();
-			Thread.sleep(COMPUTER_PLAYER_DELAY_MS);
+				GuiMessages.addMessage("ATTACK PHASE BEGINS");
+				attackPhase();
+				//Thread.sleep(1000);
+				GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
+				tacticalMovePhase();
+				Thread.sleep(COMPUTER_PLAYER_DELAY_MS);
+			}
 		}
 		catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -64,11 +77,11 @@ public abstract class Player {
 	protected int calculateReinforcements()
 	{
 		//commented version is actual reinforcement counter, currently at automatically 3 for debug
-		//int reinforcements = 0;
-		//List<Continent> ownedContinents = ownedContinents();
-		//for (Continent c : ownedContinents) reinforcements+=c.getBonus();
-		//reinforcements+=Math.max(unitMap.keySet().size()/3,3);
-		//return reinforcements;
+//		int reinforcements = 0;
+//		List<Continent> ownedContinents = ownedContinents();
+//		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
+//		reinforcements+=Math.max(unitMap.keySet().size()/3,3);
+//		return reinforcements;
 		return 3;
 	}
 	
@@ -114,6 +127,8 @@ public abstract class Player {
 	
 	public void attack(Territory from, Territory to) 
 	{
+		if(from.getUnitCount()<=1 || to.getUnitCount()<1 || from.getOwner() == to.getOwner())
+			return;
 		int unitsFrom = from.getUnitCount();
 		int unitsTo = to.getUnitCount();
 		
@@ -205,7 +220,14 @@ public abstract class Player {
 	 */
 	public boolean isOwnerOf(Territory territory)
 	{
-		return unitMap.containsKey(territory);
+		if(unitMap.containsKey(territory))
+		{
+			if(unitMap.get(territory)>0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -234,5 +256,13 @@ public abstract class Player {
 	{
 		if (color == null) return Color.WHITE;
 		return color;
+	}
+	
+	public double probabilityOfWinning(int attackingArmies, int defendingArmies)
+	{
+		//this is an approximation at the moment but it's actually pretty close, especially with larger armies
+		double attackers = (attackingArmies-2)*1.1,defenders = defendingArmies; //1.1 is because of 3v2 attacker advantage, -2 is b/c
+																			// low #s of armies don't have it
+		return attackers/(attackers+defenders);
 	}
 }

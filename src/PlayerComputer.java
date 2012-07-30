@@ -27,8 +27,7 @@ public class PlayerComputer extends Player {
 	{
 		//TODO: Be shitty and place everything in one territory randomly
 		
-		aiThinking();
-		Territory territory = getOwnedTerritoryAjacentTo(territoryTargeted);
+		Territory territory = getRandomControlledTerritory();
 		int number = calculateReinforcements();
 		reinforce(territory, number);
 		GuiMessages.addMessage("Player " + playerID + " reinforced " + territory.name);
@@ -36,8 +35,8 @@ public class PlayerComputer extends Player {
 
 	@Override
 	protected void attackPhase() {
-		for(int i=0;i<20;i++)
-		{
+		/*for(int i=0;i<20;i++)
+		{*/
 			Territory terrFrom = getRandomControlledTerritory();
 			Territory terrTo = terrFrom.getRandomLinkedUnownedTerritory(this);
 			if(terrTo != null)
@@ -45,7 +44,7 @@ public class PlayerComputer extends Player {
 				attack(terrFrom, terrTo);
 				GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
 			}
-		}
+		/*}*/
 	}
 
 	@Override
@@ -149,7 +148,4 @@ public class PlayerComputer extends Player {
 		}
 		return currentLowestCostTerritory;
 	}
-
-
-
 }

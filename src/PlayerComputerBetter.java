@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public class PlayerComputerBetter extends Player {
 	List<Territory> currentCluster;
-	Map<Territory, Integer> territoriesToAttack;
+	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
 	
 	public PlayerComputerBetter(int playerID) {
@@ -62,11 +62,10 @@ public class PlayerComputerBetter extends Player {
 	
 	private void aiThinking()//this is all TEMPORARY. I will implemet it neater and better.
 	{
-		 currentCluster = evaluateStartingPosition(); //used to have if(currentCluster == null)
-		territoriesToAttack = ajacentEnemyTerritoryHeuristic(currentCluster);
+		/*if(currentCluster == null)*/ currentCluster = evaluateStartingPosition();
+		territoriesToAttack = getTerritoryAttackList();
 		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
 	}
-	
 	
 	private List<Territory> evaluateStartingPosition()
 	{
@@ -140,20 +139,65 @@ public class PlayerComputerBetter extends Player {
 		}
 		throw new RuntimeException("no owned territory for " + name + " to attack " + territoryToAttack + " from");
 	}
-	private Territory getLowestCostTerritory(Map<Territory, Integer> territoryMap)
+	private Territory getLowestCostTerritory(Map<Territory, Double> territoryMap)
 	{
 		Territory currentLowestCostTerritory = null;
-		Integer greatest = 0;
 		for (Territory i:territoryMap.keySet())
 		{
-			if(territoryMap.get(i)>greatest){
-				currentLowestCostTerritory=i;
-				greatest = territoryMap.get(i);
-			}
-		}
+			if(currentLowestCostTerritory==null)currentLowestCostTerritory=i;//to prevent null pointer exception in next step
+			if(territoryMap.get(i)<territoryMap.get(currentLowestCostTerritory)) currentLowestCostTerritory=i;		}
 		return currentLowestCostTerritory;
 	}
 
 
-
+	private Map<Territory, Double> getTerritoryAttackList()
+	{
+		Map<Territory, Integer> ajacentEnemyTerritoryList = ajacentEnemyTerritoryHeuristic(currentCluster);
+		double ajacentEnemyTerritoryFactor = 1.0;
+		/*
+		Map<Territory, Integer> HeuristicList2 = Heuristic2(currentCluster);
+		double HeuristicFactor = 1.0;
+		
+		etc.
+		 */
+		/*return ListA*factorA+ListB*FactorB;*/
+		Map<Territory, Double> ajacentEnemyWeightedList =multiplyListWeights(ajacentEnemyTerritoryList,ajacentEnemyTerritoryFactor);
+		return addTerritoryWeights(ajacentEnemyWeightedList);
+	}
+	private Map<Territory, Double> multiplyListWeights(Map<Territory, Integer> mapping, double factor)
+	{
+		Map<Territory, Double> doubleMap= new HashMap<Territory, Double>();
+		for(Territory t:mapping.keySet())
+		{
+			int valueT=mapping.get(t);
+			doubleMap.put(t,valueT*factor);
+		}
+		return doubleMap;
+	}
+	//use this as soon as we implement another heuristic.
+	/*private Map<Territory, Double> addTerritoryWeights(Map<Territory, Double>[] territoryListArray)
+	{
+		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
+		for(Map<Territory, Double> mapInArray : territoryListArray)
+		{
+			for(Territory t:mapInArray.keySet())
+			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
+				double mappedTerritoryValue= mapInArray.get(t);
+				double currentCompositeTerritoryValue = compositeMap.get(t);
+				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
+			}
+		}			
+		return compositeMap;
+	}*/
+	private Map<Territory, Double> addTerritoryWeights(Map<Territory, Double> territoryListArray)
+	{
+		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
+			for(Territory t:territoryListArray.keySet())
+			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
+				double mappedTerritoryValue= territoryListArray.get(t)==null?0:territoryListArray.get(t);//arr. tertiary to avoid nulls.
+				double currentCompositeTerritoryValue = compositeMap.get(t)==null?0:compositeMap.get(t);
+				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
+			}
+		return compositeMap;
+	}
 }
