@@ -44,6 +44,11 @@ public abstract class Player {
 		return false;
 	}
 	
+	public Set<Territory> getOwnedTerritories()
+	{
+		return unitMap.keySet();
+	}
+	
 	protected void turn()
 	{
 		try
