@@ -139,8 +139,8 @@ public abstract class Player {
 		Collections.sort(diceToList);
 		Collections.reverse(diceToList);
 		//DEBUG
-		System.out.println(diceFromList.toString());
-		System.out.println(diceToList.toString());
+		//System.out.println(diceFromList.toString());
+		//System.out.println(diceToList.toString());
 		//END DEBUG
 		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
 		{
