@@ -239,13 +239,14 @@ public class PlayerComputerBetter extends Player {
 	//use this as soon as we implement another heuristic.
 	private Map<Territory, Double> addTerritoryWeights(List<Map<Territory, Double>> territoryListArray)
 	{
+		for (Map<Territory,Double> m : territoryListArray) {if (m == null) throw new IllegalArgumentException("null list");}
 		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
 		for(Map<Territory, Double> mapInArray : territoryListArray)
 		{
 			for(Territory t:mapInArray.keySet())
 			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
 				double mappedTerritoryValue= mapInArray.get(t);
-				double currentCompositeTerritoryValue = compositeMap.get(t);
+				double currentCompositeTerritoryValue = compositeMap.get(t)==null?0:compositeMap.get(t);;
 				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
 			}
 		}			
