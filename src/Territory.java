@@ -92,7 +92,7 @@ public class Territory {
 	public int getRelativeStrength()
 	{
 		int enemyTroops = 0;
-		for(Territory territory : getadjacentEnemyTerritories())
+		for(Territory territory : getAdjacentEnemyTerritories())
 		{
 			enemyTroops += territory.getUnitCount();
 		}
@@ -103,7 +103,7 @@ public class Territory {
 	 * Returns a set of adjacent enemy territories
 	 * @return Set<Territory>
 	 */
-	public Set<Territory> getadjacentEnemyTerritories()
+	public Set<Territory> getAdjacentEnemyTerritories()
 	{
 		Set<Territory> adjacentTerritories = new HashSet<Territory>();
 		for (Territory t : getadjacentTerritoryList())

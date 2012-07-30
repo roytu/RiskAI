@@ -113,7 +113,7 @@ public class PlayerComputerBetter extends Player {
 		}
 		return bestTerritoryGroup;
 	}
-<<<<<<< HEAD
+
 	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
 	{
 		discoveredTerritories.add(startingTerritory);
@@ -134,10 +134,7 @@ public class PlayerComputerBetter extends Player {
 	////////
 	//Heuristics
 	////////
-	private Map<Territory, Double> ajacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
-=======
 	private Map<Territory, Double> adjacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
->>>>>>> 511488562cfa3f187a271cac4315eec821993c09
 	{
 		Map<Territory,Double> adjacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Double>();
 		for (Territory t:contiguousTerritories)
@@ -179,23 +176,6 @@ public class PlayerComputerBetter extends Player {
 		return conquerProbabilityHeuristicMap;
 	}
 	
-<<<<<<< HEAD
-	
-	
-=======
-	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
-	{
-		discoveredTerritories.add(startingTerritory);
-		for (Territory t: startingTerritory.getadjacentTerritoryList())// adjacent To currentTerritory owned by this player&& not in mapping)
-		{
-			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
-			else
-			{
-				floodFill(t, discoveredTerritories);
-			}
-		}
-	}
-	
 	private int numberOfadjacentEnemyTerritories(Territory territory)
 	{
 		int numberOfadjacentEnemyTerritories = 0;
@@ -232,7 +212,6 @@ public class PlayerComputerBetter extends Player {
 		if(currentHighestTroopTerritory==null) throw new RuntimeException("Computer screwed up: no owned territories adjacent to selected territory");
 		return currentHighestTroopTerritory;
 	}
->>>>>>> 511488562cfa3f187a271cac4315eec821993c09
 	
 
 
