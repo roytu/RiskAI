@@ -17,6 +17,9 @@ public abstract class Player {
 	protected int playerID;
 	private Color color;
 	protected String name;
+	//private static final double[][] averageArmyLoss = {{0.917902,0.338333},{1.221814,0.420921},{0.745345,0.584059}}; 
+	//this is the average number of armies you would lose in a single attack with, if it's aAL[a][b], a attackers and b defenders
+	//except for that it's reversed, attackers are 0:3, 1:2, 2:1, defenders are 0:2, 1:1, and I doubt it'll be useful 
 	
 	public Player(int playerID)
 	{
@@ -78,7 +81,28 @@ public abstract class Player {
 	
 	protected int calculateReinforcements()
 	{
+		//commented version is actual reinforcement counter, currently at automatically 3 for debug
+//		int reinforcements = 0;
+//		List<Continent> ownedContinents = ownedContinents();
+//		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
+//		reinforcements+=Math.max(unitMap.keySet().size()/3,3);
+//		return reinforcements;
 		return 3;
+	}
+	
+	private List<Continent> ownedContinents()
+	{
+		List<Continent> owned = new ArrayList<Continent>();
+		for (Continent c : RiskAI.continentData)
+		{
+			boolean isOwned = true;
+			for (Territory t : c.territories())
+			{
+				if (t.getOwner() != this) isOwned = false;
+			}
+			if (isOwned) owned.add(c);
+		}
+		return owned;
 	}
 	
 	/**
@@ -159,7 +183,7 @@ public abstract class Player {
 				//System.out.println("defender wins");
 			}
 		}
-		if (to.getUnitCount() == 0)
+		if (to.getUnitCount() == 0) //if it was conquered
 		{
 			int movedArmies = from.getUnitCount()-1;
 			from.getOwner().reinforce(from, -movedArmies);
@@ -237,5 +261,13 @@ public abstract class Player {
 	{
 		if (color == null) return Color.WHITE;
 		return color;
+	}
+	
+	public double probabilityOfWinning(int attackingArmies, int defendingArmies)
+	{
+		//this is an approximation at the moment but it's actually pretty close, especially with larger armies
+		double attackers = (attackingArmies-2)*1.1,defenders = defendingArmies; //1.1 is because of 3v2 attacker advantage, -2 is b/c
+																			// low #s of armies don't have it
+		return attackers/(attackers+defenders);
 	}
 }

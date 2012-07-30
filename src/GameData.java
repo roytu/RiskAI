@@ -32,7 +32,7 @@ public class GameData {
 		for(int i=0;i<computerCount;i++)
 		{
 			Player player;
-			if(i==seecretPlayerNumber)
+			if(true)//i==seecretPlayerNumber)
 			{
 				player = new PlayerComputerBetter(humanCount+i,playerColors[humanCount+i]);
 			}
