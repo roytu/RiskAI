@@ -19,6 +19,12 @@ public class Territory {
 	private TerritoryGraphics graphic;
 	private static BufferedWriter territoryDataWriter;
 	
+	private static final double[][] attackChart = {
+		{0.417, 0.106, 0.027},
+		{0.754, 0.363, 0.206},
+		{0.916, 0.656, 0.470},
+	}; //D vs. A
+	
 	public Territory(int x, int y)
 	{
 		linkedTerritories = new ArrayList<Territory>();
@@ -199,4 +205,24 @@ public class Territory {
 		return this.graphic;
 	}
 
+	public double getChanceOfSuccessfulAttack(Territory from, Territory to)
+	{
+		if(canAttack(from, to))
+		{
+			return attackChart[to.getUnitCount()-1][from.getUnitCount()-1];
+		}
+		throw new RuntimeException("Can't attack");
+	}
+	
+	public boolean canAttack(Territory from, Territory to)
+	{
+		if(from.owner != to.owner && from.getUnitCount()>1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
