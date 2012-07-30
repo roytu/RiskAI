@@ -28,7 +28,7 @@ public class PlayerComputerBetter extends Player {
 		//TODO: Be shitty and place everything in one territory
 		
 		aiThinking();
-		Territory territory = getOwnedTerritoryWithHighestUnitCountadjacentTo(territoryTargeted);
+		Territory territory = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
 		int number = calculateReinforcements();
 		reinforce(territory, number);
 		GuiMessages.addMessage("Player " + playerID + " reinforced " + territory.name);
@@ -40,7 +40,7 @@ public class PlayerComputerBetter extends Player {
 		{
 			aiThinking();
 			if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
-			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountadjacentTo(territoryTargeted);
+			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
 			Territory terrTo = territoryTargeted;
 			if(terrTo != null)
 			{
@@ -113,11 +113,10 @@ public class PlayerComputerBetter extends Player {
 		}
 		return bestTerritoryGroup;
 	}
-<<<<<<< HEAD
 	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
 	{
 		discoveredTerritories.add(startingTerritory);
-		for (Territory t: startingTerritory.getAjacentTerritoryList())// ajacent To currentTerritory owned by this player&& not in mapping)
+		for (Territory t: startingTerritory.getadjacentTerritoryList())// ajacent To currentTerritory owned by this player&& not in mapping)
 		{
 			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
 			else
@@ -127,30 +126,23 @@ public class PlayerComputerBetter extends Player {
 		}
 	}
 	
-	
-	
-	
-	
 	////////
 	//Heuristics
 	////////
-	private Map<Territory, Double> ajacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
-=======
 	private Map<Territory, Double> adjacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
->>>>>>> 511488562cfa3f187a271cac4315eec821993c09
 	{
-		Map<Territory,Double> adjacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Double>();
+		Map<Territory,Double> ajacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Double>();
 		for (Territory t:contiguousTerritories)
 		{
 			for (Territory u:t.getadjacentTerritoryList())
 			{
 				if(u.getOwner()!=this)
 				{
-					adjacentEnemyTerritoryHeuristicMap.put(u,(double)numberOfadjacentEnemyTerritories(u));
+					ajacentEnemyTerritoryHeuristicMap.put(u,(double)numberOfAjacentEnemyTerritories(u));
 				}
 			}
 		}
-		return adjacentEnemyTerritoryHeuristicMap; 
+		return ajacentEnemyTerritoryHeuristicMap; 
 	}
 	
 	/**
@@ -179,68 +171,10 @@ public class PlayerComputerBetter extends Player {
 		return conquerProbabilityHeuristicMap;
 	}
 	
-<<<<<<< HEAD
-	
-	
-=======
-	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
-	{
-		discoveredTerritories.add(startingTerritory);
-		for (Territory t: startingTerritory.getadjacentTerritoryList())// adjacent To currentTerritory owned by this player&& not in mapping)
-		{
-			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
-			else
-			{
-				floodFill(t, discoveredTerritories);
-			}
-		}
-	}
-	
-	private int numberOfadjacentEnemyTerritories(Territory territory)
-	{
-		int numberOfadjacentEnemyTerritories = 0;
-		for (Territory t:territory.getadjacentTerritoryList())
-		{
-			if(t.getOwner()!=this) numberOfadjacentEnemyTerritories++;
-		}
-		return numberOfadjacentEnemyTerritories;
-	}
-	
-	private Territory getOwnedTerritoryadjacentTo(Territory territoryToAttack)
-	{//can add in reinforce territory with most/least number of troops
-		for (Territory i:territoryToAttack.getadjacentTerritoryList())
-		{
-			if(i.getOwner()==this) return i;
-		}
-		throw new RuntimeException("no owned territory for " + name + " to attack " + territoryToAttack + " from");
-	}
-	private Territory getOwnedTerritoryWithHighestUnitCountadjacentTo(Territory targetTerritory)
-	{
-		int currentHighestTroopCount=-1;
-		Territory currentHighestTroopTerritory=null;
-		for (Territory i:targetTerritory.getadjacentTerritoryList())
-		{
-			if(i.getOwner()==this)
-			{
-				if(i.getUnitCount()>currentHighestTroopCount)
-				{
-					currentHighestTroopCount=i.getUnitCount();
-					currentHighestTroopTerritory=i;
-				}
-			}
-		}
-		if(currentHighestTroopTerritory==null) throw new RuntimeException("Computer screwed up: no owned territories adjacent to selected territory");
-		return currentHighestTroopTerritory;
-	}
->>>>>>> 511488562cfa3f187a271cac4315eec821993c09
-	
-
-
-
 	private Map<Territory, Double> getTerritoryAttackList()
 	{
-		Map<Territory, Double> adjacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
-		double adjacentEnemyTerritoryFactor = 1.0;
+		Map<Territory, Double> ajacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
+		double ajacentEnemyTerritoryFactor = 1.0;
 		Map<Territory, Double> conquerProbList = conquerProbabilityHeuristic(currentCluster);
 		double conquerProbabilityFactor = 5.0; //This has to be much higher since it ranges from 0 to 1
 		//rather than from 1 to 6 like the prior one.
@@ -250,10 +184,10 @@ public class PlayerComputerBetter extends Player {
 		
 		etc.
 		 */
-		Map<Territory, Double> adjacentEnemyWeightedList =multiplyListWeights(adjacentEnemyTerritoryList,adjacentEnemyTerritoryFactor);
+		Map<Territory, Double> ajacentEnemyWeightedList =multiplyListWeights(ajacentEnemyTerritoryList,ajacentEnemyTerritoryFactor);
 		Map<Territory, Double> conquerProbWeightedList = multiplyListWeights(conquerProbList,conquerProbabilityFactor);
 		List<Map<Territory,Double>> lists = new ArrayList<Map<Territory,Double>>();
-		lists.add(adjacentEnemyWeightedList);
+		lists.add(ajacentEnemyWeightedList);
 		lists.add(conquerProbWeightedList);
 		return addTerritoryWeights(lists);
 	}
@@ -288,26 +222,26 @@ public class PlayerComputerBetter extends Player {
 	////////
 	private int numberOfAjacentEnemyTerritories(Territory territory)
 	{
-		int numberOfAjacentEnemyTerritories = 0;
-		for (Territory t:territory.getAjacentTerritoryList())
+		int numberOfAdjacentEnemyTerritories = 0;
+		for (Territory t:territory.getadjacentTerritoryList())
 		{
-			if(t.getOwner()!=this) numberOfAjacentEnemyTerritories++;
+			if(t.getOwner()!=this) numberOfAdjacentEnemyTerritories++;
 		}
-		return numberOfAjacentEnemyTerritories;
+		return numberOfAdjacentEnemyTerritories;
 	}
 	private Territory getOwnedTerritoryAjacentTo(Territory territoryToAttack)
 	{//can add in reinforce territory with most/least number of troops
-		for (Territory i:territoryToAttack.getAjacentTerritoryList())
+		for (Territory i:territoryToAttack.getadjacentTerritoryList())
 		{
 			if(i.getOwner()==this) return i;
 		}
 		throw new RuntimeException("no owned territory for " + name + " to attack " + territoryToAttack + " from");
 	}
-	private Territory getOwnedTerritoryWithHighestUnitCountAjacentTo(Territory targetTerritory)
+	private Territory getOwnedTerritoryWithHighestUnitCountAdjacentTo(Territory targetTerritory)
 	{
 		int currentHighestTroopCount=-1;
 		Territory currentHighestTroopTerritory=null;
-		for (Territory i:targetTerritory.getAjacentTerritoryList())
+		for (Territory i:targetTerritory.getadjacentTerritoryList())
 		{
 			if(i.getOwner()==this)
 			{
