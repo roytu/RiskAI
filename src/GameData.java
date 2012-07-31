@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameData {
-	public List<Player> playerList;
+	public static List<Player> playerList;
 	private Player whoseTurn;
 	//Colors to initialize the first 6 players with, in order
 	private static final Color[] playerColors = 
