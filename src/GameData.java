@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameData {
-	public List<Player> playerList;
+	public static List<Player> playerList;
 	private Player whoseTurn;
 	//Colors to initialize the first 6 players with, in order
 	private static final Color[] playerColors = 
@@ -23,7 +23,7 @@ public class GameData {
 	 */
 	public GameData(int humanCount, int computerCount){
 		playerList = new ArrayList<Player>();
-		int seecretPlayerNumber=0;
+		int seecretPlayerNumber=(int) 0;//(Math.random()*computerCount);
 		for(int i=0;i<humanCount;i++)
 		{
 			Player player = new PlayerHuman(i,playerColors[i]);
@@ -44,14 +44,32 @@ public class GameData {
 		}
 	}
 	
-	public void gameRun(){
-		while(true){
-			for(Player player : playerList){
-				whoseTurn = player;
-				player.turn();
+	public int gameRun(){
+		int turnIndex=0;
+		int totalturnnumber=0;
+			while(!isGameOver())
+			{
+				whoseTurn=playerList.get(turnIndex);
+				try{whoseTurn.turn();}
+				catch(GameOverException e){}
+				turnIndex=++turnIndex%playerList.size();
+				totalturnnumber++;
 			}
-		}
+		return totalturnnumber;
+		
 	}
+	private boolean isGameOver()
+	{
+		int numberOfAlivePlayers=0;
+	for (Player p:playerList)
+		{
+			if(p.isAlive()) numberOfAlivePlayers++;
+		}
+		if(numberOfAlivePlayers==1) return true;
+		//else
+		return false;
+	}
+	
 	
 	public void setupGameboard(List<Territory> territoryList)
 	{
@@ -70,6 +88,12 @@ public class GameData {
 		for(Territory t:territoryList)
 		{
 			t.getOwner().reinforce(t, 3);
+		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		/*
 		while(true)

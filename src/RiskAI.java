@@ -16,9 +16,19 @@ public class RiskAI{
 	{
 		//Initialize system information
 		init();
-		currentGame.setupGameboard(territoryData);
-		currentGame.gameRun();
 		
+		float numberOfGames=0;
+		float totalTurns=0;
+		while(numberOfGames<10)
+		{
+			currentGame.setupGameboard(territoryData);
+			totalTurns+=currentGame.gameRun();
+			numberOfGames++;
+			System.out.println(numberOfGames+" Games finished.");
+			
+		}
+		System.out.println(totalTurns/numberOfGames);
+
 		/*terrName("Ural").setOwner(currentGame.getPlayer(1));
 		terrName("Afghanistan").setOwner(currentGame.getPlayer(2));
 		currentGame.getPlayer(1).reinforce(terrName("Ural"),3);
