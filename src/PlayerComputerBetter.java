@@ -91,7 +91,7 @@ public class PlayerComputerBetter extends Player {
 	
 	private List<Territory> evaluateStartingPosition()
 	{
-		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(getUnitMap());
+		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(unitMap);
 
 		List<Territory> discoveredTerritories = new ArrayList<Territory>();
 		List<Territory> bestTerritoryGroup = new ArrayList<Territory>();
