@@ -19,7 +19,7 @@ public class RiskAI{
 		
 		float numberOfGames=0;
 		float totalTurns=0;
-		while(numberOfGames<10)
+		while(numberOfGames<20)
 		{
 			currentGame.setupGameboard(territoryData);
 			totalTurns+=currentGame.gameRun();

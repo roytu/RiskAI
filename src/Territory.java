@@ -16,6 +16,7 @@ public class Territory {
 	private Continent continent; //Only for data retrieval
 	private List<String> linkedTerritoryNames;
 	private Player owner;
+	private int numberOfUnits;
 	private TerritoryGraphics graphic;
 	private static BufferedWriter territoryDataWriter;
 	
@@ -135,12 +136,17 @@ public class Territory {
 	
 	public int getUnitCount()
 	{
-		return owner!=null ? owner.getUnitsInTerritory(this) : 0;
+		return numberOfUnits;
+		/*return owner!=null ? owner.getUnitsInTerritory(this) : 0;*/
+	}
+	public void addUnits(int unitsToAdd)
+	{
+		numberOfUnits+=unitsToAdd;
 	}
 	
 	public Player getOwner()
 	{
-		for(Player player : GameData.playerList)
+		/*for(Player player : GameData.playerList)
 		{
 			if(player.unitMap.containsKey(this))
 			{
@@ -149,9 +155,9 @@ public class Territory {
 					return player;
 				}
 			}
-		}
+		}*/
 		//return null;
-		return owner;
+		return this.owner;
 	}
 
 	public void setOwner(Player owner)

@@ -47,17 +47,22 @@ public abstract class Player {
 	
 	public boolean isAlive()
 	{
-		if(unitMap.keySet().size()>0){
+		if(getTerritoryMap().keySet().size()>0){
 			return true;
 		}
 		return false;
 	}
 	
-	public Set<Territory> getOwnedTerritories()
+	/*public Map<Territory, Integer> getTerritoryMap()
 	{
-		return unitMap.keySet();
-	}
-	public Map<Territory, Integer> getUnitMap()
+		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>();
+		for (Territory t:RiskAI.territoryData)
+		{
+			if(t.getOwner()==this) ownedTerritories.put(t, 0);
+		}
+		return ownedTerritories;
+	}*/
+	public Map<Territory, Integer> getTerritoryMap()
 	{
 		HashMap<Territory, Integer> territoryUnitMap = new HashMap<Territory, Integer>();
 		for (Territory t:RiskAI.territoryData)
@@ -100,9 +105,10 @@ public abstract class Player {
 		int reinforcements = 0;
 //		List<Continent> ownedContinents = ownedContinents();
 //		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
-		reinforcements+=Math.max(unitMap.keySet().size()/3,3);
+		reinforcements+=Math.max(getTerritoryMap().keySet().size()/3,3);
 		return reinforcements;
 	}
+	
 	
 	private List<Continent> ownedContinents()
 	{
@@ -152,21 +158,24 @@ public abstract class Player {
 	 */
 	public void reinforce(Territory territory, int number)
 	{
-		if(unitMap.containsKey(territory))
+		territory.addUnits(number);
+		/*if(unitMap.containsKey(territory))
 		{
 			unitMap.put(territory, unitMap.get(territory) + number);
 		}
 		else
 		{
 			unitMap.put(territory, number);
-		}
+		}*/
 		if(number>0) GuiMessages.addMessage(territory.name+" reinforced");
 	}
 	
 	public void move(Territory from, Territory to, int number)
 	{
-		unitMap.put(from, unitMap.get(from)-number);
-		unitMap.put(to, unitMap.get(to)+number);
+		from.addUnits(-number);
+		to.addUnits(number);
+		/*unitMap.put(from, unitMap.get(from)-number);
+		unitMap.put(to, unitMap.get(to)+number);*/
 	}
 	
 	public void attack(Territory from, Territory to) 
@@ -226,7 +235,7 @@ public abstract class Player {
 		{
 			int movedArmies = from.getUnitCount()-1;
 			from.getOwner().reinforce(from, -movedArmies);
-			to.getOwner().unitMap.remove(to);
+			//to.getOwner().unitMap.remove(to);
 			to.setOwner(from.getOwner());
 			to.getOwner().reinforce(to, movedArmies);
 		}
@@ -241,7 +250,7 @@ public abstract class Player {
 	 */
 	public Territory getRandomControlledTerritory()
 	{
-		Set<Territory> territories = unitMap.keySet();
+		Set<Territory> territories = getTerritoryMap().keySet();
 		Random random = new Random();
 		int territoryID = random.nextInt(territories.size());
 		int i = 0;
@@ -264,12 +273,9 @@ public abstract class Player {
 	 */
 	public boolean isOwnerOf(Territory territory)
 	{
-		if(unitMap.containsKey(territory))
+		if(territory.getOwner()==this)
 		{
-			if(unitMap.get(territory)>0)
-			{
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
@@ -282,14 +288,15 @@ public abstract class Player {
 	 */
 	public int getUnitsInTerritory(Territory territory)
 	{
-		if(unitMap.containsKey(territory))
+		return territory.getUnitCount();
+		/*if(unitMap.containsKey(territory))
 		{
 			return unitMap.get(territory);
 		}
 		else
 		{
 			return 0;
-		}
+		}*/
 	}
 	
 	/**

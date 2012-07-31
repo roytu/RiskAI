@@ -95,7 +95,7 @@ public class PlayerComputerBetter extends Player {
 	
 	private List<Territory> evaluateStartingPosition()
 	{
-		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(unitMap);
+		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(this.getTerritoryMap());
 
 		List<Territory> discoveredTerritories = new ArrayList<Territory>();
 		List<Territory> bestTerritoryGroup = new ArrayList<Territory>();
@@ -237,12 +237,12 @@ public class PlayerComputerBetter extends Player {
 				if(u.getOwner()!=this)
 				{
 					//map u to fraction of total armies owned by the player
-					Set<Territory> owned = new HashSet<Territory>(unitMap.keySet());
+					Set<Territory> owned = new HashSet<Territory>(this.getTerritoryMap().keySet());
 					owned.add(u);
 					List<Set<Territory>> totalOwneds = new ArrayList<Set<Territory>>();
 					for (int i = 0; i < RiskAI.PLAYERS_COMP+RiskAI.PLAYERS_HUMAN; i++) //for each player total
 					{
-						Set<Territory> otherOwned = RiskAI.currentGame.getPlayer(i).getOwnedTerritories();
+						Set<Territory> otherOwned = RiskAI.currentGame.getPlayer(i).getTerritoryMap().keySet();
 						otherOwned.remove(u); //This will not do anything if it doesn't contain u, so it will not give exceptions.
 						totalOwneds.add(otherOwned);
 					}
