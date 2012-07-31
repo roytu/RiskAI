@@ -36,8 +36,8 @@ public class PlayerComputerB extends Player {
 				ownedEnemyTerritories.add(enemy);
 			}
 		}
-		//Territory terrFrom = 
-		//Territory terrTo = getMostValuableTerritory(ownedEnemyTerritories);
+		Territory terrTo = getMostValuableTerritory(ownedEnemyTerritories);
+		//Territory terrFrom = terrTo.getadjacentTerritoryList()
 		
 		/*
 		for(int i=0;i<20;i++)
