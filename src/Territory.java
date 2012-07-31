@@ -249,6 +249,27 @@ public class Territory {
 		return set;
 	}
 	
+	public static Set<Territory> getWeakestTerritory(Set<Territory> territorySet)
+	{
+		int min = Integer.MAX_VALUE;
+		Set<Territory> set = new HashSet<Territory>();
+		for(Territory territory : territorySet)
+		{
+			int unitCount = territory.getUnitCount();
+			if(unitCount < min)
+			{
+				set.clear();
+				set.add(territory);
+				min = unitCount;
+			}
+			else if(unitCount == min)
+			{
+				set.add(territory);
+			}
+		}
+		return set;
+	}
+	
 	public static boolean canAttack(Territory from, Territory to)
 	{
 		if(from.owner != to.owner && from.getUnitCount()>1)
