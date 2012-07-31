@@ -35,7 +35,7 @@ public class PlayerComputer extends Player {
 
 	@Override
 	protected void attackPhase() {
-		//for(int i=0;i<10;i++)
+		for(int i=0;i<20;i++)
 		{
 			Territory terrFrom = getRandomControlledTerritory();
 			Territory terrTo = terrFrom.getRandomLinkedUnownedTerritory(this);

@@ -10,7 +10,7 @@ public class RiskAI{
 	public static Gfx gfx;
 	
 	public static final int PLAYERS_HUMAN = 0;
-	public static final int PLAYERS_COMP = 2;
+	public static final int PLAYERS_COMP = 3;
 	
 	public static void main(String[] args)
 	{
@@ -19,7 +19,7 @@ public class RiskAI{
 		
 		float numberOfGames=0;
 		float totalTurns=0;
-		while(numberOfGames<10)
+		while(numberOfGames<1)
 		{
 			currentGame.setupGameboard(territoryData);
 			totalTurns+=currentGame.gameRun();
