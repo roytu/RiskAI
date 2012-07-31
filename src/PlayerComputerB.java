@@ -28,6 +28,9 @@ public class PlayerComputerB extends Player {
 
 	@Override
 	protected void attackPhase() {
+		//TODO Loop through linked enemy territories and check for things that are easy to hold
+		
+		/*
 		for(int i=0;i<20;i++)
 		{
 			Territory terrFrom = getRandomControlledTerritory();
@@ -38,6 +41,7 @@ public class PlayerComputerB extends Player {
 				GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
 			}
 		}
+		*/
 	}
 
 	@Override

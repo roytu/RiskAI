@@ -199,5 +199,16 @@ public class Territory {
 	{
 		return this.graphic;
 	}
-
+	public double getChanceOfSuccessfulAttack(int attackers, int defenders)
+	{
+		//TODO Fix this, it's crap
+		if(attackers > defenders)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 }
