@@ -19,11 +19,11 @@ public class Territory {
 	private TerritoryGraphics graphic;
 	private static BufferedWriter territoryDataWriter;
 	
-	private static final double[][] attackChart = {
-		{0.417, 0.106, 0.027},
-		{0.754, 0.363, 0.206},
-		{0.916, 0.656, 0.470},
-	}; //D vs. A
+//	private static final double[][] attackChart = {
+//		{0.417, 0.106, 0.027},
+//		{0.754, 0.363, 0.206},
+//		{0.916, 0.656, 0.470},
+//	}; //D vs. A
 	
 	public Territory(int x, int y)
 	{
@@ -43,6 +43,7 @@ public class Territory {
 		linkedTerritoryNames= new LinkedList<String>(adjacentTerritoryNames);
 		this.name=name;
 		this.continent=continent;
+		continent.addTerritory(this);
 	}
 	public List<String> getAdjacentTerritoryNameList()
 	{
@@ -140,7 +141,7 @@ public class Territory {
 	
 	public Player getOwner()
 	{
-		for(Player player : GameData.playerList)
+		for(Player player : RiskAI.currentGame.playerList)
 		{
 			if(player.unitMap.containsKey(this))
 			{
@@ -241,6 +242,27 @@ public class Territory {
 				max = unitCount;
 			}
 			else if(unitCount == max)
+			{
+				set.add(territory);
+			}
+		}
+		return set;
+	}
+	
+	public static Set<Territory> getWeakestTerritory(Set<Territory> territorySet)
+	{
+		int min = Integer.MAX_VALUE;
+		Set<Territory> set = new HashSet<Territory>();
+		for(Territory territory : territorySet)
+		{
+			int unitCount = territory.getUnitCount();
+			if(unitCount < min)
+			{
+				set.clear();
+				set.add(territory);
+				min = unitCount;
+			}
+			else if(unitCount == min)
 			{
 				set.add(territory);
 			}

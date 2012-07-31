@@ -135,12 +135,12 @@ public class PlayerComputerBetter extends Player {
 	////////
 	private Map<Territory, Double> getTerritoryAttackList()
 	{
-		Map<Territory, Double> ajacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
-		double ajacentEnemyTerritoryFactor = 1.0;
+		Map<Territory, Double> adjacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
+		double adjacentEnemyTerritoryFactor = 0.1;
 		Map<Territory, Double> conquerProbList = conquerProbabilityHeuristic(currentCluster);
-		double conquerProbabilityFactor = 5.0; 
+		double conquerProbabilityFactor = 0.4;
 		Map<Territory, Double> reinforcementsList = reinforcementsHeuristic(currentCluster);
-		double reinforcementsFactor = 6.0; //These have to be much higher since they range from 0 to 1
+		double reinforcementsFactor = 0.5; //These have to be much higher since they range from 0 to 1
 		//rather than from 1 to 6 like the first one.
 		/*
 		Map<Territory, Integer> OtherHeuristicList = OtherHeuristic(currentCluster);
@@ -148,7 +148,7 @@ public class PlayerComputerBetter extends Player {
 		
 		etc.
 		 */
-		Map<Territory, Double> adjacentEnemyWeightedList =multiplyListWeights(ajacentEnemyTerritoryList,ajacentEnemyTerritoryFactor);
+		Map<Territory, Double> adjacentEnemyWeightedList =multiplyListWeights(adjacentEnemyTerritoryList,adjacentEnemyTerritoryFactor);
 		Map<Territory, Double> conquerProbWeightedList = multiplyListWeights(conquerProbList,conquerProbabilityFactor);
 		Map<Territory, Double> reinforcementsWeightedList = multiplyListWeights(reinforcementsList, reinforcementsFactor);
 		List<Map<Territory,Double>> lists = new ArrayList<Map<Territory,Double>>();
@@ -188,19 +188,19 @@ public class PlayerComputerBetter extends Player {
 	////////
 	private Map<Territory, Double> adjacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
 	{
-		Map<Territory,Double> ajacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Double>();
+		Map<Territory,Double> adjacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Double>();
 		for (Territory t:contiguousTerritories)
 		{
 			for (Territory u:t.getadjacentTerritoryList())
 			{
 				if(u.getOwner()!=this)
 				{
-					ajacentEnemyTerritoryHeuristicMap.put(u,(double)numberOfAjacentEnemyTerritories(u));
+					adjacentEnemyTerritoryHeuristicMap.put(u,(double)numberOfAdjacentEnemyTerritories(u));
 				}
 			}
 		}
-		//                 (map to normalize,        min value=0, max value=6, invert)
-		return normalizeMap(ajacentEnemyTerritoryHeuristicMap,0,6,true); 
+		//                 (map to normalize,         min value=0, max value=6, invert)
+		return normalizeMap(adjacentEnemyTerritoryHeuristicMap,0,6,true); 
 	}
 	
 	/**
@@ -273,7 +273,7 @@ public class PlayerComputerBetter extends Player {
 	////////
 	//Territory Functions
 	////////
-	private int numberOfAjacentEnemyTerritories(Territory territory)
+	private int numberOfAdjacentEnemyTerritories(Territory territory)
 	{
 		int numberOfAdjacentEnemyTerritories = 0;
 		for (Territory t:territory.getadjacentTerritoryList())
@@ -282,7 +282,7 @@ public class PlayerComputerBetter extends Player {
 		}
 		return numberOfAdjacentEnemyTerritories;
 	}
-	private Territory getOwnedTerritoryAjacentTo(Territory territoryToAttack)
+	private Territory getOwnedTerritoryAdjacentTo(Territory territoryToAttack)
 	{//can add in reinforce territory with most/least number of troops
 		for (Territory i:territoryToAttack.getadjacentTerritoryList())
 		{
