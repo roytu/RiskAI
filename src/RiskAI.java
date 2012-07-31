@@ -10,7 +10,7 @@ public class RiskAI{
 	public static Gfx gfx;
 	
 	private static final int PLAYERS_HUMAN = 0;
-	private static final int PLAYERS_COMP = 3;
+	private static final int PLAYERS_COMP = 2;
 	
 	public static void main(String[] args)
 	{

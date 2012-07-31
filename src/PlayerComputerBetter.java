@@ -39,8 +39,8 @@ public class PlayerComputerBetter extends Player {
 		for(int i=0;i<5;i++)
 		{
 			aiThinking();
-			if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
 			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
+			if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
 			Territory terrTo = territoryTargeted;
 			if(terrTo != null)
 			{
@@ -68,7 +68,6 @@ public class PlayerComputerBetter extends Player {
 		territoriesToAttack = getTerritoryAttackList();
 		//TODO Insert conquer prob heuristic somewhere in here with weights later
 		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
-		if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
 	}
 	private Territory getLowestCostTerritory(Map<Territory, Double> territoryMap)
 	{
@@ -128,7 +127,7 @@ public class PlayerComputerBetter extends Player {
 	}
 	
 	////////
-	//Heuristics
+	//Individual Heuristics
 	////////
 	private Map<Territory, Double> adjacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
 	{
@@ -143,7 +142,8 @@ public class PlayerComputerBetter extends Player {
 				}
 			}
 		}
-		return ajacentEnemyTerritoryHeuristicMap; 
+		//                 (map to normalize,        min value=0, max value=6, invert)
+		return normalizeMap(ajacentEnemyTerritoryHeuristicMap,0,6,true); 
 	}
 	
 	/**
@@ -212,10 +212,9 @@ public class PlayerComputerBetter extends Player {
 	private Map<Territory, Double> getTerritoryAttackList()
 	{
 		Map<Territory, Double> ajacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
-		double ajacentEnemyTerritoryFactor = 1.0;
+		double ajacentEnemyTerritoryFactor = 0.5;
 		Map<Territory, Double> conquerProbList = conquerProbabilityHeuristic(currentCluster);
-		double conquerProbabilityFactor = 5.0; //This has to be much higher since it ranges from 0 to 1
-		//rather than from 1 to 6 like the prior one.
+		double conquerProbabilityFactor = 0.5;
 		/*
 		Map<Territory, Integer> OtherHeuristicList = OtherHeuristic(currentCluster);
 		double OtherHeuristicFactor = 1.0;
@@ -229,6 +228,7 @@ public class PlayerComputerBetter extends Player {
 		lists.add(conquerProbWeightedList);
 		return addTerritoryWeights(lists);
 	}
+	
 	private Map<Territory, Double> multiplyListWeights(Map<Territory, Double> mapping, double factor)
 	{
 		Map<Territory, Double> doubleMap= new HashMap<Territory, Double>();
@@ -247,7 +247,7 @@ public class PlayerComputerBetter extends Player {
 			for(Territory t:mapInArray.keySet())
 			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
 				double mappedTerritoryValue= mapInArray.get(t);
-				double currentCompositeTerritoryValue = compositeMap.get(t);
+				double currentCompositeTerritoryValue = compositeMap.get(t)==null?0:compositeMap.get(t);
 				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
 			}
 		}			
@@ -289,19 +289,29 @@ public class PlayerComputerBetter extends Player {
 				}
 			}
 		}
-		if(currentHighestTroopTerritory==null) throw new RuntimeException("Computer screwed up: no owned territories ajacent to selected territory");
+		if(currentHighestTroopTerritory==null)
+		{
+			throw new RuntimeException("Computer screwed up: no owned territories ajacent to selected territory");
+		}
 		return currentHighestTroopTerritory;
 	}
 	
 	////////
 	//Misc. Functions
 	////////
-	private Map<Territory, Double> normalizeMap(Map<Territory, Double> mapping, float minValue, float maxValue)
+	private Map<Territory, Double> normalizeMap(Map<Territory, Double> mapping, float minValue, float maxValue, boolean invert)
 	{
 		for (Territory t : mapping.keySet())
 		{
 			double currentValue = mapping.get(t);
-			mapping.put(t, currentValue/maxValue-minValue);
+			if(invert)
+			{
+				mapping.put(t, 1-(currentValue/maxValue-minValue));
+			}
+			else
+			{
+				mapping.put(t, currentValue/maxValue-minValue);
+			}
 		}
 		return mapping;
 	}

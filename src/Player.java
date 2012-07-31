@@ -10,14 +10,20 @@ import java.util.Set;
 
 
 public abstract class Player {
-	
-	public static final int COMPUTER_PLAYER_DELAY_MS = 10;
+
+	public static final int COMPUTER_PLAYER_DELAY_MS = 20;
+
 	//private List<Card> cardList;
 	protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
 	protected int playerID;
 	private Color color;
 	protected String name;
+	/*
+	0.417 0.106 0.027
+	0.754 0.363 0.206
+	0.916 0.656 0.470
+	*/
 	//private static final double[][] averageArmyLoss = {{0.917902,0.338333},{1.221814,0.420921},{0.745345,0.584059}}; 
 	//this is the average number of armies you would lose in a single attack with, if it's aAL[a][b], a attackers and b defenders
 	//except for that it's reversed, attackers are 0:3, 1:2, 2:1, defenders are 0:2, 1:1, and I doubt it'll be useful 
@@ -86,6 +92,8 @@ public abstract class Player {
 		int reinforcements = 0;
 		//List<Continent> ownedContinents = ownedContinents();
 		//for (Continent c : ownedContinents) reinforcements+=c.getBonus();
+//		List<Continent> ownedContinents = ownedContinents();
+//		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
 		reinforcements+=Math.max(unitMap.keySet().size()/3,3);
 		return reinforcements;
 	}
