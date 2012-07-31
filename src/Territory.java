@@ -43,6 +43,7 @@ public class Territory {
 		linkedTerritoryNames= new LinkedList<String>(adjacentTerritoryNames);
 		this.name=name;
 		this.continent=continent;
+		continent.addTerritory(this);
 	}
 	public List<String> getAdjacentTerritoryNameList()
 	{
