@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -111,7 +112,32 @@ public abstract class Player {
 			boolean isOwned = true;
 			for (Territory t : c.territories())
 			{
-				if (t.getOwner() != this) isOwned = false;
+				if (!isOwnerOf(t)) isOwned = false;
+			}
+			if (isOwned) owned.add(c);
+		}
+		return owned;
+	}
+	//These 2 are for hypothetical territory states that the AI might think of. They refer to a group of territories rather
+	//	than a player.
+	protected int calculateReinforcements(Set<Territory> territories)
+	{
+		int reinforcements = 0;
+		Set<Continent> ownedContinents = ownedContinents(territories);
+		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
+		reinforcements+=Math.max(territories.size()/3,3);
+		return reinforcements;
+	}
+	
+	protected Set<Continent> ownedContinents(Set<Territory> territories)
+	{
+		Set<Continent> owned = new HashSet<Continent>();
+		for (Continent c : RiskAI.continentData)
+		{
+			boolean isOwned = true;
+			for (Territory t : c.territories())
+			{
+				if (!territories.contains(t)) isOwned = false;
 			}
 			if (isOwned) owned.add(c);
 		}
@@ -279,8 +305,9 @@ public abstract class Player {
 	public double probabilityOfWinning(int attackingArmies, int defendingArmies)
 	{
 		//this is an approximation at the moment but it's actually pretty close, especially with larger armies
-		double attackers = (attackingArmies-2)*1.1,defenders = defendingArmies; //1.1 is because of 3v2 attacker advantage, -2 is b/c
-																			// low #s of armies don't have it
-		return attackers/(attackers+defenders);
+		double attackers = (attackingArmies-2)*1.1; //1.1 is because of 3v2 attacker advantage, -2 is b/c
+		double defenders = defendingArmies; // low #s of armies don't have it
+		double winProbApprox = (attackers-defenders)/defenders;
+		return Math.min(Math.max(winProbApprox, 0), 1); //if it's outside 0-1, just put it as 0 or 1
 	}
 }
