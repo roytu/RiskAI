@@ -36,8 +36,25 @@ public class PlayerComputerB extends Player {
 				ownedEnemyTerritories.add(enemy);
 			}
 		}
+		
+		Territory terrFrom = null;
 		Territory terrTo = getMostValuableTerritory(ownedEnemyTerritories);
-		//Territory terrFrom = terrTo.getadjacentTerritoryList()
+		Set<Territory> terrAdj = new HashSet<Territory>(terrTo.getadjacentTerritoryList());
+		Set<Territory> terrFromSet = Territory.getStrongestTerritory(terrAdj);
+		if(terrFromSet.size()>0)
+		{
+			for(Territory territory : terrFromSet)
+			{
+				terrFrom = territory;
+			}
+		}
+		
+		if(terrFrom != null && terrTo != null)
+		{
+			//while(terrFrom.canAttack(from, to))
+			attack(terrFrom, terrTo);
+			GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
+		}
 		
 		/*
 		for(int i=0;i<20;i++)
