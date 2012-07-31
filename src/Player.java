@@ -56,6 +56,15 @@ public abstract class Player {
 	{
 		return unitMap.keySet();
 	}
+	public Map<Territory, Integer> getUnitMap()
+	{
+		HashMap<Territory, Integer> territoryUnitMap = new HashMap<Territory, Integer>();
+		for (Territory t:RiskAI.territoryData)
+		{
+			if(t.getOwner()==this) territoryUnitMap.put(t, 0);
+		}
+		return territoryUnitMap;
+	}
 	
 	protected void turn() throws GameOverException
 	{
