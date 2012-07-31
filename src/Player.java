@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 1000;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 3;
 	//private List<Card> cardList;
 	protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
@@ -41,11 +41,11 @@ public abstract class Player {
 		this.name=this.getColor().toString();
 	}
 	
-	protected abstract void reinforcementPhase();
-	protected abstract void attackPhase();
+	protected abstract void reinforcementPhase() throws GameOverException;
+	protected abstract void attackPhase() throws GameOverException;
 	protected abstract void tacticalMovePhase();
 	
-	private boolean isAlive()
+	public boolean isAlive()
 	{
 		if(unitMap.keySet().size()>0){
 			return true;
@@ -57,8 +57,17 @@ public abstract class Player {
 	{
 		return unitMap.keySet();
 	}
+	public Map<Territory, Integer> getUnitMap()
+	{
+		HashMap<Territory, Integer> territoryUnitMap = new HashMap<Territory, Integer>();
+		for (Territory t:RiskAI.territoryData)
+		{
+			if(t.getOwner()==this) territoryUnitMap.put(t, 0);
+		}
+		return territoryUnitMap;
+	}
 	
-	protected void turn()
+	protected void turn() throws GameOverException
 	{
 		try
 		{
@@ -89,8 +98,8 @@ public abstract class Player {
 	{
 		//commented version is actual reinforcement counter, currently at automatically 3 for debug
 		int reinforcements = 0;
-		List<Continent> ownedContinents = ownedContinents();
-		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
+//		List<Continent> ownedContinents = ownedContinents();
+//		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
 		reinforcements+=Math.max(unitMap.keySet().size()/3,3);
 		return reinforcements;
 	}

@@ -140,6 +140,17 @@ public class Territory {
 	
 	public Player getOwner()
 	{
+		for(Player player : GameData.playerList)
+		{
+			if(player.unitMap.containsKey(this))
+			{
+				if(player.unitMap.get(this)>0)
+				{
+					return player;
+				}
+			}
+		}
+		//return null;
 		return owner;
 	}
 

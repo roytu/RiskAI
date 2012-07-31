@@ -13,7 +13,7 @@ public class PlayerComputerBetter extends Player {
 	List<Territory> currentCluster;
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
-	double cost_limit = 5;
+	double cost_limit = 0.0;
 	public PlayerComputerBetter(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub
@@ -25,7 +25,7 @@ public class PlayerComputerBetter extends Player {
 	}
 
 	@Override
-	public void reinforcementPhase()
+	public void reinforcementPhase() throws GameOverException
 	{
 		//TODO: Be shitty and place everything in one territory
 		
@@ -37,12 +37,12 @@ public class PlayerComputerBetter extends Player {
 	}
 
 	@Override
-	protected void attackPhase() {
-		for(int i=0;i<5;i++)
+	protected void attackPhase() throws GameOverException {
+		for(int i=0;i<10;i++)
 		{
 			aiThinking();
-			if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
 			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
+			if (getHighestValue(territoriesToAttack) < cost_limit) territoryTargeted=null;
 			Territory terrTo = territoryTargeted;
 			if(terrTo != null)
 			{
@@ -64,35 +64,38 @@ public class PlayerComputerBetter extends Player {
 		}*/
 	}
 	
-	private void aiThinking()//this is all TEMPORARY. I will implemet it neater and better.
+	private void aiThinking() throws GameOverException//this is all TEMPORARY. I will implemet it neater and better. I think.
 	{
 		/*if(currentCluster == null)*/ currentCluster = evaluateStartingPosition();
 		territoriesToAttack = getTerritoryAttackList();
-		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
-		if (getLowestCost(territoriesToAttack) > cost_limit) territoryTargeted=null;
+		territoryTargeted = getHighestValueTerritory(territoriesToAttack);
+		if (getHighestValue(territoriesToAttack) > cost_limit) territoryTargeted=null;
+		if(territoriesToAttack.isEmpty()) throw new GameOverException();
+		//TODO Insert conquer prob heuristic somewhere in here with weights later
+		territoryTargeted = getHighestValueTerritory(territoriesToAttack);
 	}
-	private Territory getLowestCostTerritory(Map<Territory, Double> territoryMap)
+	private Territory getHighestValueTerritory(Map<Territory, Double> territoryMap)
 	{
-		Territory currentLowestCostTerritory = null;
+		Territory currentHighestValueTerritory = null;
 		for (Territory i:territoryMap.keySet())
 		{
-			if(currentLowestCostTerritory==null)currentLowestCostTerritory=i;//to prevent null pointer exception in next step
-			if(territoryMap.get(i)<territoryMap.get(currentLowestCostTerritory)) currentLowestCostTerritory=i;		}
-		return currentLowestCostTerritory;
+			if(currentHighestValueTerritory==null)currentHighestValueTerritory=i;//to prevent null pointer exception in next step
+			if(territoryMap.get(i)>territoryMap.get(currentHighestValueTerritory)) currentHighestValueTerritory=i;		}
+		return currentHighestValueTerritory;
 	}
-	private Double getLowestCost(Map<Territory, Double> territoryMap)
+	private Double getHighestValue(Map<Territory, Double> territoryMap)
 	{
-		double currentLowestCost=99999;
+		double currentHighestValue=0;
 		for (Territory i:territoryMap.keySet())
 		{
-			if(territoryMap.get(i)<currentLowestCost) currentLowestCost=territoryMap.get(i);
+			if(territoryMap.get(i)>currentHighestValue) currentHighestValue=territoryMap.get(i);
 		}
-		return currentLowestCost;
+		return currentHighestValue;
 	}
 	
 	private List<Territory> evaluateStartingPosition()
 	{
-		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(unitMap);
+		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(getUnitMap());
 
 		List<Territory> discoveredTerritories = new ArrayList<Territory>();
 		List<Territory> bestTerritoryGroup = new ArrayList<Territory>();
@@ -126,9 +129,57 @@ public class PlayerComputerBetter extends Player {
 			}
 		}
 	}
+	////////
+	//Heuristics Combination
+	////////
+	private Map<Territory, Double> getTerritoryAttackList()
+	{
+		Map<Territory, Double> ajacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
+		double ajacentEnemyTerritoryFactor = 1.0;
+		Map<Territory, Double> conquerProbList = conquerProbabilityHeuristic(currentCluster);
+		double conquerProbabilityFactor = 5.0; //This has to be much higher since it ranges from 0 to 1
+		//rather than from 1 to 6 like the prior one.
+		/*
+		Map<Territory, Integer> OtherHeuristicList = OtherHeuristic(currentCluster);
+		double OtherHeuristicFactor = 1.0;
+		
+		etc.
+		 */
+		Map<Territory, Double> ajacentEnemyWeightedList =multiplyListWeights(ajacentEnemyTerritoryList,ajacentEnemyTerritoryFactor);
+		Map<Territory, Double> conquerProbWeightedList = multiplyListWeights(conquerProbList,conquerProbabilityFactor);
+		List<Map<Territory,Double>> lists = new ArrayList<Map<Territory,Double>>();
+		lists.add(ajacentEnemyWeightedList);
+		lists.add(conquerProbWeightedList);
+		return addTerritoryWeights(lists);
+	}
+	private Map<Territory, Double> multiplyListWeights(Map<Territory, Double> mapping, double factor)
+	{
+		Map<Territory, Double> doubleMap= new HashMap<Territory, Double>();
+		for(Territory t:mapping.keySet())
+		{
+			double valueT=mapping.get(t);
+			doubleMap.put(t,valueT*factor);
+		}
+		return doubleMap;
+	}
+	private Map<Territory, Double> addTerritoryWeights(List<Map<Territory, Double>> territoryListArray)
+	{
+		for (Map<Territory,Double> m : territoryListArray) {if (m == null) throw new IllegalArgumentException("null list");}
+		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
+		for(Map<Territory, Double> mapInArray : territoryListArray)
+		{
+			for(Territory t:mapInArray.keySet())
+			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
+				double mappedTerritoryValue= mapInArray.get(t);
+				double currentCompositeTerritoryValue = compositeMap.get(t)==null?0:compositeMap.get(t);;
+				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
+			}
+		}			
+		return compositeMap;
+	}
 	
 	////////
-	//Heuristics
+	//Individual Heuristics
 	////////
 	private Map<Territory, Double> adjacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
 	{
@@ -143,7 +194,8 @@ public class PlayerComputerBetter extends Player {
 				}
 			}
 		}
-		return ajacentEnemyTerritoryHeuristicMap; 
+		//                 (map to normalize,        min value=0, max value=6, invert)
+		return normalizeMap(ajacentEnemyTerritoryHeuristicMap,0,6,true); 
 	}
 	
 	/**
@@ -212,52 +264,6 @@ public class PlayerComputerBetter extends Player {
 		return received/total;
 	}
 	
-	private Map<Territory, Double> getTerritoryAttackList()
-	{
-		Map<Territory, Double> ajacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
-		double ajacentEnemyTerritoryFactor = 1.0;
-		Map<Territory, Double> conquerProbList = conquerProbabilityHeuristic(currentCluster);
-		double conquerProbabilityFactor = 5.0; //This has to be much higher since it ranges from 0 to 1
-		//rather than from 1 to 6 like the prior one.
-		/*
-		Map<Territory, Integer> OtherHeuristicList = OtherHeuristic(currentCluster);
-		double OtherHeuristicFactor = 1.0;
-		
-		etc.
-		 */
-		Map<Territory, Double> ajacentEnemyWeightedList =multiplyListWeights(ajacentEnemyTerritoryList,ajacentEnemyTerritoryFactor);
-		Map<Territory, Double> conquerProbWeightedList = multiplyListWeights(conquerProbList,conquerProbabilityFactor);
-		List<Map<Territory,Double>> lists = new ArrayList<Map<Territory,Double>>();
-		lists.add(ajacentEnemyWeightedList);
-		lists.add(conquerProbWeightedList);
-		return addTerritoryWeights(lists);
-	}
-	private Map<Territory, Double> multiplyListWeights(Map<Territory, Double> mapping, double factor)
-	{
-		Map<Territory, Double> doubleMap= new HashMap<Territory, Double>();
-		for(Territory t:mapping.keySet())
-		{
-			double valueT=mapping.get(t);
-			doubleMap.put(t,valueT*factor);
-		}
-		return doubleMap;
-	}
-	private Map<Territory, Double> addTerritoryWeights(List<Map<Territory, Double>> territoryListArray)
-	{
-		for (Map<Territory,Double> m : territoryListArray) {if (m == null) throw new IllegalArgumentException("null list");}
-		Map<Territory, Double> compositeMap= new HashMap<Territory, Double>();
-		for(Map<Territory, Double> mapInArray : territoryListArray)
-		{
-			for(Territory t:mapInArray.keySet())
-			{   //SUMMARY OF THIS FOR LOOP: compositeMap[key]+=mapInArray[key]
-				double mappedTerritoryValue= mapInArray.get(t);
-				double currentCompositeTerritoryValue = compositeMap.get(t)==null?0:compositeMap.get(t);;
-				compositeMap.put(t,currentCompositeTerritoryValue+mappedTerritoryValue);
-			}
-		}			
-		return compositeMap;
-	}
-
 	////////
 	//Territory Functions
 	////////
@@ -278,7 +284,7 @@ public class PlayerComputerBetter extends Player {
 		}
 		throw new RuntimeException("no owned territory for " + name + " to attack " + territoryToAttack + " from");
 	}
-	private Territory getOwnedTerritoryWithHighestUnitCountAdjacentTo(Territory targetTerritory)
+	private Territory getOwnedTerritoryWithHighestUnitCountAdjacentTo(Territory targetTerritory) throws GameOverException
 	{
 		int currentHighestTroopCount=-1;
 		Territory currentHighestTroopTerritory=null;
@@ -293,19 +299,29 @@ public class PlayerComputerBetter extends Player {
 				}
 			}
 		}
-		if(currentHighestTroopTerritory==null) throw new RuntimeException("Computer screwed up: no owned territories ajacent to selected territory");
+		if(currentHighestTroopTerritory==null)
+		{
+			throw new GameOverException();
+		}
 		return currentHighestTroopTerritory;
 	}
 	
 	////////
 	//Misc. Functions
 	////////
-	private Map<Territory, Double> normalizeMap(Map<Territory, Double> mapping, float minValue, float maxValue)
+	private Map<Territory, Double> normalizeMap(Map<Territory, Double> mapping, float minValue, float maxValue, boolean invert)
 	{
 		for (Territory t : mapping.keySet())
 		{
 			double currentValue = mapping.get(t);
-			mapping.put(t, currentValue/maxValue-minValue);
+			if(invert)
+			{
+				mapping.put(t, 1-(currentValue/maxValue-minValue));
+			}
+			else
+			{
+				mapping.put(t, currentValue/maxValue-minValue);
+			}
 		}
 		return mapping;
 	}
