@@ -248,7 +248,7 @@ public class Territory {
 		return set;
 	}
 	
-	public boolean canAttack(Territory from, Territory to)
+	public static boolean canAttack(Territory from, Territory to)
 	{
 		if(from.owner != to.owner && from.getUnitCount()>1)
 		{
