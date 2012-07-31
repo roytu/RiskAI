@@ -61,6 +61,7 @@ public class HandleClick implements MouseListener, KeyListener
 //			break;
 //		}
 		Territory clickedOn = findTerritoryByPosition(e.getX(),e.getY());
+		System.out.println(clickedOn.getOwner());
 		if (clickedOn != null) RiskAI.currentGame.onClick(clickedOn); //implement this method
 	}
 	

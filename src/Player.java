@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 20;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 3;
 	//private List<Card> cardList;
 	protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
@@ -40,11 +40,11 @@ public abstract class Player {
 		this.name=this.getColor().toString();
 	}
 	
-	protected abstract void reinforcementPhase();
-	protected abstract void attackPhase();
+	protected abstract void reinforcementPhase() throws GameOverException;
+	protected abstract void attackPhase() throws GameOverException;
 	protected abstract void tacticalMovePhase();
 	
-	private boolean isAlive()
+	public boolean isAlive()
 	{
 		if(unitMap.keySet().size()>0){
 			return true;
@@ -57,7 +57,7 @@ public abstract class Player {
 		return unitMap.keySet();
 	}
 	
-	protected void turn()
+	protected void turn() throws GameOverException
 	{
 		try
 		{
