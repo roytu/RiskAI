@@ -227,7 +227,7 @@ public class Territory {
 	}
 	*/
 	
-	public Set<Territory> getStrongestTerritory(Set<Territory> territorySet)
+	public static Set<Territory> getStrongestTerritory(Set<Territory> territorySet)
 	{
 		int max = 0;
 		Set<Territory> set = new HashSet<Territory>();
