@@ -145,8 +145,8 @@ public class Territory {
 				}
 			}
 		}
-		return null;
-		//return owner;
+		//return null;
+		return owner;
 	}
 
 	public void setOwner(Player owner)
