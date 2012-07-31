@@ -35,7 +35,7 @@ public class PlayerComputer extends Player {
 
 	@Override
 	protected void attackPhase() {
-		for(int i=0;i<10;i++)
+		for(int i=0;i<20;i++)
 		{
 			Territory terrFrom = getRandomControlledTerritory();
 			Territory terrTo = terrFrom.getRandomLinkedUnownedTerritory(this);
@@ -57,95 +57,5 @@ public class PlayerComputer extends Player {
 		{
 			move(terrFrom, terrTo, terrFrom.getUnitCount()-1);
 		}
-	}
-	
-	private void aiThinking()//this is all TEMPOROARY. I will implemet it neater and better.
-	{
-		if(currentCluster == null) currentCluster = evaluateStartingPosition();
-		territoriesToAttack = adjacentEnemyTerritoryHeuristic(currentCluster);
-		territoryTargeted = getLowestCostTerritory(territoriesToAttack);
-	}
-	
-	
-	private List<Territory> evaluateStartingPosition()
-	{
-		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(this.getTerritoryMap());
-
-		List<Territory> discoveredTerritories = new ArrayList<Territory>();
-		List<Territory> bestTerritoryGroup = new ArrayList<Territory>();
-		List<List<Territory> > contiguousTerritoryListList = new ArrayList<List<Territory>>();
-		for(Territory t : ownedTerritories.keySet())
-		{
-			if(!discoveredTerritories.contains(t))
-			{
-				List<Territory> contiguousTerritories = new ArrayList<Territory>();
-				floodFill(t, contiguousTerritories);
-				discoveredTerritories.addAll(contiguousTerritories);
-				contiguousTerritoryListList.add(contiguousTerritories);
-			}
-		}
-		bestTerritoryGroup = contiguousTerritoryListList.get(0);
-		for(List<Territory> t:contiguousTerritoryListList)
-		{
-			if(t.size()>bestTerritoryGroup.size()) bestTerritoryGroup= t ;
-		}
-		return bestTerritoryGroup;
-	}
-	
-	private Map<Territory, Integer> adjacentEnemyTerritoryHeuristic(List<Territory> contiguousTerritories)
-	{
-		Map<Territory,Integer> adjacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Integer>();
-		for (Territory t:contiguousTerritories)
-		{
-			for (Territory u:t.getadjacentTerritoryList())
-			{
-				if(u.getOwner()!=this)
-				{
-					adjacentEnemyTerritoryHeuristicMap.put(u,numberOfadjacentEnemyTerritories(u));
-				}
-			}
-		}
-		return adjacentEnemyTerritoryHeuristicMap; 
-	}
-	
-	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
-	{
-		discoveredTerritories.add(startingTerritory);
-		for (Territory t: startingTerritory.getadjacentTerritoryList())// adjacent To currentTerritory owned by this player&& not in mapping)
-		{
-			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
-			else
-			{
-				floodFill(t, discoveredTerritories);
-			}
-		}
-	}
-	
-	private int numberOfadjacentEnemyTerritories(Territory territory)
-	{
-		int numberOfadjacentEnemyTerritories = 0;
-		for (Territory t:territory.getadjacentTerritoryList())
-		{
-			if(t.getOwner()!=this) numberOfadjacentEnemyTerritories++;
-		}
-		return numberOfadjacentEnemyTerritories;
-	}
-	
-	private Territory getOwnedTerritoryadjacentTo(Territory territoryToAttack)
-	{//can add in reinforce territory with most/least number of troops
-		for (Territory i:territoryToAttack.getadjacentTerritoryList())
-		{
-			if(i.getOwner()==this) return i;
-		}
-		throw new RuntimeException("no territory to attack from");
-	}
-	private Territory getLowestCostTerritory(Map<Territory, Integer> territoryMap)
-	{
-		Territory currentLowestCostTerritory=null;
-		for (Territory i:territoryMap.keySet())
-		{
-			if(territoryMap.get(i)>territoryMap.get(currentLowestCostTerritory)) currentLowestCostTerritory=i;
-		}
-		return currentLowestCostTerritory;
 	}
 }

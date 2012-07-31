@@ -11,7 +11,7 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 3;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 0;
 	//private List<Card> cardList;
 	protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
@@ -53,15 +53,6 @@ public abstract class Player {
 		return false;
 	}
 	
-	/*public Map<Territory, Integer> getTerritoryMap()
-	{
-		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>();
-		for (Territory t:RiskAI.territoryData)
-		{
-			if(t.getOwner()==this) ownedTerritories.put(t, 0);
-		}
-		return ownedTerritories;
-	}*/
 	public Map<Territory, Integer> getTerritoryMap()
 	{
 		HashMap<Territory, Integer> territoryUnitMap = new HashMap<Territory, Integer>();

@@ -14,6 +14,9 @@ public class PlayerComputerBetter extends Player {
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
 	double cost_limit = 0.0;
+	double adjacentEnemyTerritoryFactor = .1;
+	double conquerProbabilityFactor = .7;
+	double reinforcementsFactor = .2;
 	public PlayerComputerBetter(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub
@@ -38,7 +41,7 @@ public class PlayerComputerBetter extends Player {
 
 	@Override
 	protected void attackPhase() throws GameOverException {
-		for(int i=0;i<10;i++)
+		for(int i=0;i<20;i++)
 		{
 			aiThinking();
 			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
@@ -135,12 +138,11 @@ public class PlayerComputerBetter extends Player {
 	private Map<Territory, Double> getTerritoryAttackList()
 	{
 		Map<Territory, Double> adjacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
-		double adjacentEnemyTerritoryFactor = 0.1;
+		
 		Map<Territory, Double> conquerProbList = conquerProbabilityHeuristic(currentCluster);
-		double conquerProbabilityFactor = 0.4;
+		
 		Map<Territory, Double> reinforcementsList = reinforcementsHeuristic(currentCluster);
-		double reinforcementsFactor = 0.5; //These have to be much higher since they range from 0 to 1
-		//rather than from 1 to 6 like the first one.
+		
 		/*
 		Map<Territory, Integer> OtherHeuristicList = OtherHeuristic(currentCluster);
 		double OtherHeuristicFactor = 1.0;
