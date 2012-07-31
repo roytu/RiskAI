@@ -23,7 +23,7 @@ public class GameData {
 	 */
 	public GameData(int humanCount, int computerCount){
 		playerList = new ArrayList<Player>();
-		int seecretPlayerNumber=(int) (Math.random()*computerCount);
+		int secretPlayerNumber=(int) (Math.random()*computerCount);
 		for(int i=0;i<humanCount;i++)
 		{
 			Player player = new PlayerHuman(i,playerColors[i]);
@@ -32,7 +32,7 @@ public class GameData {
 		for(int i=0;i<computerCount;i++)
 		{
 			Player player;
-			if(true)//i==seecretPlayerNumber)
+			if(true)//i==secretPlayerNumber)
 			{
 				player = new PlayerComputerBetter(humanCount+i,playerColors[humanCount+i]);
 			}
