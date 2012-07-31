@@ -31,7 +31,7 @@ public class PlayerComputerB extends Player {
 		Set<Territory> ownedEnemyTerritories = new HashSet<Territory>();
 		for(Territory ownedTerritory : getOwnedTerritories())
 		{
-			for(Territory enemy : ownedTerritory.getAdjacentEnemyTerritories())
+			for(Territory enemy : ownedTerritory.getadjacentEnemyTerritories())
 			{
 				ownedEnemyTerritories.add(enemy);
 			}
@@ -69,9 +69,9 @@ public class PlayerComputerB extends Player {
 	private int getTerritoryHeuristic(Territory territory)
 	{
 		int h = 0;
-		h += 10-territory.getNumberOfAjacentTerritories();
+		h += 10-territory.getNumberOfadjacentTerritories();
 		h += -territory.getRelativeStrength() * 5;
-		for(Territory enemy : territory.getAdjacentEnemyTerritories())
+		for(Territory enemy : territory.getadjacentEnemyTerritories())
 		{
 			h += territory.getOwner().probabilityOfWinning(territory.getUnitCount(), enemy.getUnitCount()) * 5;
 			//enemy.getChanceOfSuccessfulAttack(territory.getUnitCount(), enemy.getUnitCount())

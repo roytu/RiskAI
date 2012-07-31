@@ -97,7 +97,7 @@ public class PlayerComputer extends Player {
 		Map<Territory,Integer> ajacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Integer>();
 		for (Territory t:contiguousTerritories)
 		{
-			for (Territory u:t.getAjacentTerritoryList())
+			for (Territory u:t.getadjacentTerritoryList())
 			{
 				if(u.getOwner()!=this)
 				{
@@ -111,7 +111,7 @@ public class PlayerComputer extends Player {
 	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
 	{
 		discoveredTerritories.add(startingTerritory);
-		for (Territory t: startingTerritory.getAjacentTerritoryList())// ajacent To currentTerritory owned by this player&& not in mapping)
+		for (Territory t: startingTerritory.getadjacentTerritoryList())// ajacent To currentTerritory owned by this player&& not in mapping)
 		{
 			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
 			else
@@ -124,7 +124,7 @@ public class PlayerComputer extends Player {
 	private int numberOfAjacentEnemyTerritories(Territory territory)
 	{
 		int numberOfAjacentEnemyTerritories = 0;
-		for (Territory t:territory.getAjacentTerritoryList())
+		for (Territory t:territory.getadjacentTerritoryList())
 		{
 			if(t.getOwner()!=this) numberOfAjacentEnemyTerritories++;
 		}
@@ -133,7 +133,7 @@ public class PlayerComputer extends Player {
 	
 	private Territory getOwnedTerritoryAjacentTo(Territory territoryToAttack)
 	{//can add in reinforce territory with most/least number of troops
-		for (Territory i:territoryToAttack.getAjacentTerritoryList())
+		for (Territory i:territoryToAttack.getadjacentTerritoryList())
 		{
 			if(i.getOwner()==this) return i;
 		}

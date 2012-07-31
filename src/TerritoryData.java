@@ -105,7 +105,7 @@ public class TerritoryData {
 	{
 		for (Territory territory : territoryList)
 		{
-			for (String name : territory.getAjacentTerritoryNameList())
+			for (String name : territory.getAdjacentTerritoryNameList())
 			{
 				territory.link(TerritoryData.findTerritoryByName(name,territoryList));
 			}			
