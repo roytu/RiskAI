@@ -1,6 +1,5 @@
 import java.awt.Color;
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -29,6 +28,16 @@ public class PlayerComputerB extends Player {
 	@Override
 	protected void attackPhase() {
 		//TODO Loop through linked enemy territories and check for things that are easy to hold
+		Set<Territory> ownedEnemyTerritories = new HashSet<Territory>();
+		for(Territory ownedTerritory : getOwnedTerritories())
+		{
+			for(Territory enemy : ownedTerritory.getAdjacentEnemyTerritories())
+			{
+				ownedEnemyTerritories.add(enemy);
+			}
+		}
+		//Territory terrFrom = 
+		//Territory terrTo = getMostValuableTerritory(ownedEnemyTerritories);
 		
 		/*
 		for(int i=0;i<20;i++)
@@ -64,7 +73,8 @@ public class PlayerComputerB extends Player {
 		h += -territory.getRelativeStrength() * 5;
 		for(Territory enemy : territory.getAdjacentEnemyTerritories())
 		{
-			
+			h += territory.getOwner().probabilityOfWinning(territory.getUnitCount(), enemy.getUnitCount()) * 5;
+			//enemy.getChanceOfSuccessfulAttack(territory.getUnitCount(), enemy.getUnitCount())
 		}
 		return h;
 	}
