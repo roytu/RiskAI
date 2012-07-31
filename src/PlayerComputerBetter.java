@@ -137,19 +137,23 @@ public class PlayerComputerBetter extends Player {
 		Map<Territory, Double> ajacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
 		double ajacentEnemyTerritoryFactor = 1.0;
 		Map<Territory, Double> conquerProbList = conquerProbabilityHeuristic(currentCluster);
-		double conquerProbabilityFactor = 5.0; //This has to be much higher since it ranges from 0 to 1
-		//rather than from 1 to 6 like the prior one.
+		double conquerProbabilityFactor = 5.0; 
+		Map<Territory, Double> reinforcementsList = reinforcementsHeuristic(currentCluster);
+		double reinforcementsFactor = 6.0; //These have to be much higher since they range from 0 to 1
+		//rather than from 1 to 6 like the first one.
 		/*
 		Map<Territory, Integer> OtherHeuristicList = OtherHeuristic(currentCluster);
 		double OtherHeuristicFactor = 1.0;
 		
 		etc.
 		 */
-		Map<Territory, Double> ajacentEnemyWeightedList =multiplyListWeights(ajacentEnemyTerritoryList,ajacentEnemyTerritoryFactor);
+		Map<Territory, Double> adjacentEnemyWeightedList =multiplyListWeights(ajacentEnemyTerritoryList,ajacentEnemyTerritoryFactor);
 		Map<Territory, Double> conquerProbWeightedList = multiplyListWeights(conquerProbList,conquerProbabilityFactor);
+		Map<Territory, Double> reinforcementsWeightedList = multiplyListWeights(reinforcementsList, reinforcementsFactor);
 		List<Map<Territory,Double>> lists = new ArrayList<Map<Territory,Double>>();
-		lists.add(ajacentEnemyWeightedList);
+		lists.add(adjacentEnemyWeightedList);
 		lists.add(conquerProbWeightedList);
+		lists.add(reinforcementsWeightedList);
 		return addTerritoryWeights(lists);
 	}
 	private Map<Territory, Double> multiplyListWeights(Map<Territory, Double> mapping, double factor)

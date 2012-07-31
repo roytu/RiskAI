@@ -222,6 +222,7 @@ public class Territory {
 		return this.graphic;
 	}
 
+	/*
 	public double getChanceOfSuccessfulAttack(Territory from, Territory to)
 	{
 		if(canAttack(from, to))
@@ -229,6 +230,28 @@ public class Territory {
 			return attackChart[to.getUnitCount()-1][from.getUnitCount()-1];
 		}
 		throw new RuntimeException("Can't attack");
+	}
+	*/
+	
+	public static Set<Territory> getStrongestTerritory(Set<Territory> territorySet)
+	{
+		int max = 0;
+		Set<Territory> set = new HashSet<Territory>();
+		for(Territory territory : territorySet)
+		{
+			int unitCount = territory.getUnitCount();
+			if(unitCount > max)
+			{
+				set.clear();
+				set.add(territory);
+				max = unitCount;
+			}
+			else if(unitCount == max)
+			{
+				set.add(territory);
+			}
+		}
+		return set;
 	}
 	
 	public boolean canAttack(Territory from, Territory to)
