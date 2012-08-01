@@ -314,6 +314,7 @@ public abstract class Player {
 	
 	protected boolean canFortify(Territory from, Territory to)
 	{
+		if (from == to) return false;
 		Set<Territory> cluster = from.getCluster();
 		return cluster.contains(to);
 	}
