@@ -380,4 +380,51 @@ public class Territory {
 		}
 		return false;
 	}
+	
+	public double getVulnerability()
+	{
+		int defenders = getUnitCount();
+		int attackers = 0;
+		for(Territory enemy : this.getAdjacentEnemyTerritories())
+		{
+			attackers += enemy.getUnitCount();
+		}
+		return Player.probabilityOfWinning2(attackers, defenders);
+	}
+	
+	public double getVulnerability(int units)
+	{
+		int defenders = units;
+		int attackers = 0;
+		for(Territory enemy : this.getAdjacentEnemyTerritories())
+		{
+			attackers += enemy.getUnitCount();
+		}
+		return Player.probabilityOfWinning2(attackers, defenders);
+	}
+	
+	public double getOutpost()
+	{
+		int attackers = Math.min(getUnitCount()-1, 3);
+		if(attackers < 1)
+		{
+			return 0;
+		}
+		int defenders = Integer.MAX_VALUE;
+		Territory targetTerritory = null;
+		for(Territory enemy : getAdjacentEnemyTerritories())
+		{
+			int minDefenders = enemy.getUnitCount();
+			if(minDefenders < defenders)
+			{
+				defenders = minDefenders;
+				targetTerritory = enemy;
+			}
+		}
+		if(targetTerritory == null)
+		{
+			return 0;
+		}
+		return Player.probabilityOfWinning2(attackers, defenders) / targetTerritory.getVulnerability(attackers) / getVulnerability(getUnitCount() - attackers); //TODO 
+	}
 }
