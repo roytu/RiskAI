@@ -24,7 +24,7 @@ public class GuiMessages {
 		int i = 0;
 		while(it.hasNext())
 		{
-			g.drawString(it.next(), 20, i * 20 + 400);
+			g.drawString(it.next(), 20, i * 20 + 450);
 			++i;
 		}
 	}
