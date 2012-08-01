@@ -17,13 +17,13 @@ public class PlayerHuman extends Player {
 	{
 		switch (stage) {
 		case 1: //reinforcement phase
-			reinforcements(t);
+			deployIfPossible(t);
 			break;
 		case 2: //attack phase
-			attacks(t);
+			addAttackTerritory(t);
 			break;
 		case 3: //tactical move phase
-			tacticalMoves(t);
+			addFortifyTerritory(t);
 			break;
 		}
 
@@ -72,7 +72,7 @@ public class PlayerHuman extends Player {
 		}
 	}
 
-	private void reinforcements(Territory t)
+	private void deployIfPossible(Territory t)
 	{
 		if (t.getOwner() == this)
 		{
@@ -81,7 +81,7 @@ public class PlayerHuman extends Player {
 		}
 	}
 
-	private void attacks(Territory t)
+	private void addAttackTerritory(Territory t)
 	{
 		if (from == null){
 			if (t.getOwner() == this)
@@ -99,7 +99,7 @@ public class PlayerHuman extends Player {
 		}
 	}
 
-	private void tacticalMoves(Territory t)
+	private void addFortifyTerritory(Territory t)
 	{
 		if (from == null){
 			if (t.getOwner() == this && getUnitsInTerritory(t) > 1)

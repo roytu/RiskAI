@@ -1,10 +1,9 @@
 import java.util.List;
 
 public class RiskAI{
-	static RiskAI riskAI;
-	static GameData currentGame;
-	static List<Continent> continentData;
-	static List<Territory> territoryData;
+	public static GameData currentGame;
+	public static List<Continent> continentData;
+	public static List<Territory> territoryData;
 
 	public static HandleClick clickHandler;
 	public static Gfx gfx;
@@ -68,11 +67,11 @@ public class RiskAI{
 	}
 	private static void setAIFactors(int instance)
 	{
-		for(int i=0;i<GameData.playerList.size();i++)//randomize goodAI factors
+		for(int i=0;i<currentGame.playerList.size();i++)//randomize goodAI factors
 		{
-			if(GameData.playerList.get(i) instanceof PlayerComputerBetter)
+			if(currentGame.playerList.get(i) instanceof PlayerComputerBetter)
 			{
-				PlayerComputerBetter goodai = ((PlayerComputerBetter)(GameData.playerList.get(i)));
+				PlayerComputerBetter goodai = ((PlayerComputerBetter)(currentGame.playerList.get(i)));
 				goodai.adjacentEnemyTerritoryFactor=fac[instance].factor1;
 				goodai.conquerProbabilityFactor=fac[instance].factor2;
 				goodai.reinforcementsFactor=fac[instance].factor3;
@@ -96,14 +95,10 @@ public class RiskAI{
 	private static void init()
 	{
 		clickHandler = new HandleClick();
-		riskAI = new RiskAI();
 		currentGame = new GameData(PLAYERS_HUMAN, PLAYERS_COMP);
 		continentData = ContinentData.init();
 		territoryData = TerritoryData.init(continentData);
 		gfx = new Gfx();
-	}
-	public RiskAI()
-	{
 	}
 
 	private static Territory terrName(String name)
