@@ -35,6 +35,22 @@ public class PlayerComputerHeuristic extends Player {
 		}
 		return maxTerr;
 	}
+	
+	private Territory getLowestHeuristic(Set<Territory> ownedTerritories) {
+		// TODO Auto-generated method stub
+		double min = Double.MAX_VALUE;
+		Territory minTerr = null;
+		for(Territory territory : ownedTerritories)
+		{
+			double h = getTerritoryHeuristic(territory);
+			if(h < min)
+			{
+				min = h;
+				minTerr = territory;
+			}
+		}
+		return minTerr;
+	}
 
 	@Override
 	protected void attackPhase() throws GameOverException {
@@ -42,7 +58,7 @@ public class PlayerComputerHeuristic extends Player {
 		while(shouldAttack())
 		{
 			Territory terrTo = getHighestHeuristic(getAllLinkedEnemyTerritories());
-			Territory terrFrom = getLowestHeuristic(terrTo.getLinkedTerritories());
+			Territory terrFrom = getLowestHeuristic(terrTo.getAdjacentEnemyTerritories());
 			attack(terrFrom, terrTo);
 		}
 	}
