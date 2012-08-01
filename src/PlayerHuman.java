@@ -13,12 +13,6 @@ public class PlayerHuman extends Player {
 		stage = 0;
 	}
 
-	public PlayerHuman(int playerID, Color color)
-	{
-		super(playerID,color);
-		stage = 0;
-	}
-
 
 	public void onClick(Territory t)
 	{

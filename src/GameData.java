@@ -6,7 +6,7 @@ public class GameData {
 	public List<Player> playerList;
 	private Player whoseTurn;
 	//Colors to initialize the first 6 players with, in order
-	private static final Color[] playerColors = 
+	public static final Color[] playerColors = 
 	{
 		new Color(95,95,255),//blue
 		new Color(255,95,95),//red
@@ -14,7 +14,17 @@ public class GameData {
 		new Color(255,255,0),//yellow
 		new Color(255,127,0),//orange
 		new Color(0xF0,0xF0,0xF0)//grey
-	}; 
+	};
+	//Text names of the colors for player identification
+	public static final String[] playerColorNames =
+	{
+		"Blue",
+		"Red",
+		"Green",
+		"Yellow",
+		"Orange",
+		"Grey"
+	};
 	
 	/**
 	 * Creates GameData object
@@ -26,7 +36,7 @@ public class GameData {
 		int secretPlayerNumber=(int) 0;//(Math.random()*computerCount);
 		for(int i=0;i<humanCount;i++)
 		{
-			Player player = new PlayerHuman(i,playerColors[i]);
+			Player player = new PlayerHuman(i);
 			playerList.add(player);
 		}
 		for(int i=0;i<computerCount;i++)
@@ -34,11 +44,11 @@ public class GameData {
 			Player player;
 			if(i==secretPlayerNumber)
 			{
-				player = new PlayerComputerBetter(humanCount+i,playerColors[humanCount+i]);
+				player = new PlayerComputerBetter(humanCount+i);
 			}
 			else
 			{
-				player = new PlayerComputer(humanCount+i,playerColors[humanCount+i]);
+				player = new PlayerComputer(humanCount+i);
 			}
 			playerList.add(player);
 		}
