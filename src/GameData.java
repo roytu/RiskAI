@@ -44,7 +44,7 @@ public class GameData {
 		}
 	}
 	
-	public int gameRun(){
+	public WinnerReturn gameRun(){
 		int turnIndex=0;
 		int totalturnnumber=0;
 			while(!isGameOver())
@@ -54,8 +54,9 @@ public class GameData {
 				catch(GameOverException e){}
 				turnIndex=++turnIndex%playerList.size();
 				totalturnnumber++;
+				if(totalturnnumber>500)break;
 			}
-		return totalturnnumber;
+		return new WinnerReturn(getWinner(),totalturnnumber);
 		
 	}
 	private boolean isGameOver()
@@ -70,6 +71,15 @@ public class GameData {
 		return false;
 	}
 	
+	private Player getWinner()
+	{
+		int players=0;
+		for(Player p:playerList)
+		{
+			if(p.isAlive()) return p;
+		}
+		return null;
+	}
 	
 	public void setupGameboard(List<Territory> territoryList)
 	{
@@ -89,9 +99,6 @@ public class GameData {
 		{
 			t.getOwner().reinforce(t, 3);
 		}
-		
-		
-		
 		/*
 		while(true)
 		{

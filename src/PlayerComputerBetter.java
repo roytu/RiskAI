@@ -13,10 +13,10 @@ public class PlayerComputerBetter extends Player {
 	List<Territory> currentCluster;
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
-	double cost_limit = 0.0;
-	double adjacentEnemyTerritoryFactor = .1;
-	double conquerProbabilityFactor = .7;
-	double reinforcementsFactor = .2;
+	double value_limit = 0.1;
+	double adjacentEnemyTerritoryFactor = .5;
+	double conquerProbabilityFactor = .4;
+	double reinforcementsFactor = .1;
 	public PlayerComputerBetter(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub
@@ -45,7 +45,7 @@ public class PlayerComputerBetter extends Player {
 		{
 			aiThinking();
 			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
-			if (getHighestValue(territoriesToAttack) < cost_limit) territoryTargeted=null;
+			if (getHighestValue(territoriesToAttack) < value_limit) territoryTargeted=null;
 			Territory terrTo = territoryTargeted;
 			if(terrTo != null)
 			{
@@ -72,7 +72,7 @@ public class PlayerComputerBetter extends Player {
 		/*if(currentCluster == null)*/ currentCluster = evaluateStartingPosition();
 		territoriesToAttack = getTerritoryAttackList();
 		territoryTargeted = getHighestValueTerritory(territoriesToAttack);
-		if (getHighestValue(territoriesToAttack) > cost_limit) territoryTargeted=null;
+		if (getHighestValue(territoriesToAttack) < value_limit) territoryTargeted=null;
 		if(territoriesToAttack.isEmpty()) throw new GameOverException();
 		//TODO Insert conquer prob heuristic somewhere in here with weights later
 		territoryTargeted = getHighestValueTerritory(territoriesToAttack);
