@@ -59,7 +59,7 @@ public class PlayerComputerB extends Player {
 					GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
 				}
 			}
-		
+			
 			/*
 			for(int i=0;i<20;i++)
 			{
@@ -79,9 +79,9 @@ public class PlayerComputerB extends Player {
 	protected void tacticalMovePhase() {
 		// TODO Auto-generated method stub
 		//Move random
-		Territory terrFrom = getRandomControlledTerritory();
-		//Territory terrTo = terrFrom.getRandomLinkedOwnedTerritory(this);
-		Territory terrTo = getMostValuableTerritory(getOwnedTerritories());
+		Territory terrFrom = Territory.chooseRandomFromSet(Territory.getStrongestTerritory(getOwnedTerritories()));
+		Territory terrTo = Territory.chooseRandomFromSet(Territory.getWeakestTerritory(getOwnedTerritories()));
+		//Territory terrTo = getMostValuableTerritory(getOwnedTerritories());
 		if(terrTo != null && terrFrom.getUnitCount()>1)
 		{
 			//getTerritoryHeuristic(terrFrom);
@@ -95,7 +95,7 @@ public class PlayerComputerB extends Player {
 		int h = 0;
 		//h += -territory.getNumberOfadjacentTerritories();
 		h += -territory.getadjacentEnemyTerritories().size();
-		h += -territory.getRelativeStrength() * 5;
+		h += -territory.getRelativeStrength();
 		for(Territory enemy : territory.getadjacentEnemyTerritories())
 		{
 			h += territory.getOwner().probabilityOfWinning(territory.getUnitCount(), enemy.getUnitCount()) * 5;
