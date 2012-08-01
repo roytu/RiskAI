@@ -186,7 +186,6 @@ public class Territory {
 		String ownerPart = ", with " + units + " armies on it";
 		return namePart + linkedPart + continentPart + ownerPart;*/
 		
-		
 		return name;
 	}
 	
@@ -200,8 +199,8 @@ public class Territory {
 			line += str + ",";
 		}
 		line += ";";
-		line += String.valueOf(getXCoord()) + ";";
-		line += String.valueOf(getYCoord()) + ";";
+		line += String.valueOf(graphic.xCoord) + ";";
+		line += String.valueOf(graphic.yCoord) + ";";
 		return line;
 	}
 	
@@ -214,18 +213,7 @@ public class Territory {
 			throw new RuntimeException("WTF JAVA");
 		}
 	}
-	public int getXCoord()
-	{
-		return graphic.xCoord;
-	}
-	public int getYCoord()
-	{
-		return graphic.yCoord;
-	}
-	public void setCoordinates(int x, int y)
-	{
-		graphic.setCoords(x, y);
-	}
+	
 	public TerritoryGraphics getTerritoryGraphic()
 	{
 		return this.graphic;
