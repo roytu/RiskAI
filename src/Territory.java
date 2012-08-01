@@ -50,7 +50,7 @@ public class Territory {
 	{
 		return new LinkedList<String>(linkedTerritoryNames);
 	}
-	public List<Territory> getadjacentTerritoryList()
+	public List<Territory> getAdjacentTerritoryList()
 	{
 		return new LinkedList<Territory>(linkedTerritories);
 	}
@@ -66,6 +66,10 @@ public class Territory {
 	{
 		Random random = new Random();
 		return linkedTerritories.get(random.nextInt(linkedTerritories.size()));
+	}
+	public Continent getContinent()
+	{
+		return this.continent;
 	}
 	
 	public Territory getRandomLinkedUnownedTerritory(Player player)
@@ -108,7 +112,7 @@ public class Territory {
 	public Set<Territory> getAdjacentOwnedTerritories()
 	{
 		Set<Territory> adjacentTerritories = new HashSet<Territory>();
-		for (Territory t : getadjacentTerritoryList())
+		for (Territory t : getAdjacentTerritoryList())
 		{
 			if(t.getOwner()==getOwner())
 				adjacentTerritories.add(t);
@@ -123,7 +127,7 @@ public class Territory {
 	public Set<Territory> getAdjacentEnemyTerritories()
 	{
 		Set<Territory> adjacentTerritories = new HashSet<Territory>();
-		for (Territory t : getadjacentTerritoryList())
+		for (Territory t : getAdjacentTerritoryList())
 		{
 			if(t.getOwner()!=getOwner())
 				adjacentTerritories.add(t);
@@ -308,7 +312,7 @@ public class Territory {
 		}
 	}
 	
-	public boolean canMove(Territory from, Territory to)
+	public static boolean canMove(Territory from, Territory to)
 	{
 		if(from.owner == to.owner && from.isLinked(to) && from.getUnitCount() > 1)
 		{
