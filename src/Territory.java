@@ -186,7 +186,6 @@ public class Territory {
 		String ownerPart = ", with " + units + " armies on it";
 		return namePart + linkedPart + continentPart + ownerPart;*/
 		
-		
 		return name;
 	}
 	
