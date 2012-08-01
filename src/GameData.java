@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameData {
-	public static List<Player> playerList;
+	public List<Player> playerList;
 	private Player whoseTurn;
 	//Colors to initialize the first 6 players with, in order
 	public static final Color[] playerColors = 
@@ -25,7 +25,7 @@ public class GameData {
 		"Orange",
 		"Grey"
 	};
-	
+
 	/**
 	 * Creates GameData object
 	 * @param int Number of human players
@@ -53,26 +53,26 @@ public class GameData {
 			playerList.add(player);
 		}
 	}
-	
+
 	public WinnerReturn gameRun(){
 		int turnIndex=0;
 		int totalturnnumber=0;
-			while(!isGameOver())
-			{
-				whoseTurn=playerList.get(turnIndex);
-				try{whoseTurn.turn();}
-				catch(GameOverException e){}
-				turnIndex=++turnIndex%playerList.size();
-				totalturnnumber++;
-				//if(totalturnnumber>500)break;
-			}
+		while(!isGameOver())
+		{
+			whoseTurn=playerList.get(turnIndex);
+			try{whoseTurn.turn();}
+			catch(GameOverException e){}
+			turnIndex=++turnIndex%playerList.size();
+			totalturnnumber++;
+			//if(totalturnnumber>500)break;
+		}
 		return new WinnerReturn(getWinner(),totalturnnumber);
-		
+
 	}
 	private boolean isGameOver()
 	{
 		int numberOfAlivePlayers=0;
-	for (Player p:playerList)
+		for (Player p:playerList)
 		{
 			if(p.isAlive()) numberOfAlivePlayers++;
 		}
@@ -80,7 +80,7 @@ public class GameData {
 		//else
 		return false;
 	}
-	
+
 	private Player getWinner()
 	{
 		for(Player p:playerList)
@@ -89,7 +89,7 @@ public class GameData {
 		}
 		return null;
 	}
-	
+
 	public void setupGameboard(List<Territory> territoryList)
 	{
 		//List<List<Territory>> playerTerritoryLists = new ArrayList<List<Territory>>(playerList.size());
@@ -115,9 +115,9 @@ public class GameData {
 			whoseTurn = playerList.get(playerIndex);
 			whoseTurn.turn();
 		}
-		*/
+		 */
 	}
-	
+
 	private int indexOfTurn()
 	{
 		int present = playerList.indexOf(whoseTurn);
@@ -125,13 +125,13 @@ public class GameData {
 		present %= playerList.size(); //restart if it was too high
 		return present;
 	}
-	
-	
+
+
 	public Player getPlayer(int playerID)
 	{
 		return playerList.get(playerID);
 	}
-	
+
 	public void onClick(Territory clickedOn)
 	{
 		if (whoseTurn instanceof PlayerHuman)
