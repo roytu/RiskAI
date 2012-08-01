@@ -330,33 +330,12 @@ public class Territory {
 		return false;
 	}
 	
-	public Set<Set<Territory>> getOwnedIslands()
-	{
-		Set<Set<Territory>> islands = new HashSet<Set<Territory>>();
-		Set<Territory> processed = new HashSet<Territory>();
-		for(Territory terrBase : getOwner().getOwnedTerritories())
-		{
-			if(!processed.contains(terrBase))
-			{
-				Set<Territory> island = new HashSet<Territory>();
-				island.add(terrBase);
-				for(Territory terrLink : getOwnedLinks(terrBase))
-				{
-					island.add(terrLink);
-					processed.add(terrLink);
-				}
-				islands.add(island);
-			}
-		}
-		return islands;
-	}
-	
-	private Set<Territory> getOwnedLinks(Territory territory)
+	public static Set<Territory> getOwnedLinks(Territory territory)
 	{
 		return getOwnedLinksRecursive(territory, new HashSet<Territory>());
 	}
 	
-	private Set<Territory> getOwnedLinksRecursive(Territory territory, Set<Territory> exclude)
+	private static Set<Territory> getOwnedLinksRecursive(Territory territory, Set<Territory> exclude)
 	{
 		exclude.add(territory);
 		Set<Territory> links = new HashSet<Territory>();

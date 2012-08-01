@@ -310,4 +310,25 @@ public abstract class Player {
 		double winProbApprox = (attackers-defenders)/defenders;
 		return Math.min(Math.max(winProbApprox, 0), 1); //if it's outside 0-1, just put it as 0 or 1
 	}
+	
+	public Set<Set<Territory>> getOwnedIslands()
+	{
+		Set<Set<Territory>> islands = new HashSet<Set<Territory>>();
+		Set<Territory> processed = new HashSet<Territory>();
+		for(Territory terrBase : getOwnedTerritories())
+		{
+			if(!processed.contains(terrBase))
+			{
+				Set<Territory> island = new HashSet<Territory>();
+				island.add(terrBase);
+				for(Territory terrLink : Territory.getOwnedLinks(terrBase))
+				{
+					island.add(terrLink);
+					processed.add(terrLink);
+				}
+				islands.add(island);
+			}
+		}
+		return islands;
+	}
 }
