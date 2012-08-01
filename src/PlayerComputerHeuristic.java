@@ -75,6 +75,11 @@ public class PlayerComputerHeuristic extends Player {
 		}
 	}
 	
+	private boolean shouldAttack()
+	{
+		//TODO
+	}
+	
 	private double getOptimalDeltaUnits(Set<Territory> territorySet, Territory territory)
 	{
 		return getOptimalUnits(territorySet, territory) - territory.getUnitCount();
