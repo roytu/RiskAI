@@ -308,7 +308,7 @@ public class Territory {
 		}
 	}
 	
-	public boolean canMove(Territory from, Territory to)
+	public static boolean canMove(Territory from, Territory to)
 	{
 		if(from.owner == to.owner && from.isLinked(to) && from.getUnitCount() > 1)
 		{
