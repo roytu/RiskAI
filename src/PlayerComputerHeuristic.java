@@ -69,7 +69,7 @@ public class PlayerComputerHeuristic extends Player {
 		Set<Territory> island = getHighestDeltaDelta(getOwnedIslands());
 		Territory terrFrom = getLowestDeltaUnits(island);
 		Territory terrTo = getHighestDeltaUnits(island);
-		if(canMove(terrFrom, terrTo))
+		if(Territory.canMove(terrFrom, terrTo))
 		{
 			move(terrFrom, terrTo, (int)Math.round((getOptimalDeltaUnits(island, terrFrom)+getOptimalDeltaUnits(island, terrTo))/2));
 		}
