@@ -67,6 +67,13 @@ public class PlayerComputerBetter extends Player {
 		}*/
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	private void aiThinking() throws GameOverException//this is all TEMPORARY. I will implemet it neater and better. I think.
 	{
 		/*if(currentCluster == null)*/ currentCluster = evaluateStartingPosition();
@@ -123,7 +130,7 @@ public class PlayerComputerBetter extends Player {
 	private void floodFill(Territory startingTerritory, List<Territory> discoveredTerritories)
 	{
 		discoveredTerritories.add(startingTerritory);
-		for (Territory t: startingTerritory.getadjacentTerritoryList())// ajacent To currentTerritory owned by this player&& not in mapping)
+		for (Territory t: startingTerritory.getAdjacentTerritoryList())// ajacent To currentTerritory owned by this player&& not in mapping)
 		{
 			if(t.getOwner()!=this||discoveredTerritories.contains(t));//do nothing, it's someone else's territory or its already been mapped
 			else
@@ -141,7 +148,7 @@ public class PlayerComputerBetter extends Player {
 		
 		Map<Territory, Double> conquerProbList = conquerProbabilityHeuristic(currentCluster);
 		
-		Map<Territory, Double> reinforcementsList = reinforcementsHeuristic(currentCluster);
+		Map<Territory, Double> continentBonusList = continentBonusHeuristic(currentCluster);
 		
 		/*
 		Map<Territory, Integer> OtherHeuristicList = OtherHeuristic(currentCluster);
@@ -151,7 +158,7 @@ public class PlayerComputerBetter extends Player {
 		 */
 		Map<Territory, Double> adjacentEnemyWeightedList =multiplyListWeights(adjacentEnemyTerritoryList,adjacentEnemyTerritoryFactor);
 		Map<Territory, Double> conquerProbWeightedList = multiplyListWeights(conquerProbList,conquerProbabilityFactor);
-		Map<Territory, Double> reinforcementsWeightedList = multiplyListWeights(reinforcementsList, reinforcementsFactor);
+		Map<Territory, Double> reinforcementsWeightedList = multiplyListWeights(continentBonusList, reinforcementsFactor);
 		List<Map<Territory,Double>> lists = new ArrayList<Map<Territory,Double>>();
 		lists.add(adjacentEnemyWeightedList);
 		lists.add(conquerProbWeightedList);
@@ -192,7 +199,7 @@ public class PlayerComputerBetter extends Player {
 		Map<Territory,Double> adjacentEnemyTerritoryHeuristicMap = new HashMap<Territory, Double>();
 		for (Territory t:contiguousTerritories)
 		{
-			for (Territory u:t.getadjacentTerritoryList())
+			for (Territory u:t.getAdjacentTerritoryList())
 			{
 				if(u.getOwner()!=this)
 				{
@@ -213,7 +220,7 @@ public class PlayerComputerBetter extends Player {
 		Map<Territory,Double> conquerProbabilityHeuristicMap = new HashMap<Territory, Double>();
 		for (Territory t:contiguousTerritories)
 		{
-			for (Territory u:t.getadjacentTerritoryList())
+			for (Territory u:t.getAdjacentTerritoryList())
 			{
 				if(u.getOwner()!=this)
 				{
@@ -233,32 +240,35 @@ public class PlayerComputerBetter extends Player {
 	 * @param contiguousTerritories
 	 * @return a map mapping each takeable territory to the fraction of total armies obtained by taking it
 	 */
-	private Map<Territory, Double> reinforcementsHeuristic(List<Territory> contiguousTerritories)
+	private Map<Territory, Double> continentBonusHeuristic(List<Territory> contiguousTerritories)
 	{
-		Map<Territory,Double> reinforcementHeuristicMap = new HashMap<Territory, Double>();
+		Map<Territory,Double> continentBonusHeuristicMap = new HashMap<Territory, Double>();
 		for (Territory t:contiguousTerritories)
 		{
-			for (Territory u:t.getadjacentTerritoryList())
+			for (Territory u:t.getAdjacentEnemyTerritories())
 			{
-				if(u.getOwner()!=this)
-				{
-					//map u to fraction of total armies owned by the player
-					Set<Territory> owned = new HashSet<Territory>(this.getTerritoryMap().keySet());
-					owned.add(u);
-					List<Set<Territory>> totalOwneds = new ArrayList<Set<Territory>>();
-					for (int i = 0; i < RiskAI.PLAYERS_COMP+RiskAI.PLAYERS_HUMAN; i++) //for each player total
-					{
-						Set<Territory> otherOwned = RiskAI.currentGame.getPlayer(i).getTerritoryMap().keySet();
-						otherOwned.remove(u); //This will not do anything if it doesn't contain u, so it will not give exceptions.
-						totalOwneds.add(otherOwned);
-					}
-					reinforcementHeuristicMap.put(u, reinforcementFraction(owned, totalOwneds));
-				}
+				double percent=getPercentageOfContinentOwned(u.getContinent());
+				//MAGIC EQUATION: 1/(1+e^-(10x-5))- nice logistic curve --  determined by experimentation
+				double magicWeight=1/1+Math.pow(Math.E, -(10*percent-5));
+				continentBonusHeuristicMap.put(u, magicWeight);
 			}
 		}
-		return reinforcementHeuristicMap;
+		return continentBonusHeuristicMap;
 	}
 	/**Note: Owned must be total territories owned, otherOwned must be the list of lists of territories owned by all players*/
+	private double getPercentageOfContinentOwned(Continent continent)
+	{
+		int numberOfOwnedTerritories=0;
+		for(Territory t:continent.territories())
+		{
+			if(t.getOwner()==this) numberOfOwnedTerritories++;
+		}
+		return numberOfOwnedTerritories/continent.territories().size();
+	}
+	
+	
+	
+	
 	private double reinforcementFraction(Set<Territory> owned, List<Set<Territory>> totalOwneds)
 	{
 		double received = (double) calculateReinforcements(owned);
@@ -276,7 +286,7 @@ public class PlayerComputerBetter extends Player {
 	private int numberOfAdjacentEnemyTerritories(Territory territory)
 	{
 		int numberOfAdjacentEnemyTerritories = 0;
-		for (Territory t:territory.getadjacentTerritoryList())
+		for (Territory t:territory.getAdjacentTerritoryList())
 		{
 			if(t.getOwner()!=this) numberOfAdjacentEnemyTerritories++;
 		}
@@ -284,7 +294,7 @@ public class PlayerComputerBetter extends Player {
 	}
 	private Territory getOwnedTerritoryAdjacentTo(Territory territoryToAttack)
 	{//can add in reinforce territory with most/least number of troops
-		for (Territory i:territoryToAttack.getadjacentTerritoryList())
+		for (Territory i:territoryToAttack.getAdjacentTerritoryList())
 		{
 			if(i.getOwner()==this) return i;
 		}
@@ -294,7 +304,7 @@ public class PlayerComputerBetter extends Player {
 	{
 		int currentHighestTroopCount=-1;
 		Territory currentHighestTroopTerritory=null;
-		for (Territory i:targetTerritory.getadjacentTerritoryList())
+		for (Territory i:targetTerritory.getAdjacentTerritoryList())
 		{
 			if(i.getOwner()==this)
 			{
