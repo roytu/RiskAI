@@ -1,4 +1,3 @@
-import java.awt.Color;
 
 public class PlayerHuman extends Player {
 
@@ -29,7 +28,7 @@ public class PlayerHuman extends Player {
 		}
 
 	}
-	
+
 	public void onKeyPress()
 	{
 		hasQuitPhase = true;
@@ -51,7 +50,7 @@ public class PlayerHuman extends Player {
 			from = null;
 			to = null;
 			while (to == null) if (hasQuitPhase) return; //wait for both territories to be picked, if player quits stage break
-			GuiMessages.addMessage(this.name+"attacks from " + from + " to " + to);
+			GuiMessages.addMessage(this.name+" attacks from " + from + " to " + to + ".");
 			attack(from, to);
 		}
 	}
@@ -65,9 +64,11 @@ public class PlayerHuman extends Player {
 			from = null;
 			to = null;
 			while (to == null) if (hasQuitPhase) {stage = 0; return;} //wait for both territories to be picked, if player quits stage end turn
-			GuiMessages.addMessage(this.name+"fortifies from " + from + " to " + to);
-			reinforce(from, -1);
-			reinforce(to,1);
+			if (canFortify(from,to))
+			{
+				GuiMessages.addMessage(this.name+" fortifies from " + from + " to " + to);
+				move(from, to, 1);
+			}
 		}
 	}
 
@@ -86,6 +87,8 @@ public class PlayerHuman extends Player {
 			if (t.getOwner() == this)
 			{
 				from = t;
+				GuiMessages.addMessage(t.name + " selected.");
+				//t.getTerritoryGraphic().highlight();
 			}
 		}
 		else if (to == null){
@@ -95,7 +98,7 @@ public class PlayerHuman extends Player {
 			}
 		}
 	}
-	
+
 	private void tacticalMoves(Territory t)
 	{
 		if (from == null){

@@ -33,7 +33,7 @@ public class GameData {
 	 */
 	public GameData(int humanCount, int computerCount){
 		playerList = new ArrayList<Player>();
-		int secretPlayerNumber=(int) (Math.random()*computerCount);
+		int secretPlayerNumber=0;//(int) (Math.random()*computerCount);
 		for(int i=0;i<humanCount;i++)
 		{
 			Player player = new PlayerHuman(i);
@@ -83,7 +83,6 @@ public class GameData {
 	
 	private Player getWinner()
 	{
-		int players=0;
 		for(Player p:playerList)
 		{
 			if(p.isAlive()) return p;
@@ -107,7 +106,7 @@ public class GameData {
 		}
 		for(Territory t:territoryList)
 		{
-			t.getOwner().reinforce(t, 3);
+			t.getOwner().reinforce(t, 3-t.getUnitCount());
 		}
 		/*
 		while(true)
