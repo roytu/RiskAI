@@ -331,4 +331,18 @@ public abstract class Player {
 		}
 		return islands;
 	}
+	
+	public Set<Territory> getAllLinkedEnemyTerritories()
+	{
+		Set<Territory> territorySet = new HashSet<Territory>();
+		//TODO
+		for(Territory ownedTerritory : getOwnedTerritories())
+		{
+			for(Territory enemyTerritory : ownedTerritory.getAdjacentEnemyTerritories())
+			{
+				territorySet.add(enemyTerritory);
+			}
+		}
+		return territorySet;
+	}
 }
