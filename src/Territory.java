@@ -50,7 +50,7 @@ public class Territory {
 	{
 		return new LinkedList<String>(linkedTerritoryNames);
 	}
-	public List<Territory> getadjacentTerritoryList()
+	public List<Territory> getAdjacentTerritoryList()
 	{
 		return new LinkedList<Territory>(linkedTerritories);
 	}
@@ -58,7 +58,7 @@ public class Territory {
 	{
 		linkedTerritories.add(territory);
 	}
-	public int getNumberOfadjacentTerritories()
+	public int getNumberOfAdjacentTerritories()
 	{
 		return linkedTerritories.size();
 	}
@@ -109,7 +109,7 @@ public class Territory {
 	public Set<Territory> getAdjacentEnemyTerritories()
 	{
 		Set<Territory> adjacentTerritories = new HashSet<Territory>();
-		for (Territory t : getadjacentTerritoryList())
+		for (Territory t : getAdjacentTerritoryList())
 		{
 			if(t.getOwner()!=getOwner())
 				adjacentTerritories.add(t);
@@ -284,13 +284,29 @@ public class Territory {
 	
 	public static boolean canAttack(Territory from, Territory to)
 	{
-		if(from.owner != to.owner && from.getUnitCount()>1)
+		if(from.owner != to.owner && from.getUnitCount()>1 && from.getAdjacentTerritoryList().contains(to) && to.getUnitCount() >= 1)
 		{
 			return true;
 		}
-		else
+		return false;
+	}
+	
+	public Set<Territory> getCluster()
+	{
+		return getClusterHelper(this, new HashSet<Territory>());
+	}
+	private Set<Territory> getClusterHelper(Territory around, Set<Territory> seen)
+	{
+		seen.add(around);
+		Set<Territory> cluster = new HashSet<Territory>();
+		cluster.add(around);
+		for (Territory t: around.getAdjacentTerritoryList())
 		{
-			return false;
+			if(t.getOwner()==around.getOwner() && !seen.contains(t))
+			{
+				cluster.addAll(getClusterHelper(t, seen));
+			}
 		}
+		return cluster;
 	}
 }

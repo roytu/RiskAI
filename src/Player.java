@@ -12,7 +12,7 @@ import java.util.Set;
 public abstract class Player {
 	public static final int COMPUTER_PLAYER_DELAY_MS = 20;
 	//private List<Card> cardList;
-	protected volatile Map<Territory, Integer> unitMap;
+	//protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
 	protected int playerID;
 	private Color color;
@@ -31,7 +31,7 @@ public abstract class Player {
 		this.playerID = playerID;
 		
 		//cardList = new ArrayList<Card>();
-		unitMap = new HashMap<Territory, Integer>();
+		//unitMap = new HashMap<Territory, Integer>();
 		color = GameData.playerColors[playerID];
 		name = GameData.playerColorNames[playerID];
 	}
@@ -153,7 +153,7 @@ public abstract class Player {
 		{
 			unitMap.put(territory, number);
 		}*/
-		if(number>0) GuiMessages.addMessage(territory.name+" reinforced");
+		//if(number>0) GuiMessages.addMessage(territory.name+" reinforced");
 	}
 	
 	public void move(Territory from, Territory to, int number)
@@ -166,7 +166,7 @@ public abstract class Player {
 	
 	public void attack(Territory from, Territory to) 
 	{
-		if(from.getUnitCount()<=1 || to.getUnitCount()<1 || from.getOwner() == to.getOwner())
+		if(!Territory.canAttack(from, to))
 			return;
 		int unitsFrom = from.getUnitCount();
 		int unitsTo = to.getUnitCount();
@@ -303,4 +303,12 @@ public abstract class Player {
 		double winProbApprox = (attackers-defenders)/defenders;
 		return Math.min(Math.max(winProbApprox, 0), 1); //if it's outside 0-1, just put it as 0 or 1
 	}
+	
+	protected boolean canFortify(Territory from, Territory to)
+	{
+		Set<Territory> cluster = from.getCluster();
+		return cluster.contains(to);
+	}
+	
+	
 }

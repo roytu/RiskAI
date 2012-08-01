@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.util.List;
 
 public class RiskAI{
@@ -10,8 +9,8 @@ public class RiskAI{
 	public static HandleClick clickHandler;
 	public static Gfx gfx;
 	
-	public static final int PLAYERS_HUMAN = 0;
-	public static final int PLAYERS_COMP = 3;
+	public static final int PLAYERS_HUMAN = 1;
+	public static final int PLAYERS_COMP = 2;
 	//public static final boolean DEBUG_ENABLED=false;
 	//DEBUG
 	public static aiFactors[] fac = new aiFactors[100];
@@ -22,7 +21,7 @@ public class RiskAI{
 		init();
 		
 		//need to implement value_limit
-		double f2=-1;
+		//double f2=-1;
 		/*for(int i=0;i<100;i++)
 		{
 			fac[i]=new aiFactors();
