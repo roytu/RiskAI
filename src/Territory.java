@@ -58,7 +58,7 @@ public class Territory {
 	{
 		linkedTerritories.add(territory);
 	}
-	public int getNumberOfadjacentTerritories()
+	public int getNumberOfAdjacentTerritories()
 	{
 		return linkedTerritories.size();
 	}
@@ -302,17 +302,33 @@ public class Territory {
 	
 	public static boolean canAttack(Territory from, Territory to)
 	{
-		if(from.owner != to.owner && from.getUnitCount()>1)
+		if(from.owner != to.owner && from.getUnitCount()>1 && from.getAdjacentTerritoryList().contains(to) && to.getUnitCount() >= 1)
 		{
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
-	public boolean canMove(Territory from, Territory to)
+	public Set<Territory> getCluster()
+	{
+		return getClusterHelper(this, new HashSet<Territory>());
+	}
+	private Set<Territory> getClusterHelper(Territory around, Set<Territory> seen)
+	{
+		seen.add(around);
+		Set<Territory> cluster = new HashSet<Territory>();
+		cluster.add(around);
+		for (Territory t: around.getAdjacentTerritoryList())
+		{
+			if(t.getOwner()==around.getOwner() && !seen.contains(t))
+			{
+				cluster.addAll(getClusterHelper(t, seen));
+			}
+		}
+		return cluster;
+	}
+	
+	public static boolean canMove(Territory from, Territory to)
 	{
 		if(from.owner == to.owner && from.isLinked(to) && from.getUnitCount() > 1)
 		{
@@ -330,33 +346,12 @@ public class Territory {
 		return false;
 	}
 	
-	public Set<Set<Territory>> getOwnedIslands()
-	{
-		Set<Set<Territory>> islands = new HashSet<Set<Territory>>();
-		Set<Territory> processed = new HashSet<Territory>();
-		for(Territory terrBase : getOwner().getOwnedTerritories())
-		{
-			if(!processed.contains(terrBase))
-			{
-				Set<Territory> island = new HashSet<Territory>();
-				island.add(terrBase);
-				for(Territory terrLink : getOwnedLinks(terrBase))
-				{
-					island.add(terrLink);
-					processed.add(terrLink);
-				}
-				islands.add(island);
-			}
-		}
-		return islands;
-	}
-	
-	private Set<Territory> getOwnedLinks(Territory territory)
+	public static Set<Territory> getOwnedLinks(Territory territory)
 	{
 		return getOwnedLinksRecursive(territory, new HashSet<Territory>());
 	}
 	
-	private Set<Territory> getOwnedLinksRecursive(Territory territory, Set<Territory> exclude)
+	private static Set<Territory> getOwnedLinksRecursive(Territory territory, Set<Territory> exclude)
 	{
 		exclude.add(territory);
 		Set<Territory> links = new HashSet<Territory>();
