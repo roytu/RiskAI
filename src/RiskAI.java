@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.util.List;
+import java.util.Random;
 
 public class RiskAI{
 	static RiskAI riskAI;
@@ -15,13 +16,25 @@ public class RiskAI{
 	public static final boolean DEBUG_ENABLED=true;
 	//DEBUG
 	public static aiFactors[] fac = new aiFactors[100];
+	
+	public static double[] params;
 
 	public static void main(String[] args)
 	{
 		//Initialize system information
 		init();
 
+		if(DEBUG_ENABLED)
+		{
+			params = new double[7];
+			Random random = new Random();
+			for(int i=0;i<7;i++)
+			{
+				params[i] = random.nextDouble() * 2 - 1;
+			}
+		}
 		//need to implement value_limit
+		/*
 		if(DEBUG_ENABLED)
 		{
 			double f2=-1;
@@ -64,7 +77,7 @@ public class RiskAI{
 			}
 			System.out.println(totalTurns/numberOfGames);
 		}
-
+		 */
 	}
 	private static void setAIFactors(int instance)
 	{

@@ -44,7 +44,7 @@ public class GameData {
 			Player player;
 			if(i==secretPlayerNumber)
 			{
-				player = new PlayerComputerBetter(humanCount+i);
+				player = new PlayerComputerHeuristic(humanCount+i);
 			}
 			else
 			{

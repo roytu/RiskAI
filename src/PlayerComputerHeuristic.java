@@ -1,16 +1,16 @@
+import java.util.Random;
 import java.util.Set;
 
 
 public class PlayerComputerHeuristic extends Player {
-
+	
 	public PlayerComputerHeuristic(int playerID) {
 		super(playerID);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
 	protected void reinforcementPhase() throws GameOverException {
-		// TODO Auto-generated method stub
 		int reinforcements = calculateReinforcements();
 		while(reinforcements > 0)
 		{
@@ -21,7 +21,6 @@ public class PlayerComputerHeuristic extends Player {
 	}
 
 	private Territory getHighestHeuristic(Set<Territory> ownedTerritories) {
-		// TODO Auto-generated method stub
 		double max = Double.MIN_VALUE;
 		Territory maxTerr = null;
 		for(Territory territory : ownedTerritories)
@@ -37,7 +36,6 @@ public class PlayerComputerHeuristic extends Player {
 	}
 	
 	private Territory getLowestHeuristic(Set<Territory> ownedTerritories) {
-		// TODO Auto-generated method stub
 		double min = Double.MAX_VALUE;
 		Territory minTerr = null;
 		for(Territory territory : ownedTerritories)
@@ -54,7 +52,6 @@ public class PlayerComputerHeuristic extends Player {
 
 	@Override
 	protected void attackPhase() throws GameOverException {
-		// TODO Auto-generated method stub
 		while(shouldAttack())
 		{
 			Territory terrTo = getHighestHeuristic(getAllLinkedEnemyTerritories());
@@ -65,7 +62,6 @@ public class PlayerComputerHeuristic extends Player {
 
 	@Override
 	protected void tacticalMovePhase() {
-		// TODO Auto-generated method stub
 		Set<Territory> island = getHighestDeltaDelta(getOwnedIslands());
 		Territory terrFrom = getLowestDeltaUnits(island);
 		Territory terrTo = getHighestDeltaUnits(island);
@@ -77,7 +73,8 @@ public class PlayerComputerHeuristic extends Player {
 	
 	private boolean shouldAttack()
 	{
-		//TODO
+		//TODO do this
+		return true;
 	}
 	
 	private double getOptimalDeltaUnits(Set<Territory> territorySet, Territory territory)
@@ -97,7 +94,10 @@ public class PlayerComputerHeuristic extends Player {
 	}
 	
 	private double getTerritoryHeuristic(Territory terr) {
-		// TODO Auto-generated method stub
+		// TODO do this
+		double h = 0;
+		h += RiskAI.params[0] * 1; //TODO
+		//h += RiskAI.params[1] *  
 		return 0;
 	}
 
