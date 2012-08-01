@@ -231,7 +231,14 @@ public abstract class Player {
 		}
 	}
 	
-	
+	/**
+	 * Get owned territories
+	 * @return Set<Territory>
+	 */
+	public Set<Territory> getOwnedTerritories()
+	{
+		return getTerritoryMap().keySet();
+	}
 	
 	/**
 	 * Gets a random territory in which the player has units.
