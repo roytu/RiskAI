@@ -186,7 +186,6 @@ public class Territory {
 		String ownerPart = ", with " + units + " armies on it";
 		return namePart + linkedPart + continentPart + ownerPart;*/
 		
-		
 		return name;
 	}
 	
@@ -200,8 +199,8 @@ public class Territory {
 			line += str + ",";
 		}
 		line += ";";
-		line += String.valueOf(getXCoord()) + ";";
-		line += String.valueOf(getYCoord()) + ";";
+		line += String.valueOf(graphic.xCoord) + ";";
+		line += String.valueOf(graphic.yCoord) + ";";
 		return line;
 	}
 	
@@ -214,18 +213,7 @@ public class Territory {
 			throw new RuntimeException("WTF JAVA");
 		}
 	}
-	public int getXCoord()
-	{
-		return graphic.xCoord;
-	}
-	public int getYCoord()
-	{
-		return graphic.yCoord;
-	}
-	public void setCoordinates(int x, int y)
-	{
-		graphic.setCoords(x, y);
-	}
+	
 	public TerritoryGraphics getTerritoryGraphic()
 	{
 		return this.graphic;
@@ -379,5 +367,52 @@ public class Territory {
 			}
 		}
 		return false;
+	}
+	
+	public double getVulnerability()
+	{
+		int defenders = getUnitCount();
+		int attackers = 0;
+		for(Territory enemy : this.getAdjacentEnemyTerritories())
+		{
+			attackers += enemy.getUnitCount();
+		}
+		return Player.probabilityOfWinning2(attackers, defenders);
+	}
+	
+	public double getVulnerability(int units)
+	{
+		int defenders = units;
+		int attackers = 0;
+		for(Territory enemy : this.getAdjacentEnemyTerritories())
+		{
+			attackers += enemy.getUnitCount();
+		}
+		return Player.probabilityOfWinning2(attackers, defenders);
+	}
+	
+	public double getOutpost()
+	{
+		int attackers = Math.min(getUnitCount()-1, 3);
+		if(attackers < 1)
+		{
+			return 0;
+		}
+		int defenders = Integer.MAX_VALUE;
+		Territory targetTerritory = null;
+		for(Territory enemy : getAdjacentEnemyTerritories())
+		{
+			int minDefenders = enemy.getUnitCount();
+			if(minDefenders < defenders)
+			{
+				defenders = minDefenders;
+				targetTerritory = enemy;
+			}
+		}
+		if(targetTerritory == null)
+		{
+			return 0;
+		}
+		return Player.probabilityOfWinning2(attackers, defenders) / targetTerritory.getVulnerability(attackers) / getVulnerability(getUnitCount() - attackers); //TODO 
 	}
 }
