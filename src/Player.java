@@ -310,6 +310,19 @@ public abstract class Player {
 		double defenders = defendingArmies; // low #s of armies don't have it
 		double winProbApprox = (attackers-defenders)/defenders;
 		return Math.min(Math.max(winProbApprox, 0), 1); //if it's outside 0-1, just put it as 0 or 1
+		//return Math.max(Math.min(0.42 + 0.11 * attackingArmies - 0.09 * defendingArmies, 1), 0);
+	}
+	
+	public static double probabilityOfWinning2(int attackingArmies, int defendingArmies)
+	{
+		//this is an approximation at the moment but it's actually pretty close, especially with larger armies
+		/*
+		double attackers = (attackingArmies-2)*1.1; //1.1 is because of 3v2 attacker advantage, -2 is b/c
+		double defenders = defendingArmies; // low #s of armies don't have it
+		double winProbApprox = (attackers-defenders)/defenders;
+		return Math.min(Math.max(winProbApprox, 0), 1); //if it's outside 0-1, just put it as 0 or 1
+		*/
+		return Math.max(Math.min(0.42 + 0.11 * attackingArmies - 0.09 * defendingArmies, 1), 0);
 	}
 	
 	protected boolean canFortify(Territory from, Territory to)
