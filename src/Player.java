@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 3;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 20;
 	//private List<Card> cardList;
 	protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
@@ -42,17 +42,13 @@ public abstract class Player {
 	
 	public boolean isAlive()
 	{
-		if(unitMap.keySet().size()>0){
+		if(getTerritoryMap().keySet().size()>0){
 			return true;
 		}
 		return false;
 	}
 	
-	public Set<Territory> getOwnedTerritories()
-	{
-		return unitMap.keySet();
-	}
-	public Map<Territory, Integer> getUnitMap()
+	public Map<Territory, Integer> getTerritoryMap()
 	{
 		HashMap<Territory, Integer> territoryUnitMap = new HashMap<Territory, Integer>();
 		for (Territory t:RiskAI.territoryData)
@@ -93,11 +89,12 @@ public abstract class Player {
 	{
 		//partially commented version is actual reinforcement counter, currently without continents for debug
 		int reinforcements = 0;
-//		List<Continent> ownedContinents = ownedContinents();
-//		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
-		reinforcements+=Math.max(unitMap.keySet().size()/3,3);
+		List<Continent> ownedContinents = ownedContinents();
+		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
+		reinforcements+=Math.max(getTerritoryMap().keySet().size()/3,3);
 		return reinforcements;
 	}
+	
 	
 	private List<Continent> ownedContinents()
 	{
@@ -147,21 +144,24 @@ public abstract class Player {
 	 */
 	public void reinforce(Territory territory, int number)
 	{
-		if(unitMap.containsKey(territory))
+		territory.addUnits(number);
+		/*if(unitMap.containsKey(territory))
 		{
 			unitMap.put(territory, unitMap.get(territory) + number);
 		}
 		else
 		{
 			unitMap.put(territory, number);
-		}
+		}*/
 		if(number>0) GuiMessages.addMessage(territory.name+" reinforced");
 	}
 	
 	public void move(Territory from, Territory to, int number)
 	{
-		unitMap.put(from, unitMap.get(from)-number);
-		unitMap.put(to, unitMap.get(to)+number);
+		from.addUnits(-number);
+		to.addUnits(number);
+		/*unitMap.put(from, unitMap.get(from)-number);
+		unitMap.put(to, unitMap.get(to)+number);*/
 	}
 	
 	public void attack(Territory from, Territory to) 
@@ -221,7 +221,7 @@ public abstract class Player {
 		{
 			int movedArmies = from.getUnitCount()-1;
 			from.getOwner().reinforce(from, -movedArmies);
-			to.getOwner().unitMap.remove(to);
+			//to.getOwner().unitMap.remove(to);
 			to.setOwner(from.getOwner());
 			to.getOwner().reinforce(to, movedArmies);
 		}
@@ -236,7 +236,7 @@ public abstract class Player {
 	 */
 	public Territory getRandomControlledTerritory()
 	{
-		Set<Territory> territories = unitMap.keySet();
+		Set<Territory> territories = getTerritoryMap().keySet();
 		Random random = new Random();
 		int territoryID = random.nextInt(territories.size());
 		int i = 0;
@@ -259,12 +259,9 @@ public abstract class Player {
 	 */
 	public boolean isOwnerOf(Territory territory)
 	{
-		if(unitMap.containsKey(territory))
+		if(territory.getOwner()==this)
 		{
-			if(unitMap.get(territory)>0)
-			{
-				return true;
-			}
+			return true;
 		}
 		return false;
 	}
@@ -277,14 +274,15 @@ public abstract class Player {
 	 */
 	public int getUnitsInTerritory(Territory territory)
 	{
-		if(unitMap.containsKey(territory))
+		return territory.getUnitCount();
+		/*if(unitMap.containsKey(territory))
 		{
 			return unitMap.get(territory);
 		}
 		else
 		{
 			return 0;
-		}
+		}*/
 	}
 	
 	/**

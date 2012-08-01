@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.List;
 
 public class RiskAI{
@@ -10,32 +11,71 @@ public class RiskAI{
 	public static Gfx gfx;
 	
 	public static final int PLAYERS_HUMAN = 0;
-	public static final int PLAYERS_COMP = 2;
+	public static final int PLAYERS_COMP = 3;
+	//public static final boolean DEBUG_ENABLED=false;
+	//DEBUG
+	public static aiFactors[] fac = new aiFactors[100];
 	
 	public static void main(String[] args)
 	{
 		//Initialize system information
 		init();
 		
-		float numberOfGames=0;
-		float totalTurns=0;
-		while(numberOfGames<10)
+		//need to implement value_limit
+		double f2=-1;
+		/*for(int i=0;i<100;i++)
 		{
-			currentGame.setupGameboard(territoryData);
-			totalTurns+=currentGame.gameRun();
-			numberOfGames++;
-			System.out.println(numberOfGames+" Games finished.");
+			fac[i]=new aiFactors();
+			if(i%10==0)f2++;
+			fac[i].initStep((i%10)*0.1,f2*0.1);*/
+			float numberOfGames=0;
+			float totalTurns=0;
+			while(numberOfGames<10)
+			{
+				currentGame.setupGameboard(territoryData);
+				//setAIFactors(i);
+				WinnerReturn winner=currentGame.gameRun();
+				totalTurns+=winner.numberOfTurns;
+				numberOfGames++;
+				System.out.println(numberOfGames+" Games finished.");
+				//if(winner.winner instanceof PlayerComputer) totalTurns+=1000;//if blue is beaten, DON"T USE THOSE WEIGHTS!!
+
+			}
+			System.out.println(totalTurns/numberOfGames);
+			/*fac[i].numberOfTurns=totalTurns/numberOfGames;
+			//fac[i].displayFactors();
 			
 		}
-		System.out.println(totalTurns/numberOfGames);
-
-		/*terrName("Ural").setOwner(currentGame.getPlayer(1));
-		terrName("Afghanistan").setOwner(currentGame.getPlayer(2));
-		currentGame.getPlayer(1).reinforce(terrName("Ural"),3);
-		currentGame.getPlayer(2).reinforce(terrName("Afghanistan"),3);
-		currentGame.getPlayer(1).attack(terrName("Ural"),terrName("Afghanistan"));		*/
+		getBestFactors();*/
 		
 	}
+	private static void setAIFactors(int instance)
+	{
+		for(int i=0;i<GameData.playerList.size();i++)//randomize goodAI factors
+		{
+			if(GameData.playerList.get(i) instanceof PlayerComputerBetter)
+			{
+				PlayerComputerBetter goodai = ((PlayerComputerBetter)(GameData.playerList.get(i)));
+				goodai.adjacentEnemyTerritoryFactor=fac[instance].factor1;
+				goodai.conquerProbabilityFactor=fac[instance].factor2;
+				goodai.reinforcementsFactor=fac[instance].factor3;
+			}
+		}
+	}
+
+	private static void getBestFactors()
+	{
+		double bestTurns=9999;
+		for(int i=0;i<100;i++)
+		{
+			if(fac[i].numberOfTurns<bestTurns)
+			{
+				System.out.println(fac[i]);
+				bestTurns=fac[i].numberOfTurns;
+			}
+		}
+	}
+	
 	private static void init()
 	{
 		clickHandler = new HandleClick();

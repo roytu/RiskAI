@@ -13,7 +13,10 @@ public class PlayerComputerBetter extends Player {
 	List<Territory> currentCluster;
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
-	double cost_limit = 0.0;
+	double value_limit = 0.1;
+	double adjacentEnemyTerritoryFactor = .5;
+	double conquerProbabilityFactor = .4;
+	double reinforcementsFactor = .1;
 	public PlayerComputerBetter(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub
@@ -33,11 +36,11 @@ public class PlayerComputerBetter extends Player {
 
 	@Override
 	protected void attackPhase() throws GameOverException {
-		for(int i=0;i<10;i++)
+		for(int i=0;i<20;i++)
 		{
 			aiThinking();
 			Territory terrFrom = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
-			if (getHighestValue(territoriesToAttack) < cost_limit) territoryTargeted=null;
+			if (getHighestValue(territoriesToAttack) < value_limit) territoryTargeted=null;
 			Territory terrTo = territoryTargeted;
 			if(terrTo != null)
 			{
@@ -64,7 +67,7 @@ public class PlayerComputerBetter extends Player {
 		/*if(currentCluster == null)*/ currentCluster = evaluateStartingPosition();
 		territoriesToAttack = getTerritoryAttackList();
 		territoryTargeted = getHighestValueTerritory(territoriesToAttack);
-		if (getHighestValue(territoriesToAttack) > cost_limit) territoryTargeted=null;
+		if (getHighestValue(territoriesToAttack) < value_limit) territoryTargeted=null;
 		if(territoriesToAttack.isEmpty()) throw new GameOverException();
 		//TODO Insert conquer prob heuristic somewhere in here with weights later
 		territoryTargeted = getHighestValueTerritory(territoriesToAttack);
@@ -90,7 +93,7 @@ public class PlayerComputerBetter extends Player {
 	
 	private List<Territory> evaluateStartingPosition()
 	{
-		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(getUnitMap());
+		Map<Territory, Integer> ownedTerritories = new HashMap<Territory, Integer>(this.getTerritoryMap());
 
 		List<Territory> discoveredTerritories = new ArrayList<Territory>();
 		List<Territory> bestTerritoryGroup = new ArrayList<Territory>();
@@ -130,12 +133,11 @@ public class PlayerComputerBetter extends Player {
 	private Map<Territory, Double> getTerritoryAttackList()
 	{
 		Map<Territory, Double> adjacentEnemyTerritoryList = adjacentEnemyTerritoryHeuristic(currentCluster);
-		double adjacentEnemyTerritoryFactor = 0.1;
+		
 		Map<Territory, Double> conquerProbList = conquerProbabilityHeuristic(currentCluster);
-		double conquerProbabilityFactor = 0.4;
+		
 		Map<Territory, Double> reinforcementsList = reinforcementsHeuristic(currentCluster);
-		double reinforcementsFactor = 0.5; //These have to be much higher since they range from 0 to 1
-		//rather than from 1 to 6 like the first one.
+		
 		/*
 		Map<Territory, Integer> OtherHeuristicList = OtherHeuristic(currentCluster);
 		double OtherHeuristicFactor = 1.0;
@@ -236,12 +238,12 @@ public class PlayerComputerBetter extends Player {
 				if(u.getOwner()!=this)
 				{
 					//map u to fraction of total armies owned by the player
-					Set<Territory> owned = new HashSet<Territory>(unitMap.keySet());
+					Set<Territory> owned = new HashSet<Territory>(this.getTerritoryMap().keySet());
 					owned.add(u);
 					List<Set<Territory>> totalOwneds = new ArrayList<Set<Territory>>();
 					for (int i = 0; i < RiskAI.PLAYERS_COMP+RiskAI.PLAYERS_HUMAN; i++) //for each player total
 					{
-						Set<Territory> otherOwned = RiskAI.currentGame.getPlayer(i).getOwnedTerritories();
+						Set<Territory> otherOwned = RiskAI.currentGame.getPlayer(i).getTerritoryMap().keySet();
 						otherOwned.remove(u); //This will not do anything if it doesn't contain u, so it will not give exceptions.
 						totalOwneds.add(otherOwned);
 					}

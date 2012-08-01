@@ -16,6 +16,7 @@ public class Territory {
 	private Continent continent; //Only for data retrieval
 	private List<String> linkedTerritoryNames;
 	private Player owner;
+	private int numberOfUnits;
 	private TerritoryGraphics graphic;
 	private static BufferedWriter territoryDataWriter;
 	
@@ -93,7 +94,7 @@ public class Territory {
 	public int getRelativeStrength()
 	{
 		int enemyTroops = 0;
-		for(Territory territory : getadjacentEnemyTerritories())
+		for(Territory territory : getAdjacentEnemyTerritories())
 		{
 			enemyTroops += territory.getUnitCount();
 		}
@@ -105,7 +106,7 @@ public class Territory {
 	 * Returns a set of adjacent enemy territories
 	 * @return Set<Territory>
 	 */
-	public Set<Territory> getadjacentEnemyTerritories()
+	public Set<Territory> getAdjacentEnemyTerritories()
 	{
 		Set<Territory> adjacentTerritories = new HashSet<Territory>();
 		for (Territory t : getadjacentTerritoryList())
@@ -136,23 +137,18 @@ public class Territory {
 	
 	public int getUnitCount()
 	{
-		return owner!=null ? owner.getUnitsInTerritory(this) : 0;
+		return numberOfUnits;
+		/*return owner!=null ? owner.getUnitsInTerritory(this) : 0;*/
+	}
+	public void addUnits(int unitsToAdd)
+	{
+		numberOfUnits+=unitsToAdd;
 	}
 	
 	public Player getOwner()
 	{
-		for(Player player : RiskAI.currentGame.playerList)
-		{
-			if(player.unitMap.containsKey(this))
-			{
-				if(player.unitMap.get(this)>0)
-				{
-					return player;
-				}
-			}
-		}
-		//return null;
-		return owner;
+		
+		return this.owner;
 	}
 
 	public void setOwner(Player owner)
@@ -249,7 +245,44 @@ public class Territory {
 		return set;
 	}
 	
-	public boolean canAttack(Territory from, Territory to)
+	public static Set<Territory> getWeakestTerritory(Set<Territory> territorySet)
+	{
+		int min = Integer.MAX_VALUE;
+		Set<Territory> set = new HashSet<Territory>();
+		for(Territory territory : territorySet)
+		{
+			int unitCount = territory.getUnitCount();
+			if(unitCount < min)
+			{
+				set.clear();
+				set.add(territory);
+				min = unitCount;
+			}
+			else if(unitCount == min)
+			{
+				set.add(territory);
+			}
+		}
+		return set;
+	}
+	
+	public static Territory chooseRandomFromSet(Set<Territory> territorySet)
+	{
+		Random random = new Random();
+		int select = random.nextInt(territorySet.size());
+		int i = 0;
+		for(Territory territory : territorySet)
+		{
+			if(i==select)
+			{
+				return territory;
+			}
+			i++;
+		}
+		return null;
+	}
+	
+	public static boolean canAttack(Territory from, Territory to)
 	{
 		if(from.owner != to.owner && from.getUnitCount()>1)
 		{
