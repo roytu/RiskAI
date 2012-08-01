@@ -368,4 +368,16 @@ public class Territory {
 		}
 		return links;
 	}
+	
+	public boolean isOnContinentBorder()
+	{
+		for(Territory terrNeighbor : getAdjacentTerritoryList())
+		{
+			if(terrNeighbor.getContinent() != getContinent())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }
