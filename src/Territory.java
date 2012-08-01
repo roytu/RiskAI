@@ -67,6 +67,10 @@ public class Territory {
 		Random random = new Random();
 		return linkedTerritories.get(random.nextInt(linkedTerritories.size()));
 	}
+	public Continent getContinent()
+	{
+		return this.continent;
+	}
 	
 	public Territory getRandomLinkedUnownedTerritory(Player player)
 	{
@@ -101,6 +105,20 @@ public class Territory {
 		return getUnitCount() - enemyTroops;
 	}
 	
+	/**
+	 * Returns a set of adjacent owned territories
+	 * @return Set<Territory>
+	 */
+	public Set<Territory> getAdjacentOwnedTerritories()
+	{
+		Set<Territory> adjacentTerritories = new HashSet<Territory>();
+		for (Territory t : getAdjacentTerritoryList())
+		{
+			if(t.getOwner()==getOwner())
+				adjacentTerritories.add(t);
+		}
+		return adjacentTerritories;
+	}
 	
 	/**
 	 * Returns a set of adjacent enemy territories
@@ -308,5 +326,46 @@ public class Territory {
 			}
 		}
 		return cluster;
+	}
+	
+	public static boolean canMove(Territory from, Territory to)
+	{
+		if(from.owner == to.owner && from.isLinked(to) && from.getUnitCount() > 1)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isLinked(Territory to)
+	{
+		if(getOwnedLinks(this).contains(to))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public static Set<Territory> getOwnedLinks(Territory territory)
+	{
+		return getOwnedLinksRecursive(territory, new HashSet<Territory>());
+	}
+	
+	private static Set<Territory> getOwnedLinksRecursive(Territory territory, Set<Territory> exclude)
+	{
+		exclude.add(territory);
+		Set<Territory> links = new HashSet<Territory>();
+		links.add(territory);
+		for(Territory link : territory.getAdjacentOwnedTerritories())
+		{
+			if(exclude.contains(link))
+				continue;
+			Set<Territory> linkedLinks = getOwnedLinksRecursive(link, exclude);
+			for(Territory linkedLink : linkedLinks)
+			{
+				links.add(linkedLink);
+			}
+		}
+		return links;
 	}
 }

@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 20;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 0;
 	//private List<Card> cardList;
 	//protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
@@ -227,7 +227,14 @@ public abstract class Player {
 		}
 	}
 	
-	
+	/**
+	 * Get owned territories
+	 * @return Set<Territory>
+	 */
+	public Set<Territory> getOwnedTerritories()
+	{
+		return getTerritoryMap().keySet();
+	}
 	
 	/**
 	 * Gets a random territory in which the player has units.
@@ -310,5 +317,24 @@ public abstract class Player {
 		return cluster.contains(to);
 	}
 	
-	
+	public Set<Set<Territory>> getOwnedIslands()
+	{
+		Set<Set<Territory>> islands = new HashSet<Set<Territory>>();
+		Set<Territory> processed = new HashSet<Territory>();
+		for(Territory terrBase : getOwnedTerritories())
+		{
+			if(!processed.contains(terrBase))
+			{
+				Set<Territory> island = new HashSet<Territory>();
+				island.add(terrBase);
+				for(Territory terrLink : Territory.getOwnedLinks(terrBase))
+				{
+					island.add(terrLink);
+					processed.add(terrLink);
+				}
+				islands.add(island);
+			}
+		}
+		return islands;
+	}
 }

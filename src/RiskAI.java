@@ -5,48 +5,64 @@ public class RiskAI{
 	static GameData currentGame;
 	static List<Continent> continentData;
 	static List<Territory> territoryData;
-	
+
 	public static HandleClick clickHandler;
 	public static Gfx gfx;
-	
-	public static final int PLAYERS_HUMAN = 1;
-	public static final int PLAYERS_COMP = 2;
-	//public static final boolean DEBUG_ENABLED=false;
+	public static final int PLAYERS_HUMAN = 0;
+	public static final int PLAYERS_COMP = 3;
+	public static final boolean DEBUG_ENABLED=true;
 	//DEBUG
 	public static aiFactors[] fac = new aiFactors[100];
-	
+
 	public static void main(String[] args)
 	{
 		//Initialize system information
 		init();
-		
+
 		//need to implement value_limit
-		//double f2=-1;
-		/*for(int i=0;i<100;i++)
+		if(DEBUG_ENABLED)
 		{
-			fac[i]=new aiFactors();
-			if(i%10==0)f2++;
-			fac[i].initStep((i%10)*0.1,f2*0.1);*/
+			double f2=-1;
+			for(int i=0;i<100;i++)
+			{
+				fac[i]=new aiFactors();
+				if(i%10==0)f2++;
+				fac[i].initStep((i%10)*0.1,f2*0.1);
+				float numberOfGames=0;
+				float totalTurns=0;
+				while(numberOfGames<10)
+				{
+					currentGame.setupGameboard(territoryData);
+					setAIFactors(i);
+					WinnerReturn winner=currentGame.gameRun();
+					totalTurns+=winner.numberOfTurns;
+					numberOfGames++;
+					System.out.println(numberOfGames+" Games finished.");
+					if(winner.winner instanceof PlayerComputer) totalTurns+=1000;//if betterComputer is beaten, DON"T USE THOSE WEIGHTS!!
+
+				}
+				System.out.println(totalTurns/numberOfGames);
+				fac[i].numberOfTurns=totalTurns/numberOfGames;
+				//fac[i].displayFactors();
+
+			}
+			getBestFactors();
+		}
+		else// (!DEBUG_ENABLED)
+		{
 			float numberOfGames=0;
 			float totalTurns=0;
-			while(numberOfGames<10)
+			while(numberOfGames<1)
 			{
 				currentGame.setupGameboard(territoryData);
-				//setAIFactors(i);
 				WinnerReturn winner=currentGame.gameRun();
 				totalTurns+=winner.numberOfTurns;
 				numberOfGames++;
 				System.out.println(numberOfGames+" Games finished.");
-				//if(winner.winner instanceof PlayerComputer) totalTurns+=1000;//if blue is beaten, DON"T USE THOSE WEIGHTS!!
-
 			}
 			System.out.println(totalTurns/numberOfGames);
-			/*fac[i].numberOfTurns=totalTurns/numberOfGames;
-			//fac[i].displayFactors();
-			
 		}
-		getBestFactors();*/
-		
+
 	}
 	private static void setAIFactors(int instance)
 	{
@@ -74,7 +90,7 @@ public class RiskAI{
 			}
 		}
 	}
-	
+
 	private static void init()
 	{
 		clickHandler = new HandleClick();
@@ -87,12 +103,12 @@ public class RiskAI{
 	public RiskAI()
 	{
 	}
-	
+
 	private static Territory terrName(String name)
 	{
 		return TerritoryData.findTerritoryByName(name, territoryData);
 	}
-	
+
 	public static GameData getCurrentGameData()
 	{	
 		return currentGame;
