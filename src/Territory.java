@@ -266,6 +266,22 @@ public class Territory {
 		return set;
 	}
 	
+	public static Territory chooseRandomFromSet(Set<Territory> territorySet)
+	{
+		Random random = new Random();
+		int select = random.nextInt(territorySet.size());
+		int i = 0;
+		for(Territory territory : territorySet)
+		{
+			if(i==select)
+			{
+				return territory;
+			}
+			i++;
+		}
+		return null;
+	}
+	
 	public static boolean canAttack(Territory from, Territory to)
 	{
 		if(from.owner != to.owner && from.getUnitCount()>1)
