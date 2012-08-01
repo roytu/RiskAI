@@ -23,7 +23,7 @@ public class GameData {
 	 */
 	public GameData(int humanCount, int computerCount){
 		playerList = new ArrayList<Player>();
-		int secretPlayerNumber=(int) 0;//(Math.random()*computerCount);
+		int secretPlayerNumber=(int) (Math.random()*computerCount);
 		for(int i=0;i<humanCount;i++)
 		{
 			Player player = new PlayerHuman(i,playerColors[i]);
@@ -54,7 +54,7 @@ public class GameData {
 				catch(GameOverException e){}
 				turnIndex=++turnIndex%playerList.size();
 				totalturnnumber++;
-				if(totalturnnumber>500)break;
+				//if(totalturnnumber>500)break;
 			}
 		return new WinnerReturn(getWinner(),totalturnnumber);
 		

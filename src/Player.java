@@ -93,8 +93,8 @@ public abstract class Player {
 	{
 		//commented version is actual reinforcement counter, currently at automatically 3 for debug
 		int reinforcements = 0;
-//		List<Continent> ownedContinents = ownedContinents();
-//		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
+		List<Continent> ownedContinents = ownedContinents();
+		for (Continent c : ownedContinents) reinforcements+=c.getBonus();
 		reinforcements+=Math.max(getTerritoryMap().keySet().size()/3,3);
 		return reinforcements;
 	}

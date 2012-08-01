@@ -11,7 +11,7 @@ public class RiskAI{
 	public static Gfx gfx;
 	
 	public static final int PLAYERS_HUMAN = 0;
-	public static final int PLAYERS_COMP = 2;
+	public static final int PLAYERS_COMP = 3;
 	//public static final boolean DEBUG_ENABLED=false;
 	//DEBUG
 	public static aiFactors[] fac = new aiFactors[100];
@@ -23,30 +23,30 @@ public class RiskAI{
 		
 		//need to implement value_limit
 		double f2=-1;
-		for(int i=0;i<100;i++)
+		/*for(int i=0;i<100;i++)
 		{
 			fac[i]=new aiFactors();
 			if(i%10==0)f2++;
-			fac[i].initStep((i%10)*0.1,f2*0.1);
+			fac[i].initStep((i%10)*0.1,f2*0.1);*/
 			float numberOfGames=0;
 			float totalTurns=0;
-			while(numberOfGames<20)
+			while(numberOfGames<10)
 			{
 				currentGame.setupGameboard(territoryData);
-				setAIFactors(i);
+				//setAIFactors(i);
 				WinnerReturn winner=currentGame.gameRun();
 				totalTurns+=winner.numberOfTurns;
 				numberOfGames++;
 				System.out.println(numberOfGames+" Games finished.");
-				if(winner.winner instanceof PlayerComputer) totalTurns+=1000;//if blue is beaten, DON"T USE THOSE WEIGHTS!!
+				//if(winner.winner instanceof PlayerComputer) totalTurns+=1000;//if blue is beaten, DON"T USE THOSE WEIGHTS!!
 
 			}
 			System.out.println(totalTurns/numberOfGames);
-			fac[i].numberOfTurns=totalTurns/numberOfGames;
+			/*fac[i].numberOfTurns=totalTurns/numberOfGames;
 			//fac[i].displayFactors();
 			
 		}
-		getBestFactors();
+		getBestFactors();*/
 		
 	}
 	private static void setAIFactors(int instance)
