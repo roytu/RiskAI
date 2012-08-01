@@ -10,9 +10,9 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 0;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 100;
 	//private List<Card> cardList;
-	protected volatile Map<Territory, Integer> unitMap;
+	//protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
 	protected int playerID;
 	private Color color;
@@ -31,7 +31,7 @@ public abstract class Player {
 		this.playerID = playerID;
 		
 		//cardList = new ArrayList<Card>();
-		unitMap = new HashMap<Territory, Integer>();
+		//unitMap = new HashMap<Territory, Integer>();
 		color = GameData.playerColors[playerID];
 		name = GameData.playerColorNames[playerID];
 	}
@@ -64,17 +64,18 @@ public abstract class Player {
 		{
 			if(isAlive())
 			{
+				GuiMessages.addMessage("----------------");
 				GuiMessages.addMessage(name+"'s turn begins");
 			
-				GuiMessages.addMessage("REINFORCEMENT PHASE BEGINS");
+				GuiMessages.addMessage("REINFORCEMENT PHASE");
 				GuiMessages.addMessage(name+" recieves "+calculateReinforcements()+" reinforcements.");
 				reinforcementPhase();
 				Thread.sleep(COMPUTER_PLAYER_DELAY_MS/3);
 			
-				GuiMessages.addMessage("ATTACK PHASE BEGINS");
+				GuiMessages.addMessage("ATTACK PHASE");
 				attackPhase();
 				Thread.sleep(COMPUTER_PLAYER_DELAY_MS/3);
-				GuiMessages.addMessage("TACTICAL MOVE PHASE BEGINS");
+				GuiMessages.addMessage("TACTICAL MOVE PHASE");
 				tacticalMovePhase();
 				Thread.sleep(COMPUTER_PLAYER_DELAY_MS/3);
 			}
@@ -153,7 +154,7 @@ public abstract class Player {
 		{
 			unitMap.put(territory, number);
 		}*/
-		if(number>0) GuiMessages.addMessage(territory.name+" reinforced");
+		//if(number>0) GuiMessages.addMessage(territory.name+" reinforced");
 	}
 	
 	public void move(Territory from, Territory to, int number)
@@ -166,7 +167,7 @@ public abstract class Player {
 	
 	public void attack(Territory from, Territory to) 
 	{
-		if(from.getUnitCount()<=1 || to.getUnitCount()<1 || from.getOwner() == to.getOwner())
+		if(!Territory.canAttack(from, to))
 			return;
 		int unitsFrom = from.getUnitCount();
 		int unitsTo = to.getUnitCount();
@@ -196,23 +197,23 @@ public abstract class Player {
 		Collections.reverse(diceFromList);
 		Collections.sort(diceToList);
 		Collections.reverse(diceToList);
-		//DEBUG
-		//System.out.println(diceFromList.toString());
-		//System.out.println(diceToList.toString());
-		//END DEBUG
+		
+		GuiMessages.addMessage("Attacker rolled: " + diceFromList.toString());
+		GuiMessages.addMessage("Defender rolled: " + diceToList.toString());
+		
 		for(int i=0;i<Math.min(countDiceFrom, countDiceTo);++i)
 		{
 			if(diceFromList.get(i) > diceToList.get(i))
 			{
 				//attacker wins
-				to.getOwner().reinforce(to, -1);
+				to.addUnits(-1);
 				//NEXT LINE DEBUG
 				//System.out.println("attacker wins");
 			}
 			else
 			{
 				//defender wins
-				from.getOwner().reinforce(from, -1);
+				from.addUnits(-1);
 				//NEXT LINE DEBUG
 				//System.out.println("defender wins");
 			}
@@ -309,6 +310,12 @@ public abstract class Player {
 		double defenders = defendingArmies; // low #s of armies don't have it
 		double winProbApprox = (attackers-defenders)/defenders;
 		return Math.min(Math.max(winProbApprox, 0), 1); //if it's outside 0-1, just put it as 0 or 1
+	}
+	
+	protected boolean canFortify(Territory from, Territory to)
+	{
+		Set<Territory> cluster = from.getCluster();
+		return cluster.contains(to);
 	}
 	
 	public Set<Set<Territory>> getOwnedIslands()
