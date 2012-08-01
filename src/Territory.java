@@ -101,6 +101,20 @@ public class Territory {
 		return getUnitCount() - enemyTroops;
 	}
 	
+	/**
+	 * Returns a set of adjacent owned territories
+	 * @return Set<Territory>
+	 */
+	public Set<Territory> getAdjacentOwnedTerritories()
+	{
+		Set<Territory> adjacentTerritories = new HashSet<Territory>();
+		for (Territory t : getadjacentTerritoryList())
+		{
+			if(t.getOwner()==getOwner())
+				adjacentTerritories.add(t);
+		}
+		return adjacentTerritories;
+	}
 	
 	/**
 	 * Returns a set of adjacent enemy territories
@@ -292,5 +306,67 @@ public class Territory {
 		{
 			return false;
 		}
+	}
+	
+	public boolean canMove(Territory from, Territory to)
+	{
+		if(from.owner == to.owner && from.isLinked(to) && from.getUnitCount() > 1)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isLinked(Territory to)
+	{
+		if(getOwnedLinks(this).contains(to))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public Set<Set<Territory>> getOwnedIslands()
+	{
+		Set<Set<Territory>> islands = new HashSet<Set<Territory>>();
+		Set<Territory> processed = new HashSet<Territory>();
+		for(Territory terrBase : getOwner().getOwnedTerritories())
+		{
+			if(!processed.contains(terrBase))
+			{
+				Set<Territory> island = new HashSet<Territory>();
+				island.add(terrBase);
+				for(Territory terrLink : getOwnedLinks(terrBase))
+				{
+					island.add(terrLink);
+					processed.add(terrLink);
+				}
+				islands.add(island);
+			}
+		}
+		return islands;
+	}
+	
+	private Set<Territory> getOwnedLinks(Territory territory)
+	{
+		return getOwnedLinksRecursive(territory, new HashSet<Territory>());
+	}
+	
+	private Set<Territory> getOwnedLinksRecursive(Territory territory, Set<Territory> exclude)
+	{
+		exclude.add(territory);
+		Set<Territory> links = new HashSet<Territory>();
+		links.add(territory);
+		for(Territory link : territory.getAdjacentOwnedTerritories())
+		{
+			if(exclude.contains(link))
+				continue;
+			Set<Territory> linkedLinks = getOwnedLinksRecursive(link, exclude);
+			for(Territory linkedLink : linkedLinks)
+			{
+				links.add(linkedLink);
+			}
+		}
+		return links;
 	}
 }
