@@ -96,8 +96,18 @@ public class PlayerComputerHeuristic extends Player {
 	private double getTerritoryHeuristic(Territory terr) {
 		// TODO do this
 		double h = 0;
-		h += RiskAI.params[0] * 1; //TODO
-		//h += RiskAI.params[1] *  
+		
+		//0 : Continent borders
+		if(terr.isOnContinentBorder())
+		{
+			h += RiskAI.params[0];
+		}
+		
+		//1 : Neighbor count
+		h += RiskAI.params[1] * terr.getNumberOfAdjacentTerritories();
+		
+		//2 : Vulnerability
+		 
 		return 0;
 	}
 
