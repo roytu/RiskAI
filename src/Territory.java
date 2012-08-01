@@ -112,7 +112,7 @@ public class Territory {
 	public Set<Territory> getAdjacentOwnedTerritories()
 	{
 		Set<Territory> adjacentTerritories = new HashSet<Territory>();
-		for (Territory t : getadjacentTerritoryList())
+		for (Territory t : getAdjacentTerritoryList())
 		{
 			if(t.getOwner()==getOwner())
 				adjacentTerritories.add(t);
