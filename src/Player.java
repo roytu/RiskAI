@@ -32,12 +32,8 @@ public abstract class Player {
 		
 		//cardList = new ArrayList<Card>();
 		unitMap = new HashMap<Territory, Integer>();
-	}
-	public Player(int playerID, Color color)
-	{
-		this(playerID);
-		this.color = color;
-		this.name=this.getColor().toString();
+		color = GameData.playerColors[playerID];
+		name = GameData.playerColorNames[playerID];
 	}
 	
 	protected abstract void reinforcementPhase() throws GameOverException;
@@ -91,7 +87,7 @@ public abstract class Player {
 	
 	protected int calculateReinforcements()
 	{
-		//commented version is actual reinforcement counter, currently at automatically 3 for debug
+		//partially commented version is actual reinforcement counter, currently without continents for debug
 		int reinforcements = 0;
 		List<Continent> ownedContinents = ownedContinents();
 		for (Continent c : ownedContinents) reinforcements+=c.getBonus();

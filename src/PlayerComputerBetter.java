@@ -21,11 +21,6 @@ public class PlayerComputerBetter extends Player {
 		super(playerID);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public PlayerComputerBetter(int playerID, Color color)
-	{
-		super(playerID,color);
-	}
 
 	@Override
 	public void reinforcementPhase() throws GameOverException
@@ -36,7 +31,7 @@ public class PlayerComputerBetter extends Player {
 		Territory territory = getOwnedTerritoryWithHighestUnitCountAdjacentTo(territoryTargeted);
 		int number = calculateReinforcements();
 		reinforce(territory, number);
-		GuiMessages.addMessage("Player " + playerID + " reinforced " + territory.name);
+		GuiMessages.addMessage(name + " reinforced " + territory.name);
 	}
 
 	@Override
@@ -50,7 +45,7 @@ public class PlayerComputerBetter extends Player {
 			if(terrTo != null)
 			{
 				attack(terrFrom, terrTo);
-				GuiMessages.addMessage("Player " + playerID + " attacked from " + terrFrom.name + " to " + terrTo.name);
+				GuiMessages.addMessage(name + " attacked from " + terrFrom.name + " to " + terrTo.name);
 			}
 		}
 	}
