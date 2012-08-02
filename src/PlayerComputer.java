@@ -217,10 +217,10 @@ public class PlayerComputer extends Player {
 				if(u.getOwner()!=this)
 				{
 					if (!conquerProbabilityHeuristicMap.containsKey(t))
-						conquerProbabilityHeuristicMap.put(u,probabilityOfWinning(t.getUnitCount(),u.getUnitCount()));
+						conquerProbabilityHeuristicMap.put(u,probabilityOfWinning2(t.getUnitCount(),u.getUnitCount()));
 					else
 					{
-						double winningProb = probabilityOfWinning(t.getUnitCount(),u.getUnitCount());
+						double winningProb = probabilityOfWinning2(t.getUnitCount(),u.getUnitCount());
 						conquerProbabilityHeuristicMap.put(u, Math.max(winningProb, conquerProbabilityHeuristicMap.get(t)));
 					}
 				}
