@@ -9,10 +9,10 @@ public class RiskAI{
 	public static HandleClick clickHandler;
 	public static Gfx gfx;
 	
-	public static final int PLAYERS_HUMAN = 1;
-	public static final int PLAYERS_COMP = 3;
+	public static final int PLAYERS_HUMAN = 0;
+	public static final int PLAYERS_COMP = 2;
 	
-	public static final boolean DEBUG_ENABLED=false;
+	public static final boolean DEBUG_ENABLED = true;
 	//DEBUG
 	public static aiFactors[] fac = new aiFactors[100];
 	
@@ -31,6 +31,17 @@ public class RiskAI{
 			{
 				params[i] = random.nextDouble() * 2 - 1;
 			}
+			float numberOfGames=0;
+			float totalTurns=0;
+			while(numberOfGames<1)
+			{
+				currentGame.setupGameboard(territoryData);
+				WinnerReturn winner=currentGame.gameRun();
+				totalTurns+=winner.numberOfTurns;
+				numberOfGames++;
+				System.out.println(numberOfGames+" Games finished.");
+			}
+			System.out.println(totalTurns/numberOfGames);
 		}
 		//need to implement value_limit
 		/*

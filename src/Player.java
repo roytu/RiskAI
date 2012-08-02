@@ -322,7 +322,7 @@ public abstract class Player {
 		double winProbApprox = (attackers-defenders)/defenders;
 		return Math.min(Math.max(winProbApprox, 0), 1); //if it's outside 0-1, just put it as 0 or 1
 		*/
-		return Math.max(Math.min(0.42 + 0.11 * attackingArmies - 0.09 * defendingArmies, 1), 0);
+		return Math.max(Math.min(0.42 + 0.11 * attackingArmies - 0.09 * defendingArmies, 0.999), 0.001);
 	}
 	
 	protected boolean canFortify(Territory from, Territory to)
@@ -352,10 +352,14 @@ public abstract class Player {
 		return islands;
 	}
 	
-	public Set<Territory> getAllLinkedEnemyTerritories()
+	public Set<Territory> getAllLinkedEnemyTerritories() throws GameOverException
 	{
 		Set<Territory> territorySet = new HashSet<Territory>();
 		//TODO
+		if(!isAlive())
+		{
+			throw new GameOverException();
+		}
 		for(Territory ownedTerritory : getOwnedTerritories())
 		{
 			for(Territory enemyTerritory : ownedTerritory.getAdjacentEnemyTerritories())

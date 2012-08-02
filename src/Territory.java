@@ -316,7 +316,7 @@ public class Territory {
 		return cluster;
 	}
 	
-	public static boolean canMove(Territory from, Territory to)
+	public static boolean canMove(Territory from, Territory to, int number)
 	{
 		if(from.owner == to.owner && from.isLinked(to) && from.getUnitCount() > 1)
 		{
@@ -388,7 +388,12 @@ public class Territory {
 		{
 			attackers += enemy.getUnitCount();
 		}
-		return Player.probabilityOfWinning2(attackers, defenders);
+		double r = Player.probabilityOfWinning2(attackers, defenders);
+		if(r == 0)
+		{
+			System.out.print("OP");
+		}
+		return r;
 	}
 	
 	public double getOutpost()
@@ -413,6 +418,18 @@ public class Territory {
 		{
 			return 0;
 		}
-		return Player.probabilityOfWinning2(attackers, defenders) / targetTerritory.getVulnerability(attackers) / getVulnerability(getUnitCount() - attackers); //TODO 
+		double r1 = Player.probabilityOfWinning2(attackers, defenders);
+		double r2 =  targetTerritory.getVulnerability(attackers);
+		double r3 = getVulnerability(getUnitCount() - attackers);
+		if(Double.isInfinite(r1) || Double.isInfinite(r2) || Double.isInfinite(r3))
+		{
+			System.out.println("GW");
+		}
+		double r = r1 / r2 / r3;
+		if(Double.isInfinite(r))
+		{
+			System.out.println("GT");
+		}
+		return r; //TODO 
 	}
 }
