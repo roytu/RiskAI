@@ -31,7 +31,7 @@ public class RiskAI{
 			{
 				fac2[q]=new aiFactors();
 				double f2=-1;
-				for(int i=0;i<100;i++)
+				for(int i=0;i<50;i++)
 				{
 					fac[i]=new aiFactors();
 					if(i%10==0)f2++;

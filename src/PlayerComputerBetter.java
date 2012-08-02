@@ -10,7 +10,7 @@ public class PlayerComputerBetter extends Player {
 	List<Territory> currentCluster;
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
-	double value_limit = 0.3;
+	double value_limit = 0.4;
 	double adjacentEnemyTerritoryFactor = .5;
 	double conquerProbabilityFactor = .2;
 	double reinforcementsFactor = .3;
