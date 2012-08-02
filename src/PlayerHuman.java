@@ -105,6 +105,7 @@ public class PlayerHuman extends Player {
 			if (t.getOwner() == this && getUnitsInTerritory(t) > 1)
 			{
 				from = t;
+				GuiMessages.addMessage(t.name + " selected.");
 			}
 		}
 		else if (to == null){
