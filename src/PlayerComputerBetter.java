@@ -14,6 +14,9 @@ public class PlayerComputerBetter extends Player {
 	double adjacentEnemyTerritoryFactor = .2;
 	double conquerProbabilityFactor = .4;
 	double reinforcementsFactor = .4;
+	
+	double vulnerabilityFactor = 0.6; //loss for overly aggressive moves, independent of other factors because it is subtracted
+	
 //	double value_limit = 0.3; // Michael's less effective weights
 //	double adjacentEnemyTerritoryFactor = .5;
 //	double conquerProbabilityFactor = .2;
@@ -146,6 +149,8 @@ public class PlayerComputerBetter extends Player {
 		
 		Map<Territory, Double> continentBonusList = continentBonusHeuristic(currentCluster);
 		
+		Map<Territory, Double> vulnerabilityList = vulnerabilityHeuristic(currentCluster);
+		
 		/*
 		Map<Territory, Integer> OtherHeuristicList = OtherHeuristic(currentCluster);
 		double OtherHeuristicFactor = 1.0;
@@ -155,10 +160,12 @@ public class PlayerComputerBetter extends Player {
 		Map<Territory, Double> adjacentEnemyWeightedList =multiplyListWeights(adjacentEnemyTerritoryList,adjacentEnemyTerritoryFactor);
 		Map<Territory, Double> conquerProbWeightedList = multiplyListWeights(conquerProbList,conquerProbabilityFactor);
 		Map<Territory, Double> reinforcementsWeightedList = multiplyListWeights(continentBonusList, reinforcementsFactor);
+		Map<Territory, Double> vulnerabilityWeightedList = multiplyListWeights(vulnerabilityList, vulnerabilityFactor);
 		List<Map<Territory,Double>> lists = new ArrayList<Map<Territory,Double>>();
 		lists.add(adjacentEnemyWeightedList);
 		lists.add(conquerProbWeightedList);
 		lists.add(reinforcementsWeightedList);
+		lists.add(vulnerabilityWeightedList);
 		return addTerritoryWeights(lists);
 	}
 	private Map<Territory, Double> multiplyListWeights(Map<Territory, Double> mapping, double factor)
@@ -279,6 +286,66 @@ public class PlayerComputerBetter extends Player {
 		}
 		return borderReinforceHeuristicList;
 	}
+	/**
+	 * Note: This heuristic gives values ranging from -1 to 0. 0 is best, -1 is worst. It is intended to have a factor close to 1
+	 * which is not counted in making everything else add up to 1.
+	 */
+	private Map<Territory, Double> vulnerabilityHeuristic(List<Territory> contiguousTerritories)
+	{
+		Map<Territory, Double> vulnerabilityOf = new HashMap<Territory, Double>();
+		int baseSpareArmies = computeSpareArmies(contiguousTerritories);
+		for (Territory t:contiguousTerritories)
+		{
+			for (Territory u:t.getAdjacentTerritoryList())
+			{
+				if(u.getOwner()!=this)
+				{
+					if (!vulnerabilityOf.containsKey(t))
+					{
+						double spareArmies = (double) baseSpareArmies - u.getUnitCount();
+						double borderTerritories = (double) borderTerritoryNumber(contiguousTerritories, u);
+						double value = (Math.min(spareArmies / borderTerritories,10.) - 10.)/10.; //from -1 for no spare to 0 for 10 spare
+						vulnerabilityOf.put(u, value);
+					}
+					else
+					{
+						double spareArmies = (double) baseSpareArmies - u.getUnitCount();
+						double borderTerritories = (double) borderTerritoryNumber(contiguousTerritories, u);
+						double value = (Math.min(spareArmies / borderTerritories,10.) - 10.)/10.; //from -1 for no spare to 0 for 10 spare
+						vulnerabilityOf.put(u, Math.max(value, vulnerabilityOf.get(t)));
+					}
+				}
+			}
+		}
+		return vulnerabilityOf;
+	}
+	
+	private int computeSpareArmies(List<Territory> contiguousTerritories)
+	{
+		int totalArmies = 0;
+		for (Territory t : contiguousTerritories)
+		{
+			totalArmies+=t.getUnitCount();
+		}
+		totalArmies-=contiguousTerritories.size(); //so that it does not count the last army on each territory
+		return totalArmies;
+	}
+	
+	private int borderTerritoryNumber(List<Territory> contiguousTerritories, Territory add)
+	{
+		int borders = 0;
+		for (Territory t : contiguousTerritories)
+		{
+			Set<Territory> adjacent = t.getAdjacentEnemyTerritories();
+			if (!(adjacent.isEmpty() || 
+					(adjacent.size() == 1 && adjacent.contains(add)))) //if there are adjacent enemy territories other than add
+			{
+				borders++;
+			}
+		}
+		if (!add.getAdjacentEnemyTerritories().isEmpty()) borders++; //also check to see if add would be a border territory
+		return borders;
+	}
 	////////
 	//Territory Functions
 	////////
@@ -352,11 +419,11 @@ public class PlayerComputerBetter extends Player {
 			double currentValue = mapping.get(t);
 			if(invert)
 			{
-				mapping.put(t, 1-(currentValue/maxValue-minValue));
+				mapping.put(t, 1-((currentValue-minValue)/(maxValue-minValue)));
 			}
 			else
 			{
-				mapping.put(t, currentValue/maxValue-minValue);
+				mapping.put(t, (currentValue-minValue)/(maxValue-minValue));
 			}
 		}
 		return mapping;

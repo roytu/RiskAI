@@ -30,12 +30,14 @@ public class RiskAI{
 			for(int q=0;q<1;q++)
 			{
 				fac2[q]=new aiFactors();
-				double f2=-1;
+				//double f2=-1;
 				for(int i=0;i<33;i++)
+				{
+				for (double f2=4; f2 < 10; f2++)
 				{
 					fac[i]=new aiFactors();
 					if(i%10==0)f2++;
-					fac[i].initStep((i%10)*0.1,f2*0.1);
+					fac[i].initStep(i*0.1,f2*0.1);
 					float numberOfGames=0;
 					float totalTurns=0;
 					int goodwins=0;
@@ -54,15 +56,16 @@ public class RiskAI{
 					System.out.println(goodwins/numberOfGames);
 					fac[i].goodWinFraction=goodwins/numberOfGames;
 					//fac[i].numberOfTurns=totalTurns/numberOfGames;
-					System.out.println((i+1)+"% completed");
+					System.out.println((10*f2 + i - 50)+"% completed");
 					//fac[i].displayFactors();
 
+				}
 				}
 				fac2[q]=getBestFactors();
 			}
 			System.out.println("finished");
 		}
-		else// (!DEBUG_ENABLED)//28 turns:.2,.5,.3:3 plyaer     -----2 
+		else //test a predefined set of values (from playercomputerbetter) rather than find good values
 		{
 			float numberOfGames=0;
 			float totalTurns=0;
