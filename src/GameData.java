@@ -64,7 +64,7 @@ public class GameData {
 			catch(GameOverException e){}
 			turnIndex=++turnIndex%playerList.size();
 			totalturnnumber++;
-			//if(totalturnnumber>500)break;
+			if(totalturnnumber>200)break;
 		}
 		return new WinnerReturn(getWinner(),totalturnnumber);
 
