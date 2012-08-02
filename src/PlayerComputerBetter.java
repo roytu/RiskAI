@@ -11,9 +11,13 @@ public class PlayerComputerBetter extends Player {
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
 	double value_limit = 0.4;
-	double adjacentEnemyTerritoryFactor = .5;
-	double conquerProbabilityFactor = .2;
-	double reinforcementsFactor = .3;
+	double adjacentEnemyTerritoryFactor = .2;
+	double conquerProbabilityFactor = .4;
+	double reinforcementsFactor = .4;
+//	double value_limit = 0.3; // Michael's less effective weights
+//	double adjacentEnemyTerritoryFactor = .5;
+//	double conquerProbabilityFactor = .2;
+//	double reinforcementsFactor = .3;
 	public PlayerComputerBetter(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub
@@ -242,7 +246,7 @@ public class PlayerComputerBetter extends Player {
 			{
 				double percent=getPercentageOfContinentOwned(u.getContinent());
 				//MAGIC EQUATION: 1/(1+e^-(10x-5))- nice logistic curve --  determined by experimentation
-				double magicWeight=1/1+Math.pow(Math.E, -(10*percent-5));
+				double magicWeight=1/(1+Math.pow(Math.E, -(10*percent-5)));
 				continentBonusHeuristicMap.put(u, magicWeight);
 			}
 		}
@@ -327,7 +331,8 @@ public class PlayerComputerBetter extends Player {
 		{
 			if(t.getOwner()==this) numberOfOwnedTerritories++;
 		}
-		return numberOfOwnedTerritories/continent.territories().size();
+		double test = (double)(continent.territories().size());
+		return numberOfOwnedTerritories/test;
 	}
 	
 	private double reinforcementFraction(Set<Territory> owned, List<Set<Territory>> totalOwneds)

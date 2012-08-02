@@ -23,6 +23,6 @@ public class aiFactors {
 	
 	public String toString()
 	{
-		return numberOfTurns+"\n"+factor1+" , "+factor2+" , "+factor3+"\n";
+		return goodWinFraction+" , "+factor1+" , "+factor2+" , "+factor3+"\n";
 	}
 }

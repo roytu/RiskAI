@@ -11,9 +11,9 @@ public class PlayerComputer extends Player {
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
 	double value_limit = 0.1;
-	double adjacentEnemyTerritoryFactor = 0.0;
-	double conquerProbabilityFactor = 1.0;
-	double reinforcementsFactor = 0.0;
+	double adjacentEnemyTerritoryFactor = Math.random();
+	double conquerProbabilityFactor = Math.random();
+	double reinforcementsFactor = Math.random();
 	public PlayerComputer(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub

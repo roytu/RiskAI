@@ -11,7 +11,7 @@ public class RiskAI{
 	public static final int PLAYERS_HUMAN = 0;
 	public static final int PLAYERS_COMP = 3;
 	
-	public static final boolean DEBUG_ENABLED=true;
+	public static final boolean DEBUG_ENABLED=false;
 	//DEBUG
 	public static aiFactors[] fac = new aiFactors[100];
 	public static aiFactors[] fac2 = new aiFactors[20];
@@ -31,7 +31,7 @@ public class RiskAI{
 			{
 				fac2[q]=new aiFactors();
 				double f2=-1;
-				for(int i=0;i<50;i++)
+				for(int i=0;i<33;i++)
 				{
 					fac[i]=new aiFactors();
 					if(i%10==0)f2++;
@@ -54,7 +54,7 @@ public class RiskAI{
 					System.out.println(goodwins/numberOfGames);
 					fac[i].goodWinFraction=goodwins/numberOfGames;
 					//fac[i].numberOfTurns=totalTurns/numberOfGames;
-					//System.out.println((i+1)+"% completed");
+					System.out.println((i+1)+"% completed");
 					//fac[i].displayFactors();
 
 				}
@@ -94,14 +94,14 @@ public class RiskAI{
 
 	private static aiFactors getBestFactors()
 	{
-		double goodWins=0;
+		double goodWins=0.6;
 		aiFactors bestFactor = null;
 		for(int i=0;i<100;i++)
 		{
 			if(fac[i].goodWinFraction>goodWins)
 			{
-				System.out.println(fac[i]);
-				goodWins=fac[i].goodWinFraction;
+				System.out.print(fac[i]);
+				goodWins=0.6;
 				bestFactor=fac[i];
 			}
 		}
