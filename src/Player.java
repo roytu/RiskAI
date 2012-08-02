@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 public abstract class Player {
-	public static final int COMPUTER_PLAYER_DELAY_MS = 100;
+	public static final int COMPUTER_PLAYER_DELAY_MS = 0;
 	//private List<Card> cardList;
 	//protected volatile Map<Territory, Integer> unitMap;
 	protected boolean isHuman;
@@ -327,6 +327,7 @@ public abstract class Player {
 	
 	protected boolean canFortify(Territory from, Territory to)
 	{
+		if (from == to) return false;
 		Set<Territory> cluster = from.getCluster();
 		return cluster.contains(to);
 	}

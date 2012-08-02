@@ -8,10 +8,10 @@ public class RiskAI{
 	public static HandleClick clickHandler;
 	public static Gfx gfx;
 	
-	public static final int PLAYERS_HUMAN = 1;
+	public static final int PLAYERS_HUMAN = 0;
 	public static final int PLAYERS_COMP = 3;
 	
-	public static final boolean DEBUG_ENABLED=false;
+	public static final boolean DEBUG_ENABLED=true;
 	//DEBUG
 	public static aiFactors[] fac = new aiFactors[100];
 
@@ -19,6 +19,10 @@ public class RiskAI{
 	{
 		//Initialize system information
 		init();
+		//
+//		BEST FACTORS:
+//		2 players: 0.9,0.1,0.0 14 turns //0.8 , 0.1 , 0.1 15 turns
+//		3 players: 0.2 , 0.7 , 0.1  //0.5 , 0.1 , 0.4  52 turns
 
 		//need to implement value_limit
 		if(DEBUG_ENABLED)
@@ -31,35 +35,36 @@ public class RiskAI{
 				fac[i].initStep((i%10)*0.1,f2*0.1);
 				float numberOfGames=0;
 				float totalTurns=0;
-				while(numberOfGames<10)
+				while(numberOfGames<20)
 				{
 					currentGame.setupGameboard(territoryData);
 					setAIFactors(i);
 					WinnerReturn winner=currentGame.gameRun();
 					totalTurns+=winner.numberOfTurns;
 					numberOfGames++;
-					System.out.println(numberOfGames+" Games finished.");
+					//System.out.println(numberOfGames+" Games finished. "+winner.winner);
 					if(winner.winner instanceof PlayerComputer) totalTurns+=1000;//if betterComputer is beaten, DON"T USE THOSE WEIGHTS!!
 
 				}
 				System.out.println(totalTurns/numberOfGames);
 				fac[i].numberOfTurns=totalTurns/numberOfGames;
+				System.out.println((i+1)+"% completed");
 				//fac[i].displayFactors();
 
 			}
 			getBestFactors();
 		}
-		else// (!DEBUG_ENABLED)
+		else// (!DEBUG_ENABLED)//28 turns:.2,.5,.3:3 plyaer     -----2 
 		{
 			float numberOfGames=0;
 			float totalTurns=0;
-			while(numberOfGames<1)
+			while(numberOfGames<5)
 			{
 				currentGame.setupGameboard(territoryData);
 				WinnerReturn winner=currentGame.gameRun();
 				totalTurns+=winner.numberOfTurns;
 				numberOfGames++;
-				System.out.println(numberOfGames+" Games finished.");
+				System.out.println(numberOfGames+" Games finished. "+winner.winner);
 			}
 			System.out.println(totalTurns/numberOfGames);
 		}
