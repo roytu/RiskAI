@@ -228,6 +228,7 @@ public class PlayerComputerBetter extends Player {
 		}
 		return conquerProbabilityHeuristicMap;
 	}
+	
 	/**
 	 * @param contiguousTerritories
 	 * @return a map mapping each takeable territory to the fraction of total armies obtained by taking it
@@ -247,31 +248,33 @@ public class PlayerComputerBetter extends Player {
 		}
 		return continentBonusHeuristicMap;
 	}
-	/**Note: Owned must be total territories owned, otherOwned must be the list of lists of territories owned by all players*/
-	private double getPercentageOfContinentOwned(Continent continent)
+	
+	private Map<Territory, Double> continentBorderReinforceHeuristic(List<Territory> contiguousTerritories)
 	{
-		int numberOfOwnedTerritories=0;
-		for(Territory t:continent.territories())
+		Map<Territory, Double> borderReinforceHeuristicList = new HashMap<Territory, Double>();
+		for(Territory t:contiguousTerritories)
 		{
-			if(t.getOwner()==this) numberOfOwnedTerritories++;
+			boolean isBorderTerritory=false;
+			for(Territory u:t.getAdjacentEnemyTerritories())
+			{
+				if(u==null)break;//no adjacent enemy territories
+				if(t.getContinent()!=u.getContinent())
+					{
+						isBorderTerritory=true;
+						break;//it is a border territory, no need to look through the rest of enemy adjacent territories
+					}
+			}
+			if(isBorderTerritory)
+			{
+				borderReinforceHeuristicList.put(t,.5);//TODO
+			}
+			else
+			{
+				borderReinforceHeuristicList.put(t,0.0);
+			}
 		}
-		return numberOfOwnedTerritories/continent.territories().size();
+		return borderReinforceHeuristicList;
 	}
-	
-	
-	
-	
-	private double reinforcementFraction(Set<Territory> owned, List<Set<Territory>> totalOwneds)
-	{
-		double received = (double) calculateReinforcements(owned);
-		double total = 0.0;
-		for (Set<Territory> aPlayer : totalOwneds)
-		{
-			total+=(double)calculateReinforcements(aPlayer);
-		}
-		return received/total;
-	}
-	
 	////////
 	//Territory Functions
 	////////
@@ -313,10 +316,30 @@ public class PlayerComputerBetter extends Player {
 		}
 		return currentHighestTroopTerritory;
 	}
-	
 	////////
 	//Misc. Functions
 	////////
+	
+	private double getPercentageOfContinentOwned(Continent continent)
+	{
+		int numberOfOwnedTerritories=0;
+		for(Territory t:continent.territories())
+		{
+			if(t.getOwner()==this) numberOfOwnedTerritories++;
+		}
+		return numberOfOwnedTerritories/continent.territories().size();
+	}
+	
+	private double reinforcementFraction(Set<Territory> owned, List<Set<Territory>> totalOwneds)
+	{
+		double received = (double) calculateReinforcements(owned);
+		double total = 0.0;
+		for (Set<Territory> aPlayer : totalOwneds)
+		{
+			total+=(double)calculateReinforcements(aPlayer);
+		}
+		return received/total;
+	}
 	private Map<Territory, Double> normalizeMap(Map<Territory, Double> mapping, float minValue, float maxValue, boolean invert)
 	{
 		for (Territory t : mapping.keySet())
