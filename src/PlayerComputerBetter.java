@@ -11,9 +11,9 @@ public class PlayerComputerBetter extends Player {
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
 	double value_limit = 0.1;
-	double adjacentEnemyTerritoryFactor = .5;
+	double adjacentEnemyTerritoryFactor = .2;
 	double conquerProbabilityFactor = .4;
-	double reinforcementsFactor = .1;
+	double reinforcementsFactor = .4;
 	public PlayerComputerBetter(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub

@@ -11,8 +11,8 @@ public class PlayerComputer extends Player {
 	Map<Territory, Double> territoriesToAttack;
 	Territory territoryTargeted;
 	double value_limit = 0.1;
-	double adjacentEnemyTerritoryFactor = 0.1;
-	double conquerProbabilityFactor = 0.1;
+	double adjacentEnemyTerritoryFactor = 0.0;
+	double conquerProbabilityFactor = 1.0;
 	double reinforcementsFactor = 0.0;
 	public PlayerComputer(int playerID) {
 		super(playerID);
