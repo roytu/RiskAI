@@ -15,7 +15,7 @@ public class PlayerComputerBetter extends Player {
 	double conquerProbabilityFactor = .4;
 	double reinforcementsFactor = .4;
 	
-	double vulnerabilityFactor = 0.6; //loss for overly aggressive moves, independent of other factors because it is subtracted
+	double vulnerabilityFactor = 0.7; //loss for overly aggressive moves, independent of other factors because it is subtracted
 	
 //	double value_limit = 0.3; // Michael's less effective weights
 //	double adjacentEnemyTerritoryFactor = .5;
@@ -303,6 +303,7 @@ public class PlayerComputerBetter extends Player {
 					if (!vulnerabilityOf.containsKey(t))
 					{
 						double spareArmies = (double) baseSpareArmies - u.getUnitCount();
+						if (spareArmies < 0) spareArmies = -10.;
 						double borderTerritories = (double) borderTerritoryNumber(contiguousTerritories, u);
 						double value = (Math.min(spareArmies / borderTerritories,10.) - 10.)/10.; //from -1 for no spare to 0 for 10 spare
 						vulnerabilityOf.put(u, value);

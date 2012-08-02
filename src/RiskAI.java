@@ -67,16 +67,16 @@ public class RiskAI{
 		else //test a predefined set of values (from playercomputerbetter) rather than find good values
 		{
 			float numberOfGames=0;
-			float totalTurns=0;
+			float numberOfWins=0;
 			while(numberOfGames<20)
 			{
 				currentGame.setupGameboard(territoryData);
 				WinnerReturn winner=currentGame.gameRun();
-				totalTurns+=winner.numberOfTurns;
+				if (winner.winner instanceof PlayerComputerBetter) numberOfWins++;
 				numberOfGames++;
 				System.out.println(numberOfGames+" Games finished. "+winner.winner);
 			}
-			System.out.println(totalTurns/numberOfGames);
+			System.out.println(numberOfWins/numberOfGames);
 		}
 
 	}
