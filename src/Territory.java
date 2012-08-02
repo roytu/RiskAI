@@ -316,9 +316,9 @@ public class Territory {
 		return cluster;
 	}
 	
-	public static boolean canMove(Territory from, Territory to)
+	public static boolean canMove(Territory from, Territory to, int number)
 	{
-		if(from.owner == to.owner && from.isLinked(to) && from.getUnitCount() > 1)
+		if(from.owner == to.owner && from.isLinked(to) && from.getUnitCount() > number + 1)
 		{
 			return true;
 		}
