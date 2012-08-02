@@ -14,6 +14,10 @@ public class PlayerComputerBetter extends Player {
 	double adjacentEnemyTerritoryFactor = .2;
 	double conquerProbabilityFactor = .4;
 	double reinforcementsFactor = .4;
+//	double value_limit = 0.3; // Michael's less effective weights
+//	double adjacentEnemyTerritoryFactor = .5;
+//	double conquerProbabilityFactor = .2;
+//	double reinforcementsFactor = .3;
 	public PlayerComputerBetter(int playerID) {
 		super(playerID);
 		// TODO Auto-generated constructor stub
@@ -217,10 +221,10 @@ public class PlayerComputerBetter extends Player {
 				if(u.getOwner()!=this)
 				{
 					if (!conquerProbabilityHeuristicMap.containsKey(t))
-						conquerProbabilityHeuristicMap.put(u,probabilityOfWinning(t.getUnitCount(),u.getUnitCount()));
+						conquerProbabilityHeuristicMap.put(u,probabilityOfWinning2(t.getUnitCount(),u.getUnitCount()));
 					else
 					{
-						double winningProb = probabilityOfWinning(t.getUnitCount(),u.getUnitCount());
+						double winningProb = probabilityOfWinning2(t.getUnitCount(),u.getUnitCount());
 						conquerProbabilityHeuristicMap.put(u, Math.max(winningProb, conquerProbabilityHeuristicMap.get(t)));
 					}
 				}

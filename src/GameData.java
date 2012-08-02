@@ -83,11 +83,17 @@ public class GameData {
 
 	private Player getWinner()
 	{
+		int mostTerritories = -1;
+		Player best = null;
 		for(Player p:playerList)
 		{
-			if(p.isAlive()) return p;
+			if(p.isAlive() && p.getTerritoryMap().keySet().size() > mostTerritories)
+			{
+				best = p;
+				mostTerritories = p.getTerritoryMap().keySet().size();
+			}
 		}
-		return null;
+		return best;
 	}
 
 	public void setupGameboard(List<Territory> territoryList)
