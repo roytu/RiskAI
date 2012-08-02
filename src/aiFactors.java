@@ -2,6 +2,7 @@
 public class aiFactors {
 	public double factor1=0,factor2=0,factor3=0;
 	public double numberOfTurns;
+	public double goodWinFraction=0;
 	
 	public void initRandom()
 	{
