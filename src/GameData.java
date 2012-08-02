@@ -45,6 +45,7 @@ public class GameData {
 			if(i==secretPlayerNumber)
 			{
 				player = new PlayerComputerBetter(humanCount+i);
+				System.out.println("PlayerComputerBetter is " + player.name);
 			}
 			else
 			{
